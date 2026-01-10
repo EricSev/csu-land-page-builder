@@ -1,15 +1,134 @@
 import { useState } from 'react'
 
-type AppMode = 'selection' | 'builder'
+type AppMode = 'selection' | 'setup' | 'builder'
 type StartMode = 'new' | 'edit' | 'load'
+type TemplateType = 'learning-partner' | 'channel-partner'
+
+// Supported URL patterns from spec
+const SUPPORTED_URL_PATTERNS = [
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/tuition-financing\/partnerships\/learning-partner-directory\/.+/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/landing-pages\/learning-partners\/.+/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/benefithub\/?$/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/delta\/?$/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/perkspot\/?$/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/iafc\/?$/i,
+  /^https?:\/\/(www\.)?columbiasouthern\.edu\/ebg-solutions\/?$/i,
+]
+
+function isValidCsuUrl(url: string): boolean {
+  return SUPPORTED_URL_PATTERNS.some(pattern => pattern.test(url))
+}
 
 function App() {
   const [mode, setMode] = useState<AppMode>('selection')
-  const [_startMode, setStartMode] = useState<StartMode | null>(null)
+  const [startMode, setStartMode] = useState<StartMode | null>(null)
+  const [partnerName, setPartnerName] = useState('')
+  const [templateType, setTemplateType] = useState<TemplateType>('learning-partner')
+  const [sourceUrl, setSourceUrl] = useState('')
+  const [urlError, setUrlError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [parseStatus, setParseStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [draftError, setDraftError] = useState('')
+  const [draftFileName, setDraftFileName] = useState('')
 
   const handleModeSelect = (selectedMode: StartMode) => {
     setStartMode(selectedMode)
-    setMode('builder')
+    // All modes now go through setup
+    setMode('setup')
+  }
+
+  const handleSetupComplete = () => {
+    if (partnerName.trim()) {
+      setMode('builder')
+    }
+  }
+
+  const handleUrlParse = async () => {
+    setUrlError('')
+
+    if (!sourceUrl.trim()) {
+      setUrlError('Please enter a URL')
+      return
+    }
+
+    if (!isValidCsuUrl(sourceUrl)) {
+      setUrlError('Please enter a valid CSU landing page URL. Supported patterns include columbiasouthern.edu/tuition-financing/partnerships/learning-partner-directory/*, /landing-pages/learning-partners/*, /benefithub, /delta, /perkspot, /iafc, /ebg-solutions')
+      return
+    }
+
+    setIsLoading(true)
+    setParseStatus('idle')
+
+    try {
+      // Simulate URL parsing (in a real app, this would fetch and parse the page)
+      // For now, we'll extract a partner name from the URL
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Extract partner name from URL path
+      const urlParts = sourceUrl.split('/')
+      const lastPart = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2]
+      const extractedName = lastPart
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, l => l.toUpperCase())
+
+      setPartnerName(extractedName || 'Partner')
+      setParseStatus('success')
+      setMode('builder')
+    } catch {
+      setUrlError('Failed to parse the URL. Please try again or enter details manually.')
+      setParseStatus('error')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDraftUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setDraftError('')
+    setDraftFileName(file.name)
+    setIsLoading(true)
+
+    try {
+      const text = await file.text()
+      const draft = JSON.parse(text)
+
+      // Validate draft structure
+      if (!draft.version || !draft.metadata) {
+        throw new Error('Invalid draft file format')
+      }
+
+      // Restore state from draft
+      if (draft.metadata.partnerName) {
+        setPartnerName(draft.metadata.partnerName)
+      }
+      if (draft.metadata.templateType) {
+        setTemplateType(draft.metadata.templateType as TemplateType)
+      }
+      if (draft.metadata.sourceUrl) {
+        setSourceUrl(draft.metadata.sourceUrl)
+      }
+
+      // Move to builder mode
+      setMode('builder')
+    } catch (err) {
+      setDraftError(err instanceof Error ? err.message : 'Failed to load draft file. Please ensure it is a valid JSON draft.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleBackToSelection = () => {
+    setMode('selection')
+    setStartMode(null)
+    setPartnerName('')
+    setTemplateType('learning-partner')
+    setSourceUrl('')
+    setUrlError('')
+    setParseStatus('idle')
+    setDraftError('')
+    setDraftFileName('')
   }
 
   if (mode === 'selection') {
@@ -105,6 +224,235 @@ function App() {
     )
   }
 
+  // Setup mode - partner name and template selection OR URL input
+  if (mode === 'setup') {
+    return (
+      <div className="min-h-screen bg-csu-lightest-gray flex flex-col">
+        {/* Header */}
+        <header className="bg-csu-navy text-white py-4 px-6 shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
+                <span className="text-csu-navy font-bold text-xl">CSU</span>
+              </div>
+              <h1 className="text-xl font-semibold">Landing Page Builder</h1>
+            </div>
+          </div>
+        </header>
+
+        {/* Setup Form */}
+        <main className="flex-1 flex items-center justify-center p-8">
+          <div className="max-w-lg w-full">
+            <button
+              onClick={handleBackToSelection}
+              className="mb-6 text-csu-navy hover:text-csu-dark-gray flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to options
+            </button>
+
+            {startMode === 'new' && (
+              <div className="bg-white rounded-lg p-8 shadow-md">
+                <h2 className="text-2xl font-bold text-csu-near-black mb-2">
+                  Create New Landing Page
+                </h2>
+                <p className="text-csu-dark-gray mb-6">
+                  Enter the partner details to get started with your new landing page.
+                </p>
+
+                <div className="space-y-6">
+                  {/* Partner Name Input */}
+                  <div>
+                    <label htmlFor="partnerName" className="block text-sm font-medium text-csu-near-black mb-2">
+                      Partner Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="partnerName"
+                      value={partnerName}
+                      onChange={(e) => setPartnerName(e.target.value)}
+                      placeholder="e.g., Acme Corporation"
+                      className="w-full px-4 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none transition-colors"
+                    />
+                  </div>
+
+                  {/* Template Type Selector */}
+                  <div>
+                    <label htmlFor="templateType" className="block text-sm font-medium text-csu-near-black mb-2">
+                      Template Type
+                    </label>
+                    <select
+                      id="templateType"
+                      value={templateType}
+                      onChange={(e) => setTemplateType(e.target.value as TemplateType)}
+                      className="w-full px-4 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none transition-colors bg-white"
+                    >
+                      <option value="learning-partner">Learning Partner</option>
+                      <option value="channel-partner">Channel Partner</option>
+                    </select>
+                    <p className="mt-2 text-sm text-csu-medium-gray">
+                      {templateType === 'learning-partner'
+                        ? 'Basic template with essential modules for learning partners.'
+                        : 'Extended template with additional sections for channel partners.'}
+                    </p>
+                  </div>
+
+                  {/* Continue Button */}
+                  <button
+                    onClick={handleSetupComplete}
+                    disabled={!partnerName.trim()}
+                    className="w-full px-6 py-3 bg-csu-navy text-white rounded-lg font-medium hover:bg-csu-navy/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Continue to Builder
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {startMode === 'edit' && (
+              <div className="bg-white rounded-lg p-8 shadow-md">
+                <h2 className="text-2xl font-bold text-csu-near-black mb-2">
+                  Edit Existing Landing Page
+                </h2>
+                <p className="text-csu-dark-gray mb-6">
+                  Enter the URL of an existing CSU landing page to import its content.
+                </p>
+
+                <div className="space-y-6">
+                  {/* URL Input */}
+                  <div>
+                    <label htmlFor="sourceUrl" className="block text-sm font-medium text-csu-near-black mb-2">
+                      Landing Page URL <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      id="sourceUrl"
+                      value={sourceUrl}
+                      onChange={(e) => {
+                        setSourceUrl(e.target.value)
+                        setUrlError('')
+                      }}
+                      placeholder="https://www.columbiasouthern.edu/landing-pages/learning-partners/..."
+                      className={`w-full px-4 py-2 border rounded-lg focus:ring-1 outline-none transition-colors ${
+                        urlError
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                          : 'border-csu-light-gray focus:border-csu-navy focus:ring-csu-navy'
+                      }`}
+                    />
+                    {urlError && (
+                      <p className="mt-2 text-sm text-red-500">{urlError}</p>
+                    )}
+                    <p className="mt-2 text-sm text-csu-medium-gray">
+                      Supported URLs: columbiasouthern.edu landing pages and partner directories
+                    </p>
+                  </div>
+
+                  {/* Parse Button */}
+                  <button
+                    onClick={handleUrlParse}
+                    disabled={!sourceUrl.trim() || isLoading}
+                    className="w-full px-6 py-3 bg-csu-navy text-white rounded-lg font-medium hover:bg-csu-navy/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isLoading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Parsing...
+                      </>
+                    ) : (
+                      'Parse & Load Content'
+                    )}
+                  </button>
+
+                  {parseStatus === 'success' && (
+                    <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                      Content parsed successfully! Loading builder...
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {startMode === 'load' && (
+              <div className="bg-white rounded-lg p-8 shadow-md">
+                <h2 className="text-2xl font-bold text-csu-near-black mb-2">
+                  Load Draft
+                </h2>
+                <p className="text-csu-dark-gray mb-6">
+                  Upload a previously saved JSON draft file to resume your work.
+                </p>
+
+                <div className="space-y-6">
+                  {/* File Upload Input */}
+                  <div>
+                    <label htmlFor="draftFile" className="block text-sm font-medium text-csu-near-black mb-2">
+                      Draft File <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        id="draftFile"
+                        accept=".json"
+                        onChange={handleDraftUpload}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      <div className={`w-full px-4 py-8 border-2 border-dashed rounded-lg text-center transition-colors ${
+                        draftError
+                          ? 'border-red-500 bg-red-50'
+                          : draftFileName
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-csu-light-gray hover:border-csu-navy'
+                      }`}>
+                        {isLoading ? (
+                          <div className="flex items-center justify-center gap-2">
+                            <svg className="animate-spin h-5 w-5 text-csu-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span className="text-csu-dark-gray">Loading draft...</span>
+                          </div>
+                        ) : draftFileName ? (
+                          <div className="flex items-center justify-center gap-2 text-green-700">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>{draftFileName}</span>
+                          </div>
+                        ) : (
+                          <>
+                            <svg className="w-8 h-8 text-csu-medium-gray mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <p className="text-csu-dark-gray">
+                              <span className="font-medium text-csu-navy">Click to upload</span> or drag and drop
+                            </p>
+                            <p className="text-sm text-csu-medium-gray mt-1">JSON files only</p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {draftError && (
+                      <p className="mt-2 text-sm text-red-500">{draftError}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-csu-near-black text-white py-4 px-6 text-center text-sm">
+          <p>&copy; {new Date().getFullYear()} Columbia Southern University. All rights reserved.</p>
+        </footer>
+      </div>
+    )
+  }
+
   // Builder mode - placeholder for now
   return (
     <div className="min-h-screen bg-csu-lightest-gray flex flex-col">
@@ -142,7 +490,7 @@ function App() {
             <h2 className="font-semibold text-csu-near-black mb-4">Modules</h2>
             <p className="text-sm text-csu-dark-gray">Module list will appear here</p>
             <button
-              onClick={() => setMode('selection')}
+              onClick={handleBackToSelection}
               className="mt-4 text-sm text-csu-navy underline hover:no-underline"
             >
               &larr; Back to start
