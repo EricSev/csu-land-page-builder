@@ -1,8 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type AppMode = 'selection' | 'setup' | 'builder'
 type StartMode = 'new' | 'edit' | 'load'
 type TemplateType = 'learning-partner' | 'channel-partner'
+
+// Module type definition
+interface Module {
+  id: string
+  name: string
+  enabled: boolean
+  locked: boolean
+  order: number
+}
+
+// Default modules for Learning Partner template
+const LEARNING_PARTNER_MODULES: Module[] = [
+  { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 2 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 3 },
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 4 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 5 },
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 6 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 7 },
+]
+
+// Default modules for Channel Partner template
+const CHANNEL_PARTNER_MODULES: Module[] = [
+  { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 2 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 3 },
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 4 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 5 },
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 6 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 7 },
+  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 8 },
+  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: true, locked: false, order: 9 },
+  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 10 },
+  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 11 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 12 },
+]
 
 // Supported URL patterns from spec
 const SUPPORTED_URL_PATTERNS = [
@@ -30,6 +66,26 @@ function App() {
   const [parseStatus, setParseStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [draftError, setDraftError] = useState('')
   const [draftFileName, setDraftFileName] = useState('')
+  const [modules, setModules] = useState<Module[]>([])
+  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null)
+
+  // Initialize modules when entering builder mode based on template type
+  useEffect(() => {
+    if (mode === 'builder' && modules.length === 0) {
+      const defaultModules = templateType === 'learning-partner'
+        ? LEARNING_PARTNER_MODULES
+        : CHANNEL_PARTNER_MODULES
+      setModules(defaultModules.map(m => ({ ...m })))
+    }
+  }, [mode, templateType, modules.length])
+
+  const handleModuleToggle = (moduleId: string) => {
+    setModules(prev => prev.map(m =>
+      m.id === moduleId && !m.locked
+        ? { ...m, enabled: !m.enabled }
+        : m
+    ))
+  }
 
   const handleModeSelect = (selectedMode: StartMode) => {
     setStartMode(selectedMode)
@@ -129,6 +185,8 @@ function App() {
     setParseStatus('idle')
     setDraftError('')
     setDraftFileName('')
+    setModules([])
+    setSelectedModuleId(null)
   }
 
   if (mode === 'selection') {
@@ -488,10 +546,47 @@ function App() {
         <aside className="w-module-panel min-w-module-panel max-w-module-panel bg-white border-r border-csu-light-gray overflow-y-auto flex-shrink-0">
           <div className="p-4">
             <h2 className="font-semibold text-csu-near-black mb-4">Modules</h2>
-            <p className="text-sm text-csu-dark-gray">Module list will appear here</p>
+
+            {/* Module List */}
+            <div className="space-y-1">
+              {modules.sort((a, b) => a.order - b.order).map((module) => (
+                <div
+                  key={module.id}
+                  className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors ${
+                    selectedModuleId === module.id
+                      ? 'bg-csu-navy/10 border border-csu-navy'
+                      : 'hover:bg-csu-lightest-gray border border-transparent'
+                  } ${module.locked ? 'opacity-75' : ''}`}
+                  onClick={() => !module.locked && setSelectedModuleId(module.id)}
+                >
+                  {/* Checkbox for toggle */}
+                  <input
+                    type="checkbox"
+                    checked={module.enabled}
+                    onChange={() => handleModuleToggle(module.id)}
+                    disabled={module.locked}
+                    className="w-4 h-4 text-csu-navy border-csu-light-gray rounded focus:ring-csu-navy disabled:opacity-50"
+                    aria-label={`Toggle ${module.name}`}
+                  />
+
+                  {/* Module Name */}
+                  <span className={`flex-1 text-sm ${module.enabled ? 'text-csu-near-black' : 'text-csu-medium-gray line-through'}`}>
+                    {module.name}
+                  </span>
+
+                  {/* Locked indicator */}
+                  {module.locked && (
+                    <svg className="w-4 h-4 text-csu-medium-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+
             <button
               onClick={handleBackToSelection}
-              className="mt-4 text-sm text-csu-navy underline hover:no-underline"
+              className="mt-6 text-sm text-csu-navy underline hover:no-underline"
             >
               &larr; Back to start
             </button>

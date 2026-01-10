@@ -1,0 +1,469 @@
+<project_specification>
+  <project_name>CSU Landing Page Builder</project_name>
+
+  <overview>
+    A landing page builder tool that enables Columbia Southern University's Business Development team to create detailed, structured mockups for partner landing pages. The tool produces Wufoo-ready text, HTML previews, and image assets, shifting Marketing's role from production to final review and publication. This eliminates revision cycles by delivering near-complete specifications rather than requests to interpret.
+  </overview>
+
+  <technology_stack>
+    <frontend>
+      <framework>React + TypeScript</framework>
+      <styling>Tailwind CSS</styling>
+      <state_management>React Context or Zustand</state_management>
+      <drag_drop>dnd-kit or react-beautiful-dnd</drag_drop>
+    </frontend>
+    <backend>
+      <runtime>Node.js</runtime>
+      <database>None (client-side only with JSON export/import)</database>
+      <html_generation>Client-side templating</html_generation>
+    </backend>
+    <dependencies>
+      <url_parsing>DOMParser for HTML extraction</url_parsing>
+      <zip_generation>JSZip for asset bundling</zip_generation>
+      <file_handling>FileSaver.js for downloads</file_handling>
+    </dependencies>
+    <hosting>Render.com (static site)</hosting>
+  </technology_stack>
+
+  <prerequisites>
+    <environment_setup>
+      <requirement>Node.js 18+ and npm</requirement>
+      <requirement>Modern browser (Chrome, Firefox, Safari, Edge - latest)</requirement>
+    </environment_setup>
+  </prerequisites>
+
+  <feature_count>144</feature_count>
+
+  <users>
+    <user_count>3</user_count>
+    <roles>
+      <role name="VP, Business Development">Occasional use, reviews before submission</role>
+      <role name="Director, Business Development">Primary user for new partner pages</role>
+      <role name="Senior Representative, Business Development">Primary user for updates and new pages</role>
+    </roles>
+    <technical_level>Non-technical users comfortable with web forms and basic content management</technical_level>
+    <workflow>Single user flow - no approval workflow in tool. Users complete and export independently.</workflow>
+  </users>
+
+  <core_features>
+    <core_application_shell>
+      - App initialization and routing
+      - Three-panel layout (module panel 300px left, preview panel fluid right, content panel collapsible bottom)
+      - Header with logo, page title, settings, save draft, export buttons
+      - Light/dark mode toggle for UI (not page preview)
+      - Auto-save functionality to browser localStorage
+      - Desktop/tablet/mobile viewport toggle in preview panel
+      - Zoom control for preview
+      - Responsive layout handling
+      - Settings panel (header style, footer style, auto-save toggle)
+    </core_application_shell>
+
+    <mode_selection_and_setup>
+      - Create New Page flow
+      - Edit Existing Page flow (enter CSU landing page URL)
+      - Load Draft flow (upload JSON file)
+      - Partner name input field
+      - Template type selector dropdown (Learning Partner / Channel Partner)
+      - URL validation for supported CSU pages only
+      - URL parsing and content extraction using DOMParser
+      - Parse error handling with user-friendly messaging
+      - Partial extraction indicators for incomplete parses
+    </mode_selection_and_setup>
+
+    <module_management>
+      - Module list with checkboxes to toggle modules on/off
+      - Drag-and-drop reordering of modules
+      - Visual indicator (icon/badge) for incomplete required fields
+      - Locked modules displayed but not toggleable (Header, Footer, Consent Disclosure)
+      - Click module name to open/expand content fields in content panel
+      - Click module in preview to jump to its content fields
+      - Module order persistence in state
+      - Default module order based on template type selection
+    </module_management>
+
+    <locked_modules>
+      - Header module with CSU horizontal logo linking to homepage
+      - Header Apply Now button linking to application
+      - Header navigation style toggle (Minimal: logo + CTA only, OR Full: site navigation)
+      - Footer module with auto-generated current year copyright
+      - Footer CSU address display
+      - Footer Privacy Policy link
+      - Footer navigation style toggle (Minimal OR Full)
+      - Consent Disclosure module (locked text appearing below lead form submit button)
+    </locked_modules>
+
+    <selectable_modules_content_forms>
+      - Partner Headline: partner name text input, headline style dropdown with 3 options
+      - Partner Logo: image upload or URL input, alt text field, PNG/JPG validation, max 500x500px
+      - Partner Benefits Card: discount percentage dropdown (10%, 15%, 20%, Custom), custom discount text field, 4 benefit line text inputs, include logo checkbox
+      - Benefits Copy: eligibility statement text, tuition paragraph textarea, flexibility paragraph textarea with defaults
+      - Lead Capture Form: form heading text, 6 checkbox toggles for field inclusion, submit button text, hidden fields display
+      - FAQ Accordion: FAQ heading text, 4 default Q&A pairs (question text + answer textarea each), add FAQ button (up to 6 total)
+      - Value Proposition Cards: 3 cards each with heading text, body textarea, image upload/URL
+      - CSU by the Numbers: 4 stat number/label pairs
+      - Accreditations Section: section heading, subheading textarea, 5 accreditation logo checkboxes (SACSCOC, Quality Matters, ACBSP, Blackboard, Military)
+      - Tuition Comparison Banner: heading text, body textarea, 3 bullet point texts, CTA button checkbox
+      - Degree Programs List: section heading, up to 8 program entries (name text + URL)
+      - Scholarship Highlight: scholarship name, description textarea, eligibility URL, CTA text
+      - Video Testimonial: YouTube embed URL, video title for accessibility, optional caption
+      - Hero Banner: background image upload/URL, overlay opacity slider (0-100%), optional headline and subheadline
+      - Secondary CTA Banner: heading text, Apply button checkbox, Request Info button checkbox
+      - Looking for More Info Card: heading, body textarea, link URL, image upload/URL
+      - Footnotes/Disclaimers: up to 6 disclaimer textarea fields with add button
+    </selectable_modules_content_forms>
+
+    <image_handling>
+      - Image upload via file input
+      - Image URL input alternative
+      - Image preview thumbnail in form fields
+      - Image validation for format (PNG, JPG) and size limits
+      - Alt text input fields for all images
+      - Default image fallbacks from CSU asset library
+      - Base64 embedding option for HTML export
+      - Image dimension display after upload
+    </image_handling>
+
+    <live_preview>
+      - Real-time preview updates as content changes
+      - CSU brand styling (Navy #002855, Gold #C6AA76, Helvetica/Arial fonts)
+      - Responsive preview rendering matching actual landing page appearance
+      - Module order reflected in preview
+      - Content populated dynamically in preview
+      - Viewport switching (desktop 1920px, tablet 768px, mobile 375px)
+      - Scroll sync option between panels
+      - Preview zoom control
+      - Locked modules always visible in preview
+      - Empty state placeholders for unfilled modules
+    </live_preview>
+
+    <export_and_output>
+      - Requester information form before export: first name, last name, email, date needed (date picker), approved by administration dropdown (Yes/No/Not Applicable), additional notes textarea
+      - Wufoo form text generation with all field mappings
+      - Copy to clipboard button for each Wufoo section
+      - Copy All button for entire Wufoo output
+      - Open Wufoo form button (opens https://columbiasouthernuniv.wufoo.com/forms/marketing-request-form/ in new tab)
+      - HTML file generation (self-contained with inline CSS, responsive, CSU branded)
+      - Image assets ZIP generation using JSZip
+      - JSON draft export with full state
+      - Filename formatting: [partner-slug]-landing-page.html, [partner-slug]-assets.zip, [partner-slug]-draft.json
+      - Export modal/dialog showing all available downloads
+    </export_and_output>
+
+    <draft_management>
+      - Save draft to JSON file download
+      - Load draft from JSON file upload
+      - Draft metadata: version, created timestamp, modified timestamp
+      - Draft validation on load (version check, required fields)
+      - Full state restoration from draft
+      - Browser auto-save to localStorage (configurable)
+      - Clear draft / start over functionality
+      - Draft filename includes partner slug and date
+    </draft_management>
+
+    <validation_and_error_handling>
+      - Required field validation before export
+      - Field-level error messages displayed inline
+      - Form completion status indicator per module
+      - Overall page completion percentage
+      - URL format validation for CSU landing pages
+      - Image format validation (PNG, JPG only)
+      - Image size validation (max dimensions)
+      - Unsupported URL error messaging
+      - Parse failure error messaging with manual entry fallback
+      - Partial extraction warning indicators
+      - Prevent export until all required fields complete
+    </validation_and_error_handling>
+  </core_features>
+
+  <supported_url_patterns>
+    <pattern>https://www.columbiasouthern.edu/tuition-financing/partnerships/learning-partner-directory/*</pattern>
+    <pattern>https://www.columbiasouthern.edu/landing-pages/learning-partners/*</pattern>
+    <pattern>https://www.columbiasouthern.edu/benefithub</pattern>
+    <pattern>https://www.columbiasouthern.edu/delta</pattern>
+    <pattern>https://www.columbiasouthern.edu/perkspot</pattern>
+    <pattern>https://www.columbiasouthern.edu/iafc</pattern>
+    <pattern>https://www.columbiasouthern.edu/ebg-solutions</pattern>
+  </supported_url_patterns>
+
+  <url_parser_behavior>
+    <extraction method="Partner Name">H1 text content</extraction>
+    <extraction method="Partner Logo">First image in partner section, src attribute</extraction>
+    <extraction method="Benefits Copy">Paragraphs containing "tuition" or "discount"</extraction>
+    <extraction method="Discount Percentage">Regex match for "X% tuition discount"</extraction>
+    <extraction method="FAQ Items">Accordion elements, question/answer pairs</extraction>
+    <extraction method="Module Detection">Presence of section containers</extraction>
+  </url_parser_behavior>
+
+  <wufoo_form_mapping>
+    <form_url>https://columbiasouthernuniv.wufoo.com/forms/marketing-request-form/</form_url>
+    <field id="Field2" label="Request Type">Auto-set to "Website"</field>
+    <field id="Field21" label="Web Request Type">New/Update from builder mode</field>
+    <field id="Field22" label="URL for Website Update">Source URL if editing, "N/A - New landing page" if new</field>
+    <field id="Field23" label="Update/New Page Information">Module summary + structure</field>
+    <field id="Field173" label="Content Message">Full content copy with WHO, WHAT, WHEN, WHERE, WHY</field>
+    <field id="Field24" label="Date Needed">From date picker</field>
+    <field id="Field25" label="Person Requesting - First">First name input</field>
+    <field id="Field26" label="Person Requesting - Last">Last name input</field>
+    <field id="Field100" label="Email Address">Email input</field>
+    <field id="Field169" label="Approved by administration">Dropdown selection</field>
+    <field id="Field98" label="Comments">Additional notes + attachment list</field>
+    <field id="Field105" label="Document attachment">HTML mockup file reference</field>
+    <field id="Field125" label="Additional documents">Assets ZIP file reference</field>
+  </wufoo_form_mapping>
+
+  <brand_guidelines>
+    <primary_colors>
+      <color name="Navy" hex="#002855" usage="Headers, primary buttons, text"/>
+      <color name="Gold" hex="#C6AA76" usage="Accents, highlights, borders"/>
+    </primary_colors>
+    <secondary_colors>
+      <color name="Light Blue" hex="#77C5D5"/>
+      <color name="Teal" hex="#7FA9AE"/>
+      <color name="Lime" hex="#C5E86C"/>
+      <color name="Pale Blue" hex="#BBDDE6"/>
+      <color name="Yellow" hex="#F1B434"/>
+      <color name="Orange" hex="#FF5C39"/>
+    </secondary_colors>
+    <neutral_colors>
+      <color name="Lightest Gray" hex="#DDE5ED" usage="Backgrounds"/>
+      <color name="Beige" hex="#DFD1A7" usage="Accents"/>
+      <color name="Light Gray" hex="#D0D3D4" usage="Borders, dividers"/>
+      <color name="Medium Gray" hex="#A2AAAD" usage="Secondary text"/>
+      <color name="Dark Gray" hex="#5B6770" usage="Body text"/>
+      <color name="Near Black" hex="#1D252D" usage="Headers, emphasis"/>
+    </neutral_colors>
+    <typography>
+      <web_font>Helvetica, Arial, sans-serif</web_font>
+    </typography>
+    <logo_urls>
+      <logo variant="Horizontal White">/media/vhgldcbo/csu-logo-horizontal-white.png</logo>
+      <logo variant="Horizontal Color">/media/campm3vj/csu-logo-horizontal.png</logo>
+      <logo variant="Logomark">/media/22hdfjna/csu-logomark-rgb.png</logo>
+      <logo variant="White Stacked">/media/sldbvqgl/logo-white-250x85.png</logo>
+      <logo variant="Shield Icon">/media/gkzno1zt/csu-icon.png</logo>
+    </logo_urls>
+  </brand_guidelines>
+
+  <default_images>
+    <value_prop_cards>
+      <image card="Affordable">/media/hphopnlq/affordable-tuition-cost-calculator.jpg</image>
+      <image card="Quality and Flexibility">/media/zpwkiakb/exapnaded-access-c.jpg</image>
+      <image card="Supportive Culture">/media/rekpawea/view-all-programs.jpg</image>
+    </value_prop_cards>
+    <accreditation_logos>
+      <logo org="SACSCOC">/media/s24nwxdz/logo-sacscoc.png</logo>
+      <logo org="Quality Matters">/media/d2sjdcat/logo-qm.png</logo>
+      <logo org="ACBSP">/media/ij1jn3pb/acbsp-accredited-badge-vertical.png</logo>
+      <logo org="Blackboard Catalyst">/media/2xwjejdr/logo-bb.png</logo>
+      <logo org="Military Recognition">/media/wihiqfg0/logo-top.png</logo>
+    </accreditation_logos>
+  </default_images>
+
+  <default_module_order>
+    <learning_partner>
+      <module order="1">Header (locked)</module>
+      <module order="2">Partner Headline</module>
+      <module order="3">Partner Logo</module>
+      <module order="4">Partner Benefits Card</module>
+      <module order="5">Benefits Copy</module>
+      <module order="6">Lead Capture Form</module>
+      <module order="7">Footer (locked)</module>
+    </learning_partner>
+    <channel_partner>
+      <module order="1">Header (locked)</module>
+      <module order="2">Partner Headline</module>
+      <module order="3">Partner Logo</module>
+      <module order="4">Partner Benefits Card</module>
+      <module order="5">Benefits Copy</module>
+      <module order="6">Lead Capture Form</module>
+      <module order="7">FAQ Accordion</module>
+      <module order="8">Value Proposition Cards</module>
+      <module order="9">Tuition Comparison Banner</module>
+      <module order="10">CSU by the Numbers</module>
+      <module order="11">Accreditations Section</module>
+      <module order="12">Footer (locked)</module>
+    </channel_partner>
+  </default_module_order>
+
+  <consent_disclosure_text>
+    By submitting this request, you consent to Columbia Southern University using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See Privacy Policy.
+  </consent_disclosure_text>
+
+  <json_draft_schema>
+    <field name="version">String, e.g., "1.0"</field>
+    <field name="created">ISO 8601 timestamp</field>
+    <field name="modified">ISO 8601 timestamp</field>
+    <field name="metadata">Object with partnerName, templateType, sourceUrl</field>
+    <field name="settings">Object with headerStyle, footerStyle</field>
+    <field name="modules">Object with each module containing enabled, order, and content</field>
+  </json_draft_schema>
+
+  <ui_layout>
+    <main_structure>
+      Three-panel layout: Module Panel (left sidebar, 300px fixed), Preview Panel (right, fluid width), Content Panel (bottom, collapsible). Header bar spans full width with logo, title, settings, save draft, and export buttons.
+    </main_structure>
+    <module_panel>
+      - Checkbox toggles for each module
+      - Drag handle for reordering
+      - Visual indicator for incomplete required fields
+      - Locked modules shown but disabled
+      - Click to select and open content fields
+    </module_panel>
+    <preview_panel>
+      - Live rendered preview of landing page
+      - Viewport toggle buttons (desktop/tablet/mobile)
+      - Zoom slider control
+      - Click module in preview to jump to content fields
+    </preview_panel>
+    <content_panel>
+      - Form fields for currently selected module
+      - Collapsible/expandable
+      - Scrollable for modules with many fields
+    </content_panel>
+  </ui_layout>
+
+  <design_system>
+    <builder_ui>
+      <light_mode>Light background with dark text for builder interface</light_mode>
+      <dark_mode>Dark background with light text for builder interface</dark_mode>
+    </builder_ui>
+    <preview>
+      <note>Preview always shows CSU-branded landing page appearance regardless of UI theme</note>
+    </preview>
+  </design_system>
+
+  <implementation_steps>
+    <step number="1">
+      <title>Project Setup and Core Structure</title>
+      <tasks>
+        - Initialize React + TypeScript project with Vite
+        - Configure Tailwind CSS
+        - Set up folder structure (components, hooks, utils, types, assets)
+        - Create base layout with three-panel structure
+        - Implement routing if needed (likely single-page app)
+      </tasks>
+    </step>
+    <step number="2">
+      <title>State Management and Data Models</title>
+      <tasks>
+        - Define TypeScript interfaces for all modules and their content
+        - Define interfaces for draft JSON structure
+        - Set up state management (Context or Zustand)
+        - Implement module state (enabled, order, content)
+        - Implement settings state (header/footer style, auto-save)
+      </tasks>
+    </step>
+    <step number="3">
+      <title>Mode Selection Flow</title>
+      <tasks>
+        - Build start screen with three mode options
+        - Implement Create New Page flow
+        - Implement Edit Existing Page flow with URL input
+        - Implement Load Draft flow with file upload
+        - Build URL parser for extracting content from existing pages
+        - Add URL validation and error handling
+      </tasks>
+    </step>
+    <step number="4">
+      <title>Module Panel and Management</title>
+      <tasks>
+        - Build module list component with checkboxes
+        - Implement drag-and-drop reordering
+        - Add locked module indicators
+        - Build validation status indicators
+        - Implement default module order by template type
+      </tasks>
+    </step>
+    <step number="5">
+      <title>Content Panel and Module Forms</title>
+      <tasks>
+        - Build form components for each selectable module (17 modules)
+        - Implement field validation (required, format, size)
+        - Add default value population
+        - Build image upload/URL input components
+        - Implement dynamic fields (FAQ add/remove, program list)
+      </tasks>
+    </step>
+    <step number="6">
+      <title>Live Preview Panel</title>
+      <tasks>
+        - Build preview renderer matching CSU landing page styling
+        - Implement real-time updates from state changes
+        - Build viewport toggle (desktop/tablet/mobile)
+        - Add zoom control
+        - Implement click-to-select-module functionality
+        - Style with CSU brand colors and typography
+      </tasks>
+    </step>
+    <step number="7">
+      <title>Draft Management</title>
+      <tasks>
+        - Implement save draft to JSON file
+        - Implement load draft from JSON file
+        - Add draft validation on load
+        - Build auto-save to localStorage
+        - Add clear draft functionality
+      </tasks>
+    </step>
+    <step number="8">
+      <title>Export Functionality</title>
+      <tasks>
+        - Build requester information form
+        - Implement Wufoo form text generation
+        - Build copy-to-clipboard functionality
+        - Implement HTML file generation with inline CSS
+        - Implement ZIP file generation for images using JSZip
+        - Build export modal with all download options
+      </tasks>
+    </step>
+    <step number="9">
+      <title>Settings and Polish</title>
+      <tasks>
+        - Implement light/dark mode toggle for builder UI
+        - Add header/footer style settings
+        - Build settings panel
+        - Add loading states and transitions
+        - Implement error boundaries
+      </tasks>
+    </step>
+    <step number="10">
+      <title>Testing and Refinement</title>
+      <tasks>
+        - Test all module forms and validation
+        - Test URL parsing with various CSU pages
+        - Test export outputs (Wufoo text, HTML, ZIP, JSON)
+        - Test draft save/load cycle
+        - Cross-browser testing
+        - Responsive layout testing
+      </tasks>
+    </step>
+  </implementation_steps>
+
+  <success_criteria>
+    <functionality>
+      - All 17 selectable modules can be toggled, reordered, and configured
+      - URL import successfully extracts content from supported CSU pages
+      - Draft save/load preserves complete state
+      - Export generates valid Wufoo text, HTML, image ZIP, and JSON
+      - Preview accurately reflects configured modules
+    </functionality>
+    <user_experience>
+      - Time to create new page mockup under 30 minutes (vs. current ~2 hours)
+      - Non-technical users can operate without training
+      - Clear validation feedback prevents incomplete submissions
+      - Real-time preview reduces need to export for review
+    </user_experience>
+    <technical_quality>
+      - No runtime errors during normal operation
+      - Responsive layout works on all standard viewports
+      - Auto-save prevents data loss
+      - Export files are valid and complete
+    </technical_quality>
+    <design_polish>
+      - Builder UI is clean and professional
+      - Preview matches CSU brand guidelines exactly
+      - Consistent spacing, typography, and color usage
+      - Smooth transitions and interactions
+    </design_polish>
+  </success_criteria>
+</project_specification>
