@@ -307,7 +307,17 @@ function App() {
     )
   }
 
-  // Check if a module has all required fields complete
+  // Calculate overall page completion percentage
+  const calculateCompletionPercentage = (): number => {
+    // Only count enabled, non-locked modules
+    const enabledModules = modules.filter(m => m.enabled && !m.locked)
+    if (enabledModules.length === 0) return 100
+
+    const completeModules = enabledModules.filter(m => isModuleComplete(m.id))
+    return Math.round((completeModules.length / enabledModules.length) * 100)
+  }
+
+  // Check if a module has all required fields complete (user has provided content)
   const isModuleComplete = (moduleId: string): boolean => {
     const content = moduleContent[moduleId]
 
@@ -317,70 +327,76 @@ function App() {
         return partnerName.trim() !== ''
 
       case 'partner-logo':
-        // Logo URL or upload is optional but if started, should be valid
-        return !content?.logoUrlError && !content?.logoError
+        // Logo should have URL or file, and no errors
+        if (content?.logoUrlError || content?.logoError) return false
+        return !!(content?.logoUrl || content?.logoFileName)
 
       case 'partner-benefits-card':
-        // Benefits card has defaults, consider complete if enabled
-        return true
+        // Consider complete if user has set any benefits or discount
+        return !!(content?.benefits?.some(b => b?.trim()) || content?.discountPercentage || content?.customDiscount?.trim())
 
       case 'benefits-copy':
-        // Benefits copy has defaults, consider complete if enabled
-        return true
+        // Consider complete if user has customized any of the copy fields
+        return !!(content?.eligibilityStatement?.trim() || content?.tuitionParagraph?.trim() || content?.flexibilityParagraph?.trim())
 
       case 'lead-capture-form':
-        // Lead form has defaults, consider complete if enabled
-        return true
+        // Consider complete if user has customized form heading or button text
+        return !!(content?.formTitle?.trim() || content?.submitButtonText?.trim())
 
       case 'faq-accordion':
         // FAQ requires at least one Q&A with both question and answer
         const faqs = content?.faqs || []
-        return faqs.length === 0 || faqs.some(faq => faq.question?.trim() && faq.answer?.trim())
+        return faqs.length > 0 && faqs.some(faq => faq.question?.trim() && faq.answer?.trim())
 
       case 'value-proposition-cards':
-        // VP cards have defaults, consider complete
-        return true
+        // Consider complete if at least one card has content
+        const props = content?.propositions || []
+        return props.length > 0 && props.some(p => p.heading?.trim() || p.body?.trim())
 
       case 'csu-by-the-numbers':
-        // Stats have defaults, consider complete
-        return true
+        // Consider complete if at least one stat has been entered
+        const stats = content?.stats || []
+        return stats.length > 0 && stats.some(s => s.number?.trim() && s.label?.trim())
 
       case 'accreditations-section':
-        // Has defaults, consider complete
-        return true
+        // Consider complete if at least one accreditation is selected
+        const acc = content?.accreditations
+        return !!(acc?.sacscoc || acc?.qualityMatters || acc?.acbsp || acc?.blackboard || acc?.military)
 
       case 'tuition-comparison-banner':
-        // Has defaults, consider complete
-        return true
+        // Consider complete if heading or bullets have content
+        return !!(content?.comparisonTitle?.trim() || content?.comparisonBullets?.some(b => b?.trim()))
 
       case 'degree-programs-list':
-        // Programs list is optional, complete if empty or has valid entries
+        // Consider complete if at least one program has name and URL
         const programs = content?.programs || []
-        return programs.length === 0 || programs.every(p => !p.name || (p.name && p.url))
+        return programs.length > 0 && programs.some(p => p.name?.trim() && p.url?.trim())
 
       case 'scholarship-highlight':
-        // Scholarship requires name if enabled
-        return !content || !content.scholarshipName || content.scholarshipName.trim() !== ''
+        // Scholarship requires name
+        return !!(content?.scholarshipName?.trim())
 
       case 'video-testimonial':
-        // Video URL should be valid YouTube URL if provided
-        return !content?.videoUrlError
+        // Video needs valid YouTube URL
+        if (content?.videoUrlError) return false
+        return !!(content?.videoUrl?.trim())
 
       case 'hero-banner':
-        // Hero banner is optional, always considered complete
-        return true
+        // Hero banner needs background image or headline
+        return !!(content?.heroBackgroundUrl?.trim() || content?.heroHeadline?.trim())
 
       case 'secondary-cta-banner':
-        // Has defaults, consider complete
-        return true
+        // Consider complete if heading is set or at least one button is enabled
+        return !!(content?.secondaryCtaHeading?.trim() || content?.secondaryCtaShowApply || content?.secondaryCtaShowRequestInfo)
 
       case 'more-info-card':
-        // Optional module, always considered complete
-        return true
+        // Consider complete if heading or body is set
+        return !!(content?.moreInfoHeading?.trim() || content?.moreInfoBody?.trim())
 
       case 'footnotes-disclaimers':
-        // Optional module, always considered complete
-        return true
+        // Consider complete if at least one disclaimer has content
+        const disclaimers = content?.disclaimers || []
+        return disclaimers.length > 0 && disclaimers.some(d => d?.trim())
 
       default:
         // Locked modules (header/footer) are always complete
@@ -1428,6 +1444,18 @@ function App() {
               <span className="text-csu-navy font-bold text-sm">CSU</span>
             </div>
             <h1 className="text-lg font-semibold">Landing Page Builder</h1>
+            {/* Overall Completion Progress */}
+            <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white/30">
+              <div className="w-24 h-2 bg-white/20 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-300 ${
+                    calculateCompletionPercentage() === 100 ? 'bg-green-400' : 'bg-csu-gold'
+                  }`}
+                  style={{ width: `${calculateCompletionPercentage()}%` }}
+                />
+              </div>
+              <span className="text-sm text-white/80">{calculateCompletionPercentage()}%</span>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <button
