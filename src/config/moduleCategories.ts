@@ -13,6 +13,7 @@ interface Module {
 export const MODULE_CATEGORY_MAP: Record<string, ModuleCategory> = {
   // Header Elements
   'header': 'header-elements',
+  'csu-global-menu': 'header-elements',
   'welcome-bar': 'header-elements',
 
   // Hero Section

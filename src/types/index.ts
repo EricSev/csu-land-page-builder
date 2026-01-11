@@ -278,6 +278,7 @@ export interface DraftSchema {
 export const MODULE_IDS = {
   // Header Elements
   HEADER: 'header',
+  CSU_GLOBAL_MENU: 'csu-global-menu',
   WELCOME_BAR: 'welcome-bar',
   // Hero Section
   HERO_BANNER: 'hero-banner',

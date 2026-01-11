@@ -6,7 +6,11 @@
       "Bash(npm run build:*)",
       "Bash(timeout:*)",
       "Bash(ping:*)",
-      "Bash(del \"C:\\\\Users\\\\erics\\\\OneDrive\\\\VS Code\\\\csu-landing\\\\csu-land-page-builder\\\\nul\")"
+      "Bash(del \"C:\\\\Users\\\\erics\\\\OneDrive\\\\VS Code\\\\csu-landing\\\\csu-land-page-builder\\\\nul\")",
+      "Bash(cd:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:www.columbiasouthern.edu)",
+      "Bash(git add:*)"
     ]
   }
 }

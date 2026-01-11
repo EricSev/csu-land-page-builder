@@ -154,88 +154,90 @@ interface ModuleContent {
   getStartedBgColor?: 'navy' | 'gold' | 'gradient'
 }
 
-// Default modules for Learning Partner template (all 28 modules, common ones enabled by default)
+// Default modules for Learning Partner template (all 29 modules, common ones enabled by default)
 const LEARNING_PARTNER_MODULES: Module[] = [
   // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 2 },
+  { id: 'csu-global-menu', name: 'CSU Global Menu', enabled: false, locked: false, order: 2 },
+  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 3 },
   // Hero Section
-  { id: 'hero-banner', name: 'Hero Banner', enabled: false, locked: false, order: 3 },
-  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 4 },
+  { id: 'hero-banner', name: 'Hero Banner', enabled: false, locked: false, order: 4 },
+  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 5 },
   // Partner Identity
-  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 5 },
-  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 6 },
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 6 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 7 },
   // Benefits & Value Proposition
-  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 7 },
-  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 8 },
-  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 9 },
-  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 10 },
-  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: false, locked: false, order: 11 },
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 8 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 9 },
+  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 10 },
+  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 11 },
+  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: false, locked: false, order: 12 },
   // Program Information
-  { id: 'degree-programs-list', name: 'Degree Programs List', enabled: false, locked: false, order: 12 },
-  { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: false, locked: false, order: 13 },
+  { id: 'degree-programs-list', name: 'Degree Programs List', enabled: false, locked: false, order: 13 },
+  { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: false, locked: false, order: 14 },
   // Lead Capture
-  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 14 },
-  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 15 },
-  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 16 },
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 15 },
+  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 16 },
+  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 17 },
   // Social Proof & Trust
-  { id: 'video-testimonial', name: 'Video Testimonial', enabled: false, locked: false, order: 17 },
-  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 18 },
-  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: false, locked: false, order: 19 },
-  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 20 },
+  { id: 'video-testimonial', name: 'Video Testimonial', enabled: false, locked: false, order: 18 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 19 },
+  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: false, locked: false, order: 20 },
+  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 21 },
   // Tuition & Cost
-  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 21 },
-  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: false, locked: false, order: 22 },
-  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 23 },
+  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 22 },
+  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: false, locked: false, order: 23 },
+  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 24 },
   // Secondary CTA & Navigation
-  { id: 'more-info-card', name: 'Looking for More Info', enabled: false, locked: false, order: 24 },
-  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: false, locked: false, order: 25 },
-  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 26 },
+  { id: 'more-info-card', name: 'Looking for More Info', enabled: false, locked: false, order: 25 },
+  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: false, locked: false, order: 26 },
+  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 27 },
   // Footer & Compliance
-  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: false, locked: false, order: 27 },
-  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 28 },
+  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: false, locked: false, order: 28 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 29 },
 ]
 
-// Default modules for Channel Partner template (28 modules organized by category)
+// Default modules for Channel Partner template (29 modules organized by category)
 const CHANNEL_PARTNER_MODULES: Module[] = [
   // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 2 },
+  { id: 'csu-global-menu', name: 'CSU Global Menu', enabled: false, locked: false, order: 2 },
+  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 3 },
   // Hero Section
-  { id: 'hero-banner', name: 'Hero Banner', enabled: true, locked: false, order: 3 },
-  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 4 },
+  { id: 'hero-banner', name: 'Hero Banner', enabled: true, locked: false, order: 4 },
+  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 5 },
   // Partner Identity
-  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 5 },
-  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 6 },
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 6 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 7 },
   // Benefits & Value Proposition
-  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 7 },
-  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 8 },
-  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 9 },
-  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 10 },
-  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 11 },
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 8 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 9 },
+  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 10 },
+  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 11 },
+  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 12 },
   // Program Information
-  { id: 'degree-programs-list', name: 'Degree Programs List', enabled: true, locked: false, order: 12 },
-  { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: true, locked: false, order: 13 },
+  { id: 'degree-programs-list', name: 'Degree Programs List', enabled: true, locked: false, order: 13 },
+  { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: true, locked: false, order: 14 },
   // Lead Capture
-  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 14 },
-  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 15 },
-  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 16 },
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 15 },
+  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 16 },
+  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 17 },
   // Social Proof & Trust
-  { id: 'video-testimonial', name: 'Video Testimonial', enabled: true, locked: false, order: 17 },
-  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 18 },
-  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 19 },
-  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 20 },
+  { id: 'video-testimonial', name: 'Video Testimonial', enabled: true, locked: false, order: 18 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 19 },
+  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 20 },
+  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 21 },
   // Tuition & Cost
-  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 21 },
-  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: true, locked: false, order: 22 },
-  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 23 },
+  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 22 },
+  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: true, locked: false, order: 23 },
+  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 24 },
   // Secondary CTA & Navigation
-  { id: 'more-info-card', name: 'Looking for More Info', enabled: true, locked: false, order: 24 },
-  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: true, locked: false, order: 25 },
-  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 26 },
+  { id: 'more-info-card', name: 'Looking for More Info', enabled: true, locked: false, order: 25 },
+  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: true, locked: false, order: 26 },
+  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 27 },
   // Footer & Compliance
-  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: true, locked: false, order: 27 },
-  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 28 },
+  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: true, locked: false, order: 28 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 29 },
 ]
 
 // Supported URL patterns from spec
@@ -624,17 +626,19 @@ function App() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${partnerName} - Columbia Southern University</title>
+  <!-- CSU Global Stylesheet - for exact branding match -->
+  <link rel="stylesheet" href="https://www.columbiasouthern.edu/css/scss/sites/global.css">
+  <!-- Google Fonts for Nunito Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- jQuery (required for CSU navigation) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!-- CSU Global Scripts (for navigation menu functionality) -->
+  <script src="https://www.columbiasouthern.edu/scripts/globals.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Helvetica, Arial, sans-serif; color: #1D252D; line-height: 1.6; }
+    /* Custom page content styles (supplement CSU global.css) */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-    /* Header */
-    .header { background-color: #002855; padding: 16px 0; }
-    .header-content { display: flex; justify-content: space-between; align-items: center; }
-    .logo { color: white; font-weight: bold; font-size: 24px; text-decoration: none; }
-    .logo span { color: #C6AA76; }
-    .apply-btn { background-color: #C6AA76; color: #1D252D; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: 600; }
 
     /* Hero Section */
     .hero { background: linear-gradient(135deg, #002855 0%, #003d7a 100%); color: white; padding: 60px 0; text-align: center; }
@@ -673,14 +677,270 @@ function App() {
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
-    <div class="container header-content">
-      <a href="https://www.columbiasouthern.edu" class="logo">
-        <span>CSU</span> Columbia Southern University
-      </a>
-      <a href="https://www.columbiasouthern.edu/apply" class="apply-btn">Apply Now</a>
+  <header>
+    <div class="dark mobile-cta">
+      <ul class="button-group flex stretch">
+        <li><a class="button ghost" href="https://mycsu.columbiasouthern.edu/prospect/application">Apply Now</a></li>
+        <li><a class="button solid" href="https://www.columbiasouthern.edu/info-form">Request Info</a></li>
+      </ul>
     </div>
+    <div class="dark utility-navigation">
+      <div class="site-wrap flex">
+        <div class="site-logo"><a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png" alt="Columbia Southern University logo, homepage"></a></div>
+        <ul class="button-group flex">
+          <li><a class="button" href="tel:+18009778449">800-977-8449</a></li>
+          <li><a class="button" href="https://www.columbiasouthern.edu/login">Login Options</a></li>
+          <li><a class="button ghost" href="https://mycsu.columbiasouthern.edu/prospect/application">Apply Now</a></li>
+          <li><a class="button solid" href="https://www.columbiasouthern.edu/info-form">Request Info</a></li>
+        </ul>
+      </div>
+    </div>
+    \${enabledModules.some(m => m.id === 'csu-global-menu') ? \`
+    <div class="light">
+      <nav class="navigation-wrapper site-wrap flex">
+        <div class="mobile-site-logo">
+          <a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/campm3vj/csu-logo-horizontal.png" alt="Columbia Southern University logo, homepage"></a>
+        </div>
+        <button id="mobileMenuToggle" class="mobile-menu" aria-expanded="false" aria-haspopup="true" type="button">
+          <span class="offscreen">Menu</span>
+          <i class="icon" role="presentation">
+            <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 30 22">
+              <title>Menu icon</title>
+              <g fill="#fff">
+                <path class="bar top" d="M27.93,8.93H2.07A2,2,0,0,0,0,11a2,2,0,0,0,2.07,2.07H27.93A2,2,0,0,0,30,11,2,2,0,0,0,27.93,8.93Z"></path>
+                <path class="bar middle" d="M27.93,8.93H2.07A2,2,0,0,0,0,11a2,2,0,0,0,2.07,2.07H27.93A2,2,0,0,0,30,11,2,2,0,0,0,27.93,8.93Z"></path>
+                <path class="bar bottom" d="M27.93,8.93H2.07A2,2,0,0,0,0,11a2,2,0,0,0,2.07,2.07H27.93A2,2,0,0,0,30,11,2,2,0,0,0,27.93,8.93Z"></path>
+              </g>
+            </svg>
+          </i>
+        </button>
+        <div class="flex">
+          <ul class="site-navigation">
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Academics</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Young graduate smiles with fellow graduates in the background" src="https://www.columbiasouthern.edu/media/ljqikvoz/thumbnail-academics.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Academics</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/" class="arrow-link reveal">View All Programs</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/continuing-education/" class="arrow-link reveal">Continuing Education</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/full-course-listing/" class="arrow-link reveal">Full Course Listing</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/doctoral-overview/" class="arrow-link reveal">Doctoral Overview</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/colleges-and-faculty/" class="arrow-link reveal">Colleges and Faculty</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/transfer-credit-to-csu/" class="arrow-link reveal">Transfer Credit to CSU</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/general-education/" class="arrow-link reveal">General Education</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/certificates/" class="arrow-link reveal">Certificate Programs</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/academic-calendar/" class="arrow-link reveal">Academic Calendar</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/commencement/" class="arrow-link reveal">Commencement</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/summer-college-credit-program/" class="arrow-link reveal">Summer College Credit Program</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/accelerated-bachelor-to-masters/" class="arrow-link reveal">Accelerated Bachelor to Master's</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Admissions</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Student and admissions counselor look at a laptop together" src="https://www.columbiasouthern.edu/media/upff0sp2/thumbnail-admissions.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Admissions</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/admissions/getting-started/" class="arrow-link reveal">Getting Started</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/online-learning-experience/" class="arrow-link reveal">Online Learning Experience</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/graduation-calculator/" class="arrow-link reveal">Graduation Calculator</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/requirements/" class="arrow-link reveal">Requirements</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/transfer-credit/" class="arrow-link reveal">Transfer Credit</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/international-transfer-credit/" class="arrow-link reveal">International Transfer Credit</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/admissions/admissions-faqs/" class="arrow-link reveal">Admissions FAQs</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Student Support</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Support representative smiling" src="https://www.columbiasouthern.edu/media/0xqf0leo/thumbnail-resources.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Student Support</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/student-support/support-overview/" class="arrow-link reveal">Support Overview</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/registrar/" class="arrow-link reveal">Registrar</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/student-resolution/" class="arrow-link reveal">Student Resolution</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/career-services/" class="arrow-link reveal">Career Services</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/student-community/" class="arrow-link reveal">Student Community</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/disability-services/" class="arrow-link reveal">Disability Services</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/online-library/" class="arrow-link reveal">Online Library</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/student-faqs/" class="arrow-link reveal">Student FAQs</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/student-support/importance-of-advising/" class="arrow-link reveal">Importance of Advising</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Tuition &amp; Financing</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Jar of coins labelled Education with graduation cap resting against it" src="https://www.columbiasouthern.edu/media/zudbm5ev/thumbnail-tuition.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Tuition &amp; Financing</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/" class="arrow-link reveal">Tuition Overview</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/cost-comparison-calculator/" class="arrow-link reveal">Cost Comparison Calculator</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/federal-student-aid/" class="arrow-link reveal">Federal Student Aid</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/payment-options/" class="arrow-link reveal">Payment Options</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/scholarships/" class="arrow-link reveal">Scholarships</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/tuition-fees-payment-policy/" class="arrow-link reveal">Tuition &amp; Fees Payment Policy</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/student-fees/" class="arrow-link reveal">Student Fees</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/tuition-refund-policy/" class="arrow-link reveal">Tuition Refund Policy</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/partnerships/" class="arrow-link reveal">Partnerships</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/tuition-financing-faqs/" class="arrow-link reveal">Tuition &amp; Financing FAQs</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/tuition-financing/financial-literacy/" class="arrow-link reveal">Financial Literacy</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">About</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Columbia Southern University facade against blue sky" src="https://www.columbiasouthern.edu/media/qimp2eni/thumbnail-about.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">About</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/about-csu/" class="arrow-link reveal">About CSU</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/accreditation-licensure/" class="arrow-link reveal">State Authorization and Accreditation</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/leadership/" class="arrow-link reveal">Leadership</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/board-of-trustees/" class="arrow-link reveal">Board of Trustees</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/csu-cares/" class="arrow-link reveal">CSU Cares</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/media/" class="arrow-link reveal">Press Room</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/contact-us/" class="arrow-link reveal">Contact Us</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/history/" class="arrow-link reveal">History</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/the-link-blog/" class="arrow-link reveal">The Link Blog</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Military</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="Military student greets advisor with handshake" src="https://www.columbiasouthern.edu/media/kokpc40q/thumbnail-military.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Military</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/military/college-of-space-intelligence-and-military-operations/" class="arrow-link reveal">College of Space, Intelligence, and Military Operations</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/continuing-education/" class="arrow-link reveal">Continuing Education</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/military-tuition-information/" class="arrow-link reveal">Military Tuition Information</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/military-transfer-pathways/" class="arrow-link reveal">Military Transfer Pathways</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/veterans-center/" class="arrow-link reveal">Veterans Center</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/branch-resources/" class="arrow-link reveal">Branch Resources</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/military-spouses/" class="arrow-link reveal">Military Spouses</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/military/military-faqs/" class="arrow-link reveal">Military FAQs</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <button class="toggle" aria-expanded="false" type="button">Careers</button>
+              <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
+                <div class="column dark">
+                  <div class="image fit-image">
+                    <img alt="smiling young women" src="https://www.columbiasouthern.edu/media/ayzf5hf1/careers-staff.jpg">
+                  </div>
+                  <div class="text-overlay gradient-bottom">
+                    <div class="text"><strong class="h5">Careers</strong></div>
+                  </div>
+                </div>
+                <ul class="self-center">
+                  <li><a href="https://www.columbiasouthern.edu/careers/careers-overview/" class="arrow-link reveal">Careers Overview</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/careers/staff-careers/" class="arrow-link reveal">Staff Careers</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/careers/faculty-careers/" class="arrow-link reveal">Faculty Careers</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          <div class="mobile-utility-navigation">
+            <ul>
+              <li><a href="tel:+18009778449" class="arrow-link reveal">800-977-8449</a></li>
+              <li><a href="https://www.columbiasouthern.edu/login" class="arrow-link reveal">Login Options</a></li>
+            </ul>
+          </div>
+          <div class="site-search">
+            <button id="desktopSearchToggle" class="toggle" data-selector="#siteNav" aria-expanded="false" type="button">
+              <span class="offscreen">Open Search</span>
+              <i class="icon" role="presentation">
+                <svg class="search-open" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 20 20">
+                  <title>Search icon</title>
+                  <g><path class="cls-1" d="M19.51,17.15,15.17,12.8l-.08-.06a8.25,8.25,0,1,0-2.35,2.35l.06.08,4.35,4.34a1.67,1.67,0,0,0,2.36-2.36ZM8.22,13.59a5.37,5.37,0,1,1,5.37-5.37A5.37,5.37,0,0,1,8.22,13.59Z" transform="translate(0 0)"></path></g>
+                </svg>
+              </i>
+              <i class="icon" role="presentation">
+                <svg class="search-close" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 18 18">
+                  <title>Close search</title>
+                  <g><path class="cls-1" d="M15.17,12.8,12.36,10l6.15-6.15a1.67,1.67,0,0,0-2.36-2.36L12.8,4.83,10,7.64,3.85,1.49A1.67,1.67,0,0,0,1.49,3.85L4.83,7.2,7.64,10,1.49,16.15a1.67,1.67,0,0,0,2.36,2.36L7.2,15.17,10,12.36l6.15,6.15a1.67,1.67,0,0,0,2.36-2.36Z" transform="translate(-1 -1)"></path></g>
+                </svg>
+              </i>
+            </button>
+            <div class="search-box">
+              <div class="nav-overlay"></div>
+              <div class="search-query">
+                <form role="search" action="https://www.columbiasouthern.edu/search/" method="get">
+                  <label for="CSUSiteSearch"><span class="offscreen">What can we help you search for?</span></label>
+                  <input id="CSUSiteSearch" name="query" maxlength="1000" class="form-control" type="search">
+                  <button id="CSUSiteSearchButton" class="search-button" type="submit">
+                    <i class="icon search-icon" role="presentation">
+                      <svg class="search" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 20 20">
+                        <title>Search icon</title>
+                        <g><path class="cls-1" d="M19.51,17.15,15.17,12.8l-.08-.06a8.25,8.25,0,1,0-2.35,2.35l.06.08,4.35,4.34a1.67,1.67,0,0,0,2.36-2.36ZM8.22,13.59a5.37,5.37,0,1,1,5.37-5.37A5.37,5.37,0,0,1,8.22,13.59Z" transform="translate(0 0)"></path></g>
+                      </svg>
+                    </i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    \` : ''}
   </header>
+  \${enabledModules.some(m => m.id === 'csu-global-menu') ? \`
+  <script>
+    (function () {
+      var input = document.getElementById("CSUSiteSearch");
+      if (!input) return;
+      input.addEventListener("keyup", function (event) {
+        if (event.key === "Enter" || event.keyCode === 13) {
+          event.preventDefault();
+          var btn = document.getElementById("CSUSiteSearchButton");
+          if (btn) btn.click();
+        }
+      });
+    })();
+  </script>
+  \` : ''}
 
   <!-- Hero Section -->
   <section class="hero">
@@ -1739,69 +1999,74 @@ function App() {
                   tabIndex={module.locked ? -1 : 0}
                 >
                   {module.id === 'header' && (
-                    <div className="p-4">
-                      {headerStyle === 'minimal' ? (
-                        /* Minimal Header - Logo + CTA only */
-                        <div className="flex items-center justify-between">
-                          <a
-                            href="https://www.columbiasouthern.edu"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-4 hover:opacity-80 transition-opacity"
-                            aria-label="Columbia Southern University Homepage"
-                          >
-                            <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
-                              <span className="text-csu-navy font-bold text-sm">CSU</span>
-                            </div>
-                            <span className="font-semibold">Columbia Southern University</span>
+                    <div className="py-3 px-4">
+                      {/* CSU Corporate Header - matches columbiasouthern.edu */}
+                      <div className="flex items-center justify-between max-w-6xl mx-auto">
+                        <a
+                          href="https://www.columbiasouthern.edu"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:opacity-80 transition-opacity"
+                          aria-label="Columbia Southern University Homepage"
+                        >
+                          <img
+                            src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png"
+                            alt="Columbia Southern University logo"
+                            className="h-12"
+                          />
+                        </a>
+                        <div className="flex items-center gap-2">
+                          <a href="tel:+18009778449" className="text-sm px-3 py-2 hover:text-csu-gold transition-colors">
+                            800-977-8449
+                          </a>
+                          <a href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 hover:text-csu-gold transition-colors">
+                            Login Options
                           </a>
                           <a
-                            href="https://www.columbiasouthern.edu/apply"
+                            href="https://mycsu.columbiasouthern.edu/prospect/application"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 bg-csu-gold text-csu-near-black rounded font-medium text-sm hover:bg-csu-gold/90 transition-colors"
+                            className="px-4 py-2 border border-white rounded text-sm hover:bg-white/10 transition-colors"
                           >
                             Apply Now
                           </a>
+                          <a
+                            href="https://www.columbiasouthern.edu/info-form"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 bg-csu-gold text-csu-near-black rounded text-sm font-semibold hover:bg-csu-gold/90 transition-colors"
+                          >
+                            Request Info
+                          </a>
                         </div>
-                      ) : (
-                        /* Full Header - Logo + Navigation + CTA */
-                        <div>
-                          <div className="flex items-center justify-between mb-4">
-                            <a
-                              href="https://www.columbiasouthern.edu"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-4 hover:opacity-80 transition-opacity"
-                              aria-label="Columbia Southern University Homepage"
-                            >
-                              <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
-                                <span className="text-csu-navy font-bold text-sm">CSU</span>
-                              </div>
-                              <span className="font-semibold">Columbia Southern University</span>
-                            </a>
-                            <div className="flex items-center gap-4">
-                              <a href="#" className="text-sm hover:text-csu-gold transition-colors">Student Login</a>
-                              <a href="#" className="text-sm hover:text-csu-gold transition-colors">Contact</a>
-                              <a
-                                href="https://www.columbiasouthern.edu/apply"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-4 py-2 bg-csu-gold text-csu-near-black rounded font-medium text-sm hover:bg-csu-gold/90 transition-colors"
-                              >
-                                Apply Now
-                              </a>
-                            </div>
-                          </div>
-                          <nav className="flex gap-6 text-sm border-t border-white/20 pt-3">
-                            <a href="#" className="hover:text-csu-gold transition-colors">Programs</a>
-                            <a href="#" className="hover:text-csu-gold transition-colors">Admissions</a>
-                            <a href="#" className="hover:text-csu-gold transition-colors">Tuition & Aid</a>
-                            <a href="#" className="hover:text-csu-gold transition-colors">About</a>
-                            <a href="#" className="hover:text-csu-gold transition-colors">Resources</a>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CSU Global Menu Preview */}
+                  {module.id === 'csu-global-menu' && (
+                    <div className="bg-white border-b border-gray-200">
+                      <div className="py-3 px-4">
+                        <div className="flex items-center justify-between max-w-6xl mx-auto">
+                          <nav className="flex items-center gap-6">
+                            <a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Academics</a>
+                            <a href="https://www.columbiasouthern.edu/admissions/getting-started/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Admissions</a>
+                            <a href="https://www.columbiasouthern.edu/student-support/support-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Student Support</a>
+                            <a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Tuition & Financing</a>
+                            <a href="https://www.columbiasouthern.edu/about-csu/about-csu/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">About</a>
+                            <a href="https://www.columbiasouthern.edu/military/military-tuition-information/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Military</a>
+                            <a href="https://www.columbiasouthern.edu/careers/careers-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Careers</a>
                           </nav>
+                          <a href="https://www.columbiasouthern.edu/search/" target="_blank" rel="noopener noreferrer" className="text-csu-navy hover:text-csu-gold transition-colors" aria-label="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                          </a>
                         </div>
-                      )}
+                      </div>
+                      <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
+                        <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
+                      </div>
                     </div>
                   )}
 
@@ -2760,6 +3025,45 @@ function App() {
             <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray'}`}>
               Select a module from the left panel to edit its content here.
             </p>
+          )}
+
+          {/* Header (locked - no editable content) */}
+          {selectedModuleId === 'header' && (
+            <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
+              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
+                <strong>Header</strong> is a locked module that displays the CSU corporate header with logo, phone number, and action buttons. This module cannot be edited or disabled.
+              </p>
+            </div>
+          )}
+
+          {/* CSU Global Menu (optional - no editable content) */}
+          {selectedModuleId === 'csu-global-menu' && (
+            <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
+              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
+                <strong>CSU Global Menu</strong> displays the official CSU website navigation bar with full mega-menu functionality.
+              </p>
+              <p className={`text-sm mt-2 ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
+                The preview shows simplified navigation links. The exported HTML includes the complete CSU template with:
+              </p>
+              <ul className={`text-sm mt-2 list-disc list-inside ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
+                <li>Dropdown menus with images for each section</li>
+                <li>Mobile menu toggle and responsive design</li>
+                <li>Site search functionality</li>
+                <li>All styling from CSU global.css</li>
+              </ul>
+              <p className={`text-sm mt-2 ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
+                Enable or disable using the checkbox in the left panel.
+              </p>
+            </div>
+          )}
+
+          {/* Footer (locked - no editable content) */}
+          {selectedModuleId === 'footer' && (
+            <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
+              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
+                <strong>Footer</strong> is a locked module that displays the standard CSU footer with copyright and address information. This module cannot be edited or disabled.
+              </p>
+            </div>
           )}
 
           {/* Partner Headline Form */}

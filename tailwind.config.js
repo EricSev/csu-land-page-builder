@@ -25,9 +25,11 @@ export default {
         'csu-medium-gray': '#A2AAAD',
         'csu-dark-gray': '#5B6770',
         'csu-near-black': '#1D252D',
+        // CSU Accent Colors
+        'csu-teal-hover': '#207788',
       },
       fontFamily: {
-        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        sans: ['"Nunito Sans"', 'Helvetica', 'Arial', 'sans-serif'],
       },
       width: {
         'module-panel': '300px',
