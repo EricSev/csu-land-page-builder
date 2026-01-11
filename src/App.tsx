@@ -157,11 +157,12 @@ const CHANNEL_PARTNER_MODULES: Module[] = [
 interface SortableModuleProps {
   module: Module
   isSelected: boolean
+  isComplete: boolean
   onToggle: (id: string) => void
   onSelect: (id: string) => void
 }
 
-function SortableModule({ module, isSelected, onToggle, onSelect }: SortableModuleProps) {
+function SortableModule({ module, isSelected, isComplete, onToggle, onSelect }: SortableModuleProps) {
   const {
     attributes,
     listeners,
@@ -232,6 +233,19 @@ function SortableModule({ module, isSelected, onToggle, onSelect }: SortableModu
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
       )}
+
+      {/* Completion status indicator */}
+      {!module.locked && module.enabled && (
+        isComplete ? (
+          <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20" title="Complete">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          </svg>
+        ) : (
+          <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20" title="Incomplete - missing required fields">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+        )
+      )}
     </div>
   )
 }
@@ -291,6 +305,87 @@ function App() {
       exportRequester.dateNeeded.trim() !== '' &&
       exportRequester.approvedBy !== ''
     )
+  }
+
+  // Check if a module has all required fields complete
+  const isModuleComplete = (moduleId: string): boolean => {
+    const content = moduleContent[moduleId]
+
+    switch (moduleId) {
+      case 'partner-headline':
+        // Partner name is required (comes from partnerName state, not module content)
+        return partnerName.trim() !== ''
+
+      case 'partner-logo':
+        // Logo URL or upload is optional but if started, should be valid
+        return !content?.logoUrlError && !content?.logoError
+
+      case 'partner-benefits-card':
+        // Benefits card has defaults, consider complete if enabled
+        return true
+
+      case 'benefits-copy':
+        // Benefits copy has defaults, consider complete if enabled
+        return true
+
+      case 'lead-capture-form':
+        // Lead form has defaults, consider complete if enabled
+        return true
+
+      case 'faq-accordion':
+        // FAQ requires at least one Q&A with both question and answer
+        const faqs = content?.faqs || []
+        return faqs.length === 0 || faqs.some(faq => faq.question?.trim() && faq.answer?.trim())
+
+      case 'value-proposition-cards':
+        // VP cards have defaults, consider complete
+        return true
+
+      case 'csu-by-the-numbers':
+        // Stats have defaults, consider complete
+        return true
+
+      case 'accreditations-section':
+        // Has defaults, consider complete
+        return true
+
+      case 'tuition-comparison-banner':
+        // Has defaults, consider complete
+        return true
+
+      case 'degree-programs-list':
+        // Programs list is optional, complete if empty or has valid entries
+        const programs = content?.programs || []
+        return programs.length === 0 || programs.every(p => !p.name || (p.name && p.url))
+
+      case 'scholarship-highlight':
+        // Scholarship requires name if enabled
+        return !content || !content.scholarshipName || content.scholarshipName.trim() !== ''
+
+      case 'video-testimonial':
+        // Video URL should be valid YouTube URL if provided
+        return !content?.videoUrlError
+
+      case 'hero-banner':
+        // Hero banner is optional, always considered complete
+        return true
+
+      case 'secondary-cta-banner':
+        // Has defaults, consider complete
+        return true
+
+      case 'more-info-card':
+        // Optional module, always considered complete
+        return true
+
+      case 'footnotes-disclaimers':
+        // Optional module, always considered complete
+        return true
+
+      default:
+        // Locked modules (header/footer) are always complete
+        return true
+    }
   }
 
   // Generate Wufoo form text
@@ -1381,6 +1476,7 @@ function App() {
                       key={module.id}
                       module={module}
                       isSelected={selectedModuleId === module.id}
+                      isComplete={isModuleComplete(module.id)}
                       onToggle={handleModuleToggle}
                       onSelect={setSelectedModuleId}
                     />
