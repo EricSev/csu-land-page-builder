@@ -18,6 +18,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
+import { ExtractionWarningBanner, ExtractionWarning } from './components/ExtractionWarningBanner'
 
 type AppMode = 'selection' | 'setup' | 'builder'
 type StartMode = 'new' | 'edit' | 'load'
@@ -277,6 +278,8 @@ function App() {
   const [urlError, setUrlError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [parseStatus, setParseStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [extractionWarnings, setExtractionWarnings] = useState<ExtractionWarning[]>([])
+  const [showExtractionWarning, setShowExtractionWarning] = useState(false)
   const [draftError, setDraftError] = useState('')
   const [draftFileName, setDraftFileName] = useState('')
   const [modules, setModules] = useState<Module[]>([])
@@ -1086,8 +1089,65 @@ function App() {
         .replace(/-/g, ' ')
         .replace(/\b\w/g, l => l.toUpperCase())
 
-      setPartnerName(extractedName || 'Partner')
-      setParseStatus('success')
+      // Known partner discounts (based on URL patterns)
+      // In a real implementation with backend, this would be extracted from the page
+      const knownDiscounts: Record<string, string> = {
+        'benefithub': '10%',
+        'delta': '15%',
+        'perkspot': '10%',
+        'iafc': '15%',
+        'ebg-solutions': '10%',
+      };
+
+      // Extract discount percentage for known partners
+      const slug = lastPart.toLowerCase().replace(/[?#].*$/, '');
+      const extractedDiscount = knownDiscounts[slug] || null;
+
+      // Generate extraction warnings for fields that could not be extracted
+      // Due to CORS restrictions, we can only extract limited info from the URL
+      const warnings: ExtractionWarning[] = [
+        {
+          field: 'partnerLogo',
+          message: 'Partner logo could not be extracted due to browser security restrictions. Please upload or enter URL.',
+          module: 'Partner Logo'
+        },
+        {
+          field: 'benefitsCopy',
+          message: 'Benefits copy could not be extracted. Please enter eligibility and benefits text.',
+          module: 'Benefits Copy'
+        },
+        {
+          field: 'faqs',
+          message: 'FAQ content could not be extracted. Please enter questions and answers.',
+          module: 'FAQ Accordion'
+        }
+      ];
+
+      // Only add discount warning if we could not extract it
+      if (!extractedDiscount) {
+        warnings.push({
+          field: 'discountPercentage',
+          message: 'Discount percentage could not be determined. Please select the correct value.',
+          module: 'Partner Benefits Card'
+        });
+      }
+
+      setExtractionWarnings(warnings);
+      setShowExtractionWarning(true);
+      setPartnerName(extractedName || 'Partner');
+
+      // If discount was extracted, set it in module content
+      if (extractedDiscount) {
+        setModuleContent(prev => ({
+          ...prev,
+          'partner-benefits-card': {
+            ...prev['partner-benefits-card'],
+            discountPercentage: extractedDiscount as '10%' | '15%' | '20%' | 'custom'
+          }
+        }));
+      }
+
+      setParseStatus('success');
       setMode('builder')
     } catch {
       setUrlError('Failed to parse the URL. Please try again or enter details manually.')
@@ -1698,6 +1758,17 @@ function App() {
               </label>
             </div>
           </div>
+
+          {/* Extraction Warning Banner */}
+          {showExtractionWarning && extractionWarnings.length > 0 && (
+            <div className="px-4 pt-4">
+              <ExtractionWarningBanner
+                warnings={extractionWarnings}
+                onDismiss={() => setShowExtractionWarning(false)}
+                darkMode={darkMode}
+              />
+            </div>
+          )}
 
           {/* Preview Content */}
           <div
