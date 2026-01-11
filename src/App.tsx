@@ -1777,6 +1777,10 @@ function App() {
                           <button className="w-full py-2 bg-csu-navy text-white rounded font-medium">
                             {moduleContent['lead-capture-form']?.submitButtonText || 'Submit'}
                           </button>
+                          {/* Consent Disclosure - Locked text, cannot be edited */}
+                          <p className="text-xs text-csu-medium-gray mt-3 leading-relaxed">
+                            By submitting this request, you consent to Columbia Southern University using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See <a href="https://www.columbiasouthern.edu/privacy-policy" className="text-csu-navy underline hover:no-underline">Privacy Policy</a>.
+                          </p>
                         </div>
                       </div>
                     </div>
