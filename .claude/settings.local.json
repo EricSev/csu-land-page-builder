@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npm run dev:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(timeout:*)",
+      "Bash(ping:*)",
+      "Bash(del \"C:\\\\Users\\\\erics\\\\OneDrive\\\\VS Code\\\\csu-landing\\\\csu-land-page-builder\\\\nul\")"
     ]
   }
 }

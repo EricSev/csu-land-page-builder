@@ -1,21 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
   DragEndEvent,
 } from '@dnd-kit/core'
 import {
   arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
 import { ExtractionWarningBanner, ExtractionWarning } from './components/ExtractionWarningBanner'
@@ -165,16 +154,46 @@ interface ModuleContent {
   getStartedBgColor?: 'navy' | 'gold' | 'gradient'
 }
 
-// Default modules for Learning Partner template
+// Default modules for Learning Partner template (all 28 modules, common ones enabled by default)
 const LEARNING_PARTNER_MODULES: Module[] = [
+  // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 2 },
-  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 3 },
-  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 4 },
-  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 5 },
-  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 6 },
-  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 7 },
-  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 8 },
+  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 2 },
+  // Hero Section
+  { id: 'hero-banner', name: 'Hero Banner', enabled: false, locked: false, order: 3 },
+  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 4 },
+  // Partner Identity
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 5 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 6 },
+  // Benefits & Value Proposition
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 7 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 8 },
+  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 9 },
+  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 10 },
+  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: false, locked: false, order: 11 },
+  // Program Information
+  { id: 'degree-programs-list', name: 'Degree Programs List', enabled: false, locked: false, order: 12 },
+  { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: false, locked: false, order: 13 },
+  // Lead Capture
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 14 },
+  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 15 },
+  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 16 },
+  // Social Proof & Trust
+  { id: 'video-testimonial', name: 'Video Testimonial', enabled: false, locked: false, order: 17 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 18 },
+  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: false, locked: false, order: 19 },
+  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 20 },
+  // Tuition & Cost
+  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 21 },
+  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: false, locked: false, order: 22 },
+  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 23 },
+  // Secondary CTA & Navigation
+  { id: 'more-info-card', name: 'Looking for More Info', enabled: false, locked: false, order: 24 },
+  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: false, locked: false, order: 25 },
+  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 26 },
+  // Footer & Compliance
+  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: false, locked: false, order: 27 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 28 },
 ]
 
 // Default modules for Channel Partner template (28 modules organized by category)
@@ -218,104 +237,6 @@ const CHANNEL_PARTNER_MODULES: Module[] = [
   { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: true, locked: false, order: 27 },
   { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 28 },
 ]
-
-// Sortable module item component
-interface SortableModuleProps {
-  module: Module
-  isSelected: boolean
-  isComplete: boolean
-  darkMode: boolean
-  onToggle: (id: string) => void
-  onSelect: (id: string) => void
-}
-
-function SortableModule({ module, isSelected, isComplete, darkMode, onToggle, onSelect }: SortableModuleProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: module.id,
-    disabled: module.locked,
-  })
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-    zIndex: isDragging ? 1000 : 'auto',
-  }
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={`flex items-center gap-2 p-2 rounded-lg transition-colors ${
-        isSelected
-          ? darkMode ? 'bg-gray-700 border border-csu-gold' : 'bg-csu-navy/10 border border-csu-navy'
-          : darkMode ? 'hover:bg-gray-700 border border-transparent' : 'hover:bg-csu-lightest-gray border border-transparent'
-      } ${module.locked ? 'opacity-75' : ''} ${isDragging ? 'shadow-lg' : ''}`}
-    >
-      {/* Drag Handle - only for non-locked modules */}
-      {!module.locked ? (
-        <button
-          className={`cursor-grab active:cursor-grabbing p-1 ${darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-csu-medium-gray hover:text-csu-dark-gray'}`}
-          aria-label={`Drag to reorder ${module.name}`}
-          {...attributes}
-          {...listeners}
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm0 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm-2 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8-14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm-2 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm2 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
-          </svg>
-        </button>
-      ) : (
-        <div className="w-6" /> // Spacer for locked modules
-      )}
-
-      {/* Checkbox for toggle */}
-      <input
-        type="checkbox"
-        checked={module.enabled}
-        onChange={() => onToggle(module.id)}
-        disabled={module.locked}
-        className={`w-4 h-4 rounded focus:ring-csu-navy disabled:opacity-50 ${darkMode ? 'text-csu-gold border-gray-500 bg-gray-700' : 'text-csu-navy border-csu-light-gray'}`}
-        aria-label={`Toggle ${module.name}`}
-      />
-
-      {/* Module Name - clickable to select */}
-      <button
-        className={`flex-1 text-left text-sm ${module.enabled ? (darkMode ? 'text-white' : 'text-csu-near-black') : (darkMode ? 'text-gray-500 line-through' : 'text-csu-medium-gray line-through')}`}
-        onClick={() => !module.locked && onSelect(module.id)}
-        disabled={module.locked}
-      >
-        {module.name}
-      </button>
-
-      {/* Locked indicator */}
-      {module.locked && (
-        <svg className="w-4 h-4 text-csu-medium-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      )}
-
-      {/* Completion status indicator */}
-      {!module.locked && module.enabled && (
-        isComplete ? (
-          <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20" title="Complete">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-        ) : (
-          <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20" title="Incomplete - missing required fields">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-        )
-      )}
-    </div>
-  )
-}
 
 // Supported URL patterns from spec
 const SUPPORTED_URL_PATTERNS = [
@@ -571,12 +492,10 @@ function App() {
     const moduleSummary = enabledModules.map(m => `- ${m.name}`).join('\n')
 
     // Build WHO section
-    const partnerHeadline = moduleContent['partner-headline']
     const whoSection = `WHO: ${partnerName} Employees`
 
     // Build WHAT section
     const benefitsCard = moduleContent['partner-benefits-card']
-    const benefitsCopy = moduleContent['benefits-copy']
     const whatItems = []
     if (benefitsCard?.discountPercentage) {
       const discount = benefitsCard.discountPercentage === 'custom'
@@ -698,8 +617,6 @@ function App() {
     const benefitsCard = moduleContent['partner-benefits-card']
     const benefitsCopy = moduleContent['benefits-copy']
     const leadForm = moduleContent['lead-capture-form']
-    const faqData = moduleContent['faq-accordion']
-    const stats = moduleContent['csu-by-the-numbers']
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -880,7 +797,7 @@ function App() {
   }
 
   // State for uploaded images (stores base64 data)
-  const [uploadedImages, setUploadedImages] = useState<Record<string, { name: string; data: string; type: string }>>({})
+  const [uploadedImages, _setUploadedImages] = useState<Record<string, { name: string; data: string; type: string }>>({})
 
   // Download assets ZIP file
   const downloadAssetsZip = async () => {
@@ -892,7 +809,7 @@ function App() {
 
     // Add all uploaded images to the ZIP
     let imageCount = 0
-    Object.entries(uploadedImages).forEach(([id, image]) => {
+    Object.entries(uploadedImages).forEach(([_id, image]) => {
       if (image.data && imagesFolder) {
         // Extract base64 data from data URL
         const base64Data = image.data.split(',')[1]
@@ -1020,17 +937,6 @@ function App() {
     saveAs(blob, filename)
   }
 
-  // DnD sensors for drag and drop
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  )
 
   // Handle drag end event for reordering modules
   const handleDragEnd = (event: DragEndEvent) => {
@@ -2173,13 +2079,13 @@ function App() {
 
                   {module.id === 'value-proposition-cards' && (() => {
                     const userProps = moduleContent['value-proposition-cards']?.propositions
-                    const hasUserContent = userProps && userProps.some((prop: { heading: string; body: string; imageUrl: string }) => prop.heading?.trim() || prop.body?.trim())
+                    const hasUserContent = userProps && userProps.some((prop: { heading: string; body: string; imageUrl?: string }) => prop.heading?.trim() || prop.body?.trim())
 
                     return (
                       <div className="p-6">
                         {hasUserContent ? (
                           <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                            {userProps.map((prop: { heading: string; body: string; imageUrl: string }, i: number) => (
+                            {userProps.map((prop: { heading: string; body: string; imageUrl?: string }, i: number) => (
                               <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
                                 {prop.imageUrl ? (
                                   <img src={prop.imageUrl} alt={prop.heading} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />

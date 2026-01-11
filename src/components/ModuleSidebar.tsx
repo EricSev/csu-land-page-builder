@@ -14,7 +14,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { MODULE_CATEGORIES, CategoryDefinition } from '../types'
-import { MODULE_CATEGORY_MAP, getModulesByCategory } from '../config/moduleCategories'
+import { getModulesByCategory } from '../config/moduleCategories'
 import { SortableModule, Module } from './SortableModule'
 
 interface ModuleSidebarProps {
