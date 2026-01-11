@@ -952,6 +952,22 @@ function App() {
     }
   }, []) // Only run on initial mount
 
+  // Warn user before leaving page with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // Only show warning when in builder mode with content
+      if (mode === 'builder' && partnerName) {
+        e.preventDefault()
+        // Modern browsers ignore custom messages, but we still need to set returnValue
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?'
+        return e.returnValue
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [mode, partnerName])
+
   const handleModuleToggle = (moduleId: string) => {
     setModules(prev => prev.map(m =>
       m.id === moduleId && !m.locked
