@@ -19,6 +19,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
 import { ExtractionWarningBanner, ExtractionWarning } from './components/ExtractionWarningBanner'
+import { ModuleSidebar } from './components/ModuleSidebar'
 
 type AppMode = 'selection' | 'setup' | 'builder'
 type StartMode = 'new' | 'edit' | 'load'
@@ -119,6 +120,49 @@ interface ModuleContent {
   moreInfoImageUrl?: string
   // Footnotes/Disclaimers
   disclaimers?: string[]
+  // Welcome Bar
+  welcomeGreeting?: string
+  welcomeCtaText?: string
+  welcomeCtaUrl?: string
+  // Stats Banner
+  statsBannerStats?: { value: string; label: string }[]
+  statsBannerStyle?: 'horizontal' | 'cards'
+  // Tiered Pricing Display
+  tieredPricingHeading?: string
+  tieredPricingTiers?: { level: string; discount: string; originalPrice?: string }[]
+  tieredPricingFootnote?: string
+  // Why Choose CSU
+  whyChooseHeading?: string
+  whyChooseBenefits?: string[]
+  // CTA Buttons Only
+  ctaShowApply?: boolean
+  ctaApplyText?: string
+  ctaShowRequestInfo?: boolean
+  ctaRequestInfoText?: string
+  ctaAlignment?: 'left' | 'center' | 'right'
+  ctaStyle?: 'side-by-side' | 'stacked'
+  // Contact Info Block
+  contactHeading?: string
+  contactEmail?: string
+  contactPhone?: string
+  contactShowLiveChat?: boolean
+  contactLiveChatUrl?: string
+  contactAdditionalInfo?: string
+  // Tuition Comparison Table
+  tuitionTableHeading?: string
+  tuitionTableSubheading?: string
+  tuitionTableRows?: { institution: string; tuitionPerCredit: string; isCSU: boolean }[]
+  // Cost Calculator Widget
+  calculatorHeading?: string
+  calculatorIframeUrl?: string
+  calculatorHeight?: number
+  calculatorFallbackText?: string
+  // Get Started Today Banner
+  getStartedHeading?: string
+  getStartedSubheading?: string
+  getStartedShowApply?: boolean
+  getStartedShowRequestInfo?: boolean
+  getStartedBgColor?: 'navy' | 'gold' | 'gradient'
 }
 
 // Default modules for Learning Partner template
@@ -133,27 +177,46 @@ const LEARNING_PARTNER_MODULES: Module[] = [
   { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 8 },
 ]
 
-// Default modules for Channel Partner template
+// Default modules for Channel Partner template (28 modules organized by category)
 const CHANNEL_PARTNER_MODULES: Module[] = [
+  // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 2 },
-  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 3 },
-  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 4 },
-  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 5 },
-  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 6 },
-  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 7 },
-  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 8 },
-  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: true, locked: false, order: 9 },
-  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 10 },
-  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 11 },
+  { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 2 },
+  // Hero Section
+  { id: 'hero-banner', name: 'Hero Banner', enabled: true, locked: false, order: 3 },
+  { id: 'stats-banner', name: 'Stats Banner', enabled: false, locked: false, order: 4 },
+  // Partner Identity
+  { id: 'partner-headline', name: 'Partner Headline', enabled: true, locked: false, order: 5 },
+  { id: 'partner-logo', name: 'Partner Logo', enabled: true, locked: false, order: 6 },
+  // Benefits & Value Proposition
+  { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 7 },
+  { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 8 },
+  { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 9 },
+  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 10 },
+  { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 11 },
+  // Program Information
   { id: 'degree-programs-list', name: 'Degree Programs List', enabled: true, locked: false, order: 12 },
   { id: 'scholarship-highlight', name: 'Scholarship Highlight', enabled: true, locked: false, order: 13 },
-  { id: 'video-testimonial', name: 'Video Testimonial', enabled: true, locked: false, order: 14 },
-  { id: 'hero-banner', name: 'Hero Banner', enabled: true, locked: false, order: 15 },
-  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: true, locked: false, order: 16 },
-  { id: 'more-info-card', name: 'Looking for More Info Card', enabled: true, locked: false, order: 17 },
-  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: true, locked: false, order: 18 },
-  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 19 },
+  // Lead Capture
+  { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 14 },
+  { id: 'cta-buttons-only', name: 'CTA Buttons Only', enabled: false, locked: false, order: 15 },
+  { id: 'contact-info-block', name: 'Contact Info Block', enabled: false, locked: false, order: 16 },
+  // Social Proof & Trust
+  { id: 'video-testimonial', name: 'Video Testimonial', enabled: true, locked: false, order: 17 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 18 },
+  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 19 },
+  { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 20 },
+  // Tuition & Cost
+  { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 21 },
+  { id: 'tuition-comparison-banner', name: 'Tuition Comparison Banner', enabled: true, locked: false, order: 22 },
+  { id: 'cost-calculator-widget', name: 'Cost Calculator Widget', enabled: false, locked: false, order: 23 },
+  // Secondary CTA & Navigation
+  { id: 'more-info-card', name: 'Looking for More Info', enabled: true, locked: false, order: 24 },
+  { id: 'secondary-cta-banner', name: 'Secondary CTA Banner', enabled: true, locked: false, order: 25 },
+  { id: 'get-started-today-banner', name: 'Get Started Today Banner', enabled: false, locked: false, order: 26 },
+  // Footer & Compliance
+  { id: 'footnotes-disclaimers', name: 'Footnotes/Disclaimers', enabled: true, locked: false, order: 27 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 28 },
 ]
 
 // Sortable module item component
@@ -289,8 +352,6 @@ function App() {
   const [showClearConfirm, setShowClearConfirm] = useState(false)
   const [headerStyle, setHeaderStyle] = useState<'minimal' | 'full'>('minimal')
   const [footerStyle, setFooterStyle] = useState<'minimal' | 'full'>('minimal')
-  const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
-  const [previewZoom, setPreviewZoom] = useState(75)
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
   const [scrollSyncEnabled, setScrollSyncEnabled] = useState(false)
@@ -454,6 +515,47 @@ function App() {
         // Consider complete if at least one disclaimer has content
         const disclaimers = content?.disclaimers || []
         return disclaimers.length > 0 && disclaimers.some(d => d?.trim())
+
+      // New modules (9)
+      case 'welcome-bar':
+        // Consider complete if greeting or CTA text is set
+        return !!(content?.welcomeGreeting?.trim() || content?.welcomeCtaText?.trim())
+
+      case 'stats-banner':
+        // Consider complete if at least one stat has value and label
+        const bannerStats = content?.statsBannerStats || []
+        return bannerStats.length > 0 && bannerStats.some(s => s?.value?.trim() && s?.label?.trim())
+
+      case 'tiered-pricing-display':
+        // Consider complete if at least one tier has discount
+        const tiers = content?.tieredPricingTiers || []
+        return tiers.length > 0 && tiers.some(t => t?.discount?.trim())
+
+      case 'why-choose-csu':
+        // Consider complete if at least one benefit is set
+        const benefits = content?.whyChooseBenefits || []
+        return benefits.length > 0 && benefits.some(b => b?.trim())
+
+      case 'cta-buttons-only':
+        // Consider complete if at least one button is enabled
+        return !!(content?.ctaShowApply || content?.ctaShowRequestInfo)
+
+      case 'contact-info-block':
+        // Consider complete if email or phone is set
+        return !!(content?.contactEmail?.trim() || content?.contactPhone?.trim())
+
+      case 'tuition-comparison-table':
+        // Consider complete if at least one row has institution and tuition
+        const tableRows = content?.tuitionTableRows || []
+        return tableRows.length > 0 && tableRows.some(r => r?.institution?.trim() && r?.tuitionPerCredit?.trim())
+
+      case 'cost-calculator-widget':
+        // Consider complete if iframe URL is set
+        return !!(content?.calculatorIframeUrl?.trim())
+
+      case 'get-started-today-banner':
+        // Consider complete if heading is set or at least one button is enabled
+        return !!(content?.getStartedHeading?.trim() || content?.getStartedShowApply || content?.getStartedShowRequestInfo)
 
       default:
         // Locked modules (header/footer) are always complete
@@ -1668,95 +1770,32 @@ function App() {
 
       {/* Main Content - Three Panel Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Module Panel - Left Sidebar */}
-        <aside className={`w-module-panel min-w-module-panel max-w-module-panel border-r overflow-y-auto flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
-          <div className="p-4">
-            <h2 className={`font-semibold mb-4 ${darkMode ? 'text-white' : 'text-csu-near-black'}`}>Modules</h2>
-
-            {/* Module List with Drag and Drop */}
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={modules.sort((a, b) => a.order - b.order).map(m => m.id)}
-                strategy={verticalListSortingStrategy}
-              >
-                <div className="space-y-1">
-                  {modules.sort((a, b) => a.order - b.order).map((module) => (
-                    <SortableModule
-                      key={module.id}
-                      module={module}
-                      isSelected={selectedModuleId === module.id}
-                      isComplete={isModuleComplete(module.id)}
-                      darkMode={darkMode}
-                      onToggle={handleModuleToggle}
-                      onSelect={setSelectedModuleId}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
-
-            <button
-              onClick={handleClearDraft}
-              className={`mt-6 text-sm underline hover:no-underline ${darkMode ? 'text-csu-gold' : 'text-csu-navy'}`}
-            >
-              &larr; Back to start
-            </button>
-          </div>
-        </aside>
+        {/* Module Panel - Left Sidebar with Collapsible Categories */}
+        <ModuleSidebar
+          modules={modules}
+          selectedModuleId={selectedModuleId}
+          darkMode={darkMode}
+          onToggle={handleModuleToggle}
+          onSelect={setSelectedModuleId}
+          onDragEnd={handleDragEnd}
+          isModuleComplete={isModuleComplete}
+          onBackToStart={handleClearDraft}
+        />
 
         {/* Preview Panel - Right/Center */}
         <main className={`flex-1 overflow-hidden flex flex-col transition-colors duration-200 ${darkMode ? 'bg-gray-900' : 'bg-csu-lightest-gray'}`}>
           {/* Preview Controls */}
-          <div className={`border-b px-4 py-2 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
-            <div className="flex items-center gap-2">
-              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Viewport:</span>
-              <button
-                onClick={() => setViewport('desktop')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'desktop' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
-              >
-                Desktop
-              </button>
-              <button
-                onClick={() => setViewport('tablet')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'tablet' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
-              >
-                Tablet
-              </button>
-              <button
-                onClick={() => setViewport('mobile')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'mobile' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
-              >
-                Mobile
-              </button>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Zoom:</span>
+          <div className={`border-b px-4 py-2 flex items-center justify-end flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
+            <label className="flex items-center gap-1 cursor-pointer">
               <input
-                type="range"
-                min="25"
-                max="100"
-                value={previewZoom}
-                onChange={(e) => setPreviewZoom(Number(e.target.value))}
-                className="w-24"
-                aria-label="Preview zoom level"
+                type="checkbox"
+                checked={scrollSyncEnabled}
+                onChange={(e) => setScrollSyncEnabled(e.target.checked)}
+                className="w-3 h-3"
+                aria-label="Enable scroll sync"
               />
-              <span className={`text-xs w-8 ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>{previewZoom}%</span>
-              <div className="border-l border-csu-light-gray h-4 mx-2" />
-              <label className="flex items-center gap-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={scrollSyncEnabled}
-                  onChange={(e) => setScrollSyncEnabled(e.target.checked)}
-                  className="w-3 h-3"
-                  aria-label="Enable scroll sync"
-                />
-                <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Scroll Sync</span>
-              </label>
-            </div>
+              <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Scroll Sync</span>
+            </label>
           </div>
 
           {/* Extraction Warning Banner */}
@@ -1776,15 +1815,8 @@ function App() {
             onScroll={handlePreviewScroll}
             className="flex-1 overflow-auto p-4"
           >
-            <div
-              className="bg-white mx-auto shadow-lg transition-all duration-200"
-              style={{
-                width: viewport === 'desktop' ? '1920px' : viewport === 'tablet' ? '768px' : '375px',
-                minHeight: '800px',
-                transform: `scale(${previewZoom / 100})`,
-                transformOrigin: 'top center',
-              }}
-            >
+            {/* Responsive Preview Container */}
+            <div className="bg-white shadow-lg min-h-full border border-gray-300 rounded">
               {/* Render enabled modules in preview */}
               {modules.filter(m => m.enabled).sort((a, b) => a.order - b.order).map((module) => (
                 <div
@@ -1864,6 +1896,23 @@ function App() {
                           </nav>
                         </div>
                       )}
+                    </div>
+                  )}
+
+                  {/* Welcome Bar Preview */}
+                  {module.id === 'welcome-bar' && (
+                    <div className="bg-csu-near-black text-white py-2 px-4">
+                      <div className="max-w-4xl mx-auto flex items-center justify-between">
+                        <span className="text-sm">
+                          {moduleContent['welcome-bar']?.welcomeGreeting || `Welcome, ${partnerName || 'Partner'} Employees!`}
+                        </span>
+                        <a
+                          href={moduleContent['welcome-bar']?.welcomeCtaUrl || '#request-info'}
+                          className="px-4 py-1 bg-csu-gold text-csu-navy text-sm font-medium rounded hover:bg-csu-gold/90"
+                        >
+                          {moduleContent['welcome-bar']?.welcomeCtaText || 'Get Started'}
+                        </a>
+                      </div>
                     </div>
                   )}
 
@@ -2022,6 +2071,76 @@ function App() {
                     </div>
                   )}
 
+                  {/* CTA Buttons Only Preview */}
+                  {module.id === 'cta-buttons-only' && (() => {
+                    const showApply = moduleContent['cta-buttons-only']?.ctaShowApply ?? true
+                    const showRequestInfo = moduleContent['cta-buttons-only']?.ctaShowRequestInfo ?? true
+                    const alignment = moduleContent['cta-buttons-only']?.ctaAlignment || 'center'
+                    const style = moduleContent['cta-buttons-only']?.ctaStyle || 'side-by-side'
+
+                    const justifyClass = alignment === 'left' ? 'justify-start' : alignment === 'right' ? 'justify-end' : 'justify-center'
+                    const flexDirection = style === 'stacked' ? 'flex-col items-center' : 'flex-row'
+
+                    return (
+                      <div className="p-6">
+                        <div className={`flex gap-4 ${justifyClass} ${flexDirection}`}>
+                          {showApply && (
+                            <a href="#" className="px-6 py-3 bg-csu-gold text-csu-navy font-semibold rounded hover:bg-csu-gold/90">
+                              {moduleContent['cta-buttons-only']?.ctaApplyText || 'Apply Now'}
+                            </a>
+                          )}
+                          {showRequestInfo && (
+                            <a href="#" className="px-6 py-3 bg-csu-navy text-white font-semibold rounded hover:bg-csu-navy/90">
+                              {moduleContent['cta-buttons-only']?.ctaRequestInfoText || 'Request Info'}
+                            </a>
+                          )}
+                        </div>
+                        {!showApply && !showRequestInfo && (
+                          <p className="text-csu-medium-gray italic text-center">Enable at least one button to display</p>
+                        )}
+                      </div>
+                    )
+                  })()}
+
+                  {/* Contact Info Block Preview */}
+                  {module.id === 'contact-info-block' && (() => {
+                    const heading = moduleContent['contact-info-block']?.contactHeading || 'Contact Us'
+                    const email = moduleContent['contact-info-block']?.contactEmail || 'info@columbiasouthern.edu'
+                    const phone = moduleContent['contact-info-block']?.contactPhone || '1-800-977-8449'
+                    const showLiveChat = moduleContent['contact-info-block']?.contactShowLiveChat ?? true
+
+                    return (
+                      <div className="p-6 bg-csu-lightest-gray">
+                        <div className="max-w-md mx-auto text-center">
+                          <h3 className="text-xl font-bold text-csu-navy mb-4">{heading}</h3>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-center gap-2">
+                              <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                              </svg>
+                              <a href={`mailto:${email}`} className="text-csu-navy hover:text-csu-gold">{email}</a>
+                            </div>
+                            <div className="flex items-center justify-center gap-2">
+                              <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                              </svg>
+                              <a href={`tel:${phone}`} className="text-csu-navy hover:text-csu-gold">{phone}</a>
+                            </div>
+                            {showLiveChat && (
+                              <div className="flex items-center justify-center gap-2">
+                                <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                                </svg>
+                                <a href={moduleContent['contact-info-block']?.contactLiveChatUrl || '#'} className="text-csu-navy hover:text-csu-gold">Live Chat</a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })()}
+
                   {module.id === 'faq-accordion' && (() => {
                     const userFaqs = moduleContent['faq-accordion']?.faqs
                     const hasUserContent = userFaqs && userFaqs.length > 0 && userFaqs.some((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim())
@@ -2082,6 +2201,67 @@ function App() {
                     )
                   })()}
 
+                  {/* Tiered Pricing Display Preview */}
+                  {module.id === 'tiered-pricing-display' && (() => {
+                    const heading = moduleContent['tiered-pricing-display']?.tieredPricingHeading || 'Tuition Discounts by Degree Level'
+                    const tiers = moduleContent['tiered-pricing-display']?.tieredPricingTiers || [
+                      { level: 'Undergraduate', discount: '10%' },
+                      { level: 'Graduate', discount: '15%' },
+                      { level: 'Doctoral', discount: '20%' }
+                    ]
+                    const footnote = moduleContent['tiered-pricing-display']?.tieredPricingFootnote
+
+                    return (
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-csu-navy text-center mb-6">{heading}</h3>
+                        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          {tiers.map((tier, i) => (
+                            <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
+                              <div className="text-sm text-csu-dark-gray mb-2">{tier.level || 'Level'}</div>
+                              <div className="text-3xl font-bold text-csu-gold">{tier.discount || '—'}</div>
+                              {tier.originalPrice && (
+                                <div className="text-xs text-csu-medium-gray line-through mt-1">{tier.originalPrice}</div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        {footnote && <p className="text-xs text-csu-medium-gray text-center mt-4">{footnote}</p>}
+                      </div>
+                    )
+                  })()}
+
+                  {/* Why Choose CSU Preview */}
+                  {module.id === 'why-choose-csu' && (() => {
+                    const heading = moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose CSU?'
+                    const benefits = moduleContent['why-choose-csu']?.whyChooseBenefits || [
+                      '100% Online - Learn from anywhere',
+                      'Regionally Accredited',
+                      'Affordable Tuition',
+                      'Flexible Scheduling',
+                      'No Application Fee',
+                      'Military-Friendly'
+                    ]
+
+                    return (
+                      <div className="p-6 bg-csu-lightest-gray">
+                        <div className="max-w-2xl mx-auto">
+                          <h3 className="text-xl font-bold text-csu-navy mb-4">{heading}</h3>
+                          <ul className="grid grid-cols-2 gap-2">
+                            {benefits.filter(b => b?.trim()).map((benefit, i) => (
+                              <li key={i} className="flex items-center gap-2 text-csu-dark-gray">
+                                <span className="text-csu-gold">✓</span>
+                                {benefit}
+                              </li>
+                            ))}
+                          </ul>
+                          {benefits.filter(b => b?.trim()).length === 0 && (
+                            <p className="text-csu-medium-gray italic">Add benefits to display here</p>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })()}
+
                   {module.id === 'tuition-comparison-banner' && (() => {
                     const userBullets = moduleContent['tuition-comparison-banner']?.comparisonBullets
                     const hasUserContent = moduleContent['tuition-comparison-banner']?.comparisonTitle?.trim() ||
@@ -2124,6 +2304,70 @@ function App() {
                             </div>
                           )}
                         </div>
+                      </div>
+                    )
+                  })()}
+
+                  {/* Tuition Comparison Table Preview */}
+                  {module.id === 'tuition-comparison-table' && (() => {
+                    const heading = moduleContent['tuition-comparison-table']?.tuitionTableHeading || 'Compare Tuition Costs'
+                    const subheading = moduleContent['tuition-comparison-table']?.tuitionTableSubheading
+                    const rows = moduleContent['tuition-comparison-table']?.tuitionTableRows || [
+                      { institution: 'Columbia Southern University', tuitionPerCredit: '$270', isCSU: true },
+                      { institution: 'Average Public University', tuitionPerCredit: '$390', isCSU: false },
+                      { institution: 'Average Private University', tuitionPerCredit: '$550', isCSU: false },
+                    ]
+
+                    return (
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-csu-navy text-center mb-2">{heading}</h3>
+                        {subheading && <p className="text-csu-dark-gray text-center mb-4">{subheading}</p>}
+                        <div className="max-w-2xl mx-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="bg-csu-navy text-white">
+                                <th className="p-3 text-left">Institution</th>
+                                <th className="p-3 text-right">Tuition/Credit Hour</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {rows.map((row, i) => (
+                                <tr key={i} className={`border-b border-csu-light-gray ${row.isCSU ? 'bg-csu-gold/20 font-bold' : ''}`}>
+                                  <td className="p-3">{row.institution || 'Institution'}</td>
+                                  <td className="p-3 text-right">{row.tuitionPerCredit || '$0'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )
+                  })()}
+
+                  {/* Cost Calculator Widget Preview */}
+                  {module.id === 'cost-calculator-widget' && (() => {
+                    const heading = moduleContent['cost-calculator-widget']?.calculatorHeading || 'Calculate Your Costs'
+                    const iframeUrl = moduleContent['cost-calculator-widget']?.calculatorIframeUrl
+                    const height = moduleContent['cost-calculator-widget']?.calculatorHeight || 400
+
+                    return (
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-csu-navy text-center mb-4">{heading}</h3>
+                        {iframeUrl ? (
+                          <iframe
+                            src={iframeUrl}
+                            className="w-full border rounded-lg max-w-2xl mx-auto block"
+                            style={{ height: `${height}px` }}
+                            title="Cost Calculator"
+                          />
+                        ) : (
+                          <div className="max-w-2xl mx-auto bg-csu-lightest-gray rounded-lg p-8 text-center text-csu-medium-gray">
+                            <svg className="w-16 h-16 mx-auto mb-4 text-csu-light-gray" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clipRule="evenodd" />
+                            </svg>
+                            <p>Enter a calculator URL to embed the cost calculator</p>
+                          </div>
+                        )}
                       </div>
                     )
                   })()}
@@ -2340,6 +2584,29 @@ function App() {
                     )
                   })()}
 
+                  {/* Stats Banner Preview */}
+                  {module.id === 'stats-banner' && (() => {
+                    const stats = moduleContent['stats-banner']?.statsBannerStats || [
+                      { value: '20%', label: 'Discount' },
+                      { value: '50+', label: 'Programs' },
+                      { value: '$0', label: 'Textbooks' }
+                    ]
+                    const style = moduleContent['stats-banner']?.statsBannerStyle || 'horizontal'
+
+                    return (
+                      <div className="p-6 bg-csu-gold">
+                        <div className={`max-w-4xl mx-auto ${style === 'horizontal' ? 'flex justify-around' : 'grid grid-cols-3 gap-4'}`}>
+                          {stats.map((stat, i) => (
+                            <div key={i} className={`text-center ${style === 'cards' ? 'bg-white rounded-lg p-4 shadow' : ''}`}>
+                              <div className="text-3xl font-bold text-csu-navy">{stat.value || '—'}</div>
+                              <div className="text-sm text-csu-dark-gray">{stat.label || 'Label'}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  })()}
+
                   {module.id === 'secondary-cta-banner' && (() => {
                     const heading = moduleContent['secondary-cta-banner']?.secondaryCtaHeading || 'Ready to Get Started?'
                     const showApply = moduleContent['secondary-cta-banner']?.secondaryCtaShowApply ?? true
@@ -2371,6 +2638,43 @@ function App() {
                         {!showApply && !showRequestInfo && (
                           <p className="text-csu-navy/70">Enable at least one button to display</p>
                         )}
+                      </div>
+                    )
+                  })()}
+
+                  {/* Get Started Today Banner Preview */}
+                  {module.id === 'get-started-today-banner' && (() => {
+                    const heading = moduleContent['get-started-today-banner']?.getStartedHeading || 'Get Started Today!'
+                    const subheading = moduleContent['get-started-today-banner']?.getStartedSubheading
+                    const showApply = moduleContent['get-started-today-banner']?.getStartedShowApply ?? true
+                    const showRequestInfo = moduleContent['get-started-today-banner']?.getStartedShowRequestInfo ?? true
+                    const bgColor = moduleContent['get-started-today-banner']?.getStartedBgColor || 'navy'
+
+                    const bgClass = bgColor === 'navy' ? 'bg-csu-navy text-white'
+                      : bgColor === 'gold' ? 'bg-csu-gold text-csu-navy'
+                      : 'bg-gradient-to-r from-csu-navy to-csu-gold text-white'
+
+                    return (
+                      <div className={`p-8 ${bgClass}`}>
+                        <div className="max-w-4xl mx-auto text-center">
+                          <h3 className="text-2xl font-bold mb-2">{heading}</h3>
+                          {subheading && <p className="opacity-90 mb-6">{subheading}</p>}
+                          <div className="flex justify-center gap-4 flex-wrap">
+                            {showApply && (
+                              <a href="#" className={`px-6 py-3 font-semibold rounded ${bgColor === 'gold' ? 'bg-csu-navy text-white' : 'bg-csu-gold text-csu-navy'}`}>
+                                Apply Now
+                              </a>
+                            )}
+                            {showRequestInfo && (
+                              <a href="#" className="px-6 py-3 font-semibold rounded bg-white text-csu-navy border-2 border-white">
+                                Request Information
+                              </a>
+                            )}
+                          </div>
+                          {!showApply && !showRequestInfo && (
+                            <p className="opacity-70">Enable at least one button to display</p>
+                          )}
+                        </div>
                       </div>
                     )
                   })()}
@@ -3758,8 +4062,655 @@ function App() {
             </div>
           )}
 
+          {/* Welcome Bar Form */}
+          {selectedModuleId === 'welcome-bar' && (
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="welcomeGreeting" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Greeting Text
+                </label>
+                <input
+                  type="text"
+                  id="welcomeGreeting"
+                  value={moduleContent['welcome-bar']?.welcomeGreeting || `Welcome, ${partnerName || 'Partner'} Employees!`}
+                  onChange={(e) => updateModuleContent('welcome-bar', { welcomeGreeting: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  placeholder="e.g., Welcome, Partner Employees!"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="welcomeCtaText" className="block text-sm font-medium text-csu-near-black mb-1">
+                    CTA Button Text
+                  </label>
+                  <input
+                    type="text"
+                    id="welcomeCtaText"
+                    value={moduleContent['welcome-bar']?.welcomeCtaText || 'Get Started'}
+                    onChange={(e) => updateModuleContent('welcome-bar', { welcomeCtaText: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="e.g., Get Started"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="welcomeCtaUrl" className="block text-sm font-medium text-csu-near-black mb-1">
+                    CTA Button URL
+                  </label>
+                  <input
+                    type="text"
+                    id="welcomeCtaUrl"
+                    value={moduleContent['welcome-bar']?.welcomeCtaUrl || '#request-info'}
+                    onChange={(e) => updateModuleContent('welcome-bar', { welcomeCtaUrl: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="e.g., #request-info"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Stats Banner Form */}
+          {selectedModuleId === 'stats-banner' && (() => {
+            const defaultStats = [
+              { value: '20%', label: 'Discount' },
+              { value: '50+', label: 'Programs' },
+              { value: '$0', label: 'Textbooks' }
+            ]
+            const currentStats = moduleContent['stats-banner']?.statsBannerStats || defaultStats
+
+            return (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-csu-near-black mb-2">Display Style</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="statsBannerStyle"
+                        value="horizontal"
+                        checked={(moduleContent['stats-banner']?.statsBannerStyle || 'horizontal') === 'horizontal'}
+                        onChange={() => updateModuleContent('stats-banner', { statsBannerStyle: 'horizontal' })}
+                        className="text-csu-navy focus:ring-csu-navy"
+                      />
+                      <span className="text-sm text-csu-dark-gray">Horizontal</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="statsBannerStyle"
+                        value="cards"
+                        checked={moduleContent['stats-banner']?.statsBannerStyle === 'cards'}
+                        onChange={() => updateModuleContent('stats-banner', { statsBannerStyle: 'cards' })}
+                        className="text-csu-navy focus:ring-csu-navy"
+                      />
+                      <span className="text-sm text-csu-dark-gray">Cards</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-csu-near-black mb-2">Statistics (3)</label>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[0, 1, 2].map((index) => (
+                      <div key={index} className="p-3 bg-csu-lightest-gray rounded-lg space-y-2">
+                        <div>
+                          <label className="block text-xs text-csu-medium-gray mb-1">Value</label>
+                          <input
+                            type="text"
+                            value={currentStats[index]?.value || ''}
+                            onChange={(e) => {
+                              const updated = [...currentStats]
+                              updated[index] = { ...updated[index], value: e.target.value }
+                              updateModuleContent('stats-banner', { statsBannerStats: updated })
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy outline-none"
+                            placeholder="e.g., 20%"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs text-csu-medium-gray mb-1">Label</label>
+                          <input
+                            type="text"
+                            value={currentStats[index]?.label || ''}
+                            onChange={(e) => {
+                              const updated = [...currentStats]
+                              updated[index] = { ...updated[index], label: e.target.value }
+                              updateModuleContent('stats-banner', { statsBannerStats: updated })
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy outline-none"
+                            placeholder="e.g., Discount"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* Tiered Pricing Display Form */}
+          {selectedModuleId === 'tiered-pricing-display' && (() => {
+            const defaultTiers = [
+              { level: 'Undergraduate', discount: '10%', originalPrice: '' },
+              { level: 'Graduate', discount: '15%', originalPrice: '' },
+              { level: 'Doctoral', discount: '20%', originalPrice: '' }
+            ]
+            const currentTiers = moduleContent['tiered-pricing-display']?.tieredPricingTiers || defaultTiers
+
+            return (
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="tieredPricingHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Section Heading
+                  </label>
+                  <input
+                    type="text"
+                    id="tieredPricingHeading"
+                    value={moduleContent['tiered-pricing-display']?.tieredPricingHeading || 'Tuition Discounts by Degree Level'}
+                    onChange={(e) => updateModuleContent('tiered-pricing-display', { tieredPricingHeading: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-csu-near-black mb-2">Pricing Tiers</label>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[0, 1, 2].map((index) => (
+                      <div key={index} className="p-3 bg-csu-lightest-gray rounded-lg space-y-2">
+                        <div>
+                          <label className="block text-xs text-csu-medium-gray mb-1">Level</label>
+                          <input
+                            type="text"
+                            value={currentTiers[index]?.level || ''}
+                            onChange={(e) => {
+                              const updated = [...currentTiers]
+                              updated[index] = { ...updated[index], level: e.target.value }
+                              updateModuleContent('tiered-pricing-display', { tieredPricingTiers: updated })
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy outline-none"
+                            placeholder="e.g., Undergraduate"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs text-csu-medium-gray mb-1">Discount</label>
+                          <input
+                            type="text"
+                            value={currentTiers[index]?.discount || ''}
+                            onChange={(e) => {
+                              const updated = [...currentTiers]
+                              updated[index] = { ...updated[index], discount: e.target.value }
+                              updateModuleContent('tiered-pricing-display', { tieredPricingTiers: updated })
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy outline-none"
+                            placeholder="e.g., 10%"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="tieredPricingFootnote" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Footnote (optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="tieredPricingFootnote"
+                    value={moduleContent['tiered-pricing-display']?.tieredPricingFootnote || ''}
+                    onChange={(e) => updateModuleContent('tiered-pricing-display', { tieredPricingFootnote: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="e.g., *Discounts applied to standard tuition rates"
+                  />
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* Why Choose CSU Form */}
+          {selectedModuleId === 'why-choose-csu' && (() => {
+            const defaultBenefits = [
+              '100% Online - Learn from anywhere',
+              'Regionally Accredited',
+              'Affordable Tuition',
+              'Flexible Scheduling',
+              'No Application Fee',
+              'Military-Friendly'
+            ]
+            const currentBenefits = moduleContent['why-choose-csu']?.whyChooseBenefits || defaultBenefits
+
+            return (
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="whyChooseHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Section Heading
+                  </label>
+                  <input
+                    type="text"
+                    id="whyChooseHeading"
+                    value={moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose CSU?'}
+                    onChange={(e) => updateModuleContent('why-choose-csu', { whyChooseHeading: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-medium text-csu-near-black">Benefits List</label>
+                  {currentBenefits.length < 8 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateModuleContent('why-choose-csu', {
+                          whyChooseBenefits: [...currentBenefits, '']
+                        })
+                      }}
+                      className="text-sm text-csu-navy hover:text-csu-gold font-medium flex items-center gap-1"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                      Add Benefit
+                    </button>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {currentBenefits.map((benefit, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={benefit}
+                        onChange={(e) => {
+                          const updated = [...currentBenefits]
+                          updated[index] = e.target.value
+                          updateModuleContent('why-choose-csu', { whyChooseBenefits: updated })
+                        }}
+                        className="flex-1 px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                        placeholder={`Benefit ${index + 1}`}
+                      />
+                      {currentBenefits.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = currentBenefits.filter((_, i) => i !== index)
+                            updateModuleContent('why-choose-csu', { whyChooseBenefits: updated })
+                          }}
+                          className="text-csu-medium-gray hover:text-red-500"
+                          title="Remove benefit"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* CTA Buttons Only Form */}
+          {selectedModuleId === 'cta-buttons-only' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={moduleContent['cta-buttons-only']?.ctaShowApply ?? true}
+                      onChange={(e) => updateModuleContent('cta-buttons-only', { ctaShowApply: e.target.checked })}
+                      className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                    />
+                    <span className="text-sm font-medium text-csu-near-black">Show Apply Button</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={moduleContent['cta-buttons-only']?.ctaApplyText || 'Apply Now'}
+                    onChange={(e) => updateModuleContent('cta-buttons-only', { ctaApplyText: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="Apply button text"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={moduleContent['cta-buttons-only']?.ctaShowRequestInfo ?? true}
+                      onChange={(e) => updateModuleContent('cta-buttons-only', { ctaShowRequestInfo: e.target.checked })}
+                      className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                    />
+                    <span className="text-sm font-medium text-csu-near-black">Show Request Info Button</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={moduleContent['cta-buttons-only']?.ctaRequestInfoText || 'Request Info'}
+                    onChange={(e) => updateModuleContent('cta-buttons-only', { ctaRequestInfoText: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="Request info button text"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-csu-near-black mb-1">Alignment</label>
+                  <select
+                    value={moduleContent['cta-buttons-only']?.ctaAlignment || 'center'}
+                    onChange={(e) => updateModuleContent('cta-buttons-only', { ctaAlignment: e.target.value as 'left' | 'center' | 'right' })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none bg-white"
+                  >
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-csu-near-black mb-1">Button Layout</label>
+                  <select
+                    value={moduleContent['cta-buttons-only']?.ctaStyle || 'side-by-side'}
+                    onChange={(e) => updateModuleContent('cta-buttons-only', { ctaStyle: e.target.value as 'side-by-side' | 'stacked' })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none bg-white"
+                  >
+                    <option value="side-by-side">Side by Side</option>
+                    <option value="stacked">Stacked</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Contact Info Block Form */}
+          {selectedModuleId === 'contact-info-block' && (
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="contactHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Section Heading
+                </label>
+                <input
+                  type="text"
+                  id="contactHeading"
+                  value={moduleContent['contact-info-block']?.contactHeading || 'Contact Us'}
+                  onChange={(e) => updateModuleContent('contact-info-block', { contactHeading: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="contactEmail" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="contactEmail"
+                    value={moduleContent['contact-info-block']?.contactEmail || 'info@columbiasouthern.edu'}
+                    onChange={(e) => updateModuleContent('contact-info-block', { contactEmail: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contactPhone" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="contactPhone"
+                    value={moduleContent['contact-info-block']?.contactPhone || '1-800-977-8449'}
+                    onChange={(e) => updateModuleContent('contact-info-block', { contactPhone: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={moduleContent['contact-info-block']?.contactShowLiveChat ?? true}
+                    onChange={(e) => updateModuleContent('contact-info-block', { contactShowLiveChat: e.target.checked })}
+                    className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                  />
+                  <span className="text-sm font-medium text-csu-near-black">Show Live Chat Link</span>
+                </label>
+              </div>
+              {(moduleContent['contact-info-block']?.contactShowLiveChat ?? true) && (
+                <div>
+                  <label htmlFor="contactLiveChatUrl" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Live Chat URL
+                  </label>
+                  <input
+                    type="url"
+                    id="contactLiveChatUrl"
+                    value={moduleContent['contact-info-block']?.contactLiveChatUrl || ''}
+                    onChange={(e) => updateModuleContent('contact-info-block', { contactLiveChatUrl: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="https://..."
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Tuition Comparison Table Form */}
+          {selectedModuleId === 'tuition-comparison-table' && (() => {
+            const defaultRows = [
+              { institution: 'Columbia Southern University', tuitionPerCredit: '$270', isCSU: true },
+              { institution: 'Average Public University', tuitionPerCredit: '$390', isCSU: false },
+              { institution: 'Average Private University', tuitionPerCredit: '$550', isCSU: false },
+            ]
+            const currentRows = moduleContent['tuition-comparison-table']?.tuitionTableRows || defaultRows
+
+            return (
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="tuitionTableHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Table Heading
+                  </label>
+                  <input
+                    type="text"
+                    id="tuitionTableHeading"
+                    value={moduleContent['tuition-comparison-table']?.tuitionTableHeading || 'Compare Tuition Costs'}
+                    onChange={(e) => updateModuleContent('tuition-comparison-table', { tuitionTableHeading: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="tuitionTableSubheading" className="block text-sm font-medium text-csu-near-black mb-1">
+                    Subheading (optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="tuitionTableSubheading"
+                    value={moduleContent['tuition-comparison-table']?.tuitionTableSubheading || ''}
+                    onChange={(e) => updateModuleContent('tuition-comparison-table', { tuitionTableSubheading: e.target.value })}
+                    className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                    placeholder="Optional subheading text"
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-medium text-csu-near-black">Table Rows</label>
+                  {currentRows.length < 5 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateModuleContent('tuition-comparison-table', {
+                          tuitionTableRows: [...currentRows, { institution: '', tuitionPerCredit: '', isCSU: false }]
+                        })
+                      }}
+                      className="text-sm text-csu-navy hover:text-csu-gold font-medium flex items-center gap-1"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                      Add Row
+                    </button>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {currentRows.map((row, index) => (
+                    <div key={index} className="flex gap-2 items-center">
+                      <input
+                        type="text"
+                        value={row.institution}
+                        onChange={(e) => {
+                          const updated = [...currentRows]
+                          updated[index] = { ...updated[index], institution: e.target.value }
+                          updateModuleContent('tuition-comparison-table', { tuitionTableRows: updated })
+                        }}
+                        className="flex-1 px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                        placeholder="Institution name"
+                      />
+                      <input
+                        type="text"
+                        value={row.tuitionPerCredit}
+                        onChange={(e) => {
+                          const updated = [...currentRows]
+                          updated[index] = { ...updated[index], tuitionPerCredit: e.target.value }
+                          updateModuleContent('tuition-comparison-table', { tuitionTableRows: updated })
+                        }}
+                        className="w-24 px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                        placeholder="$000"
+                      />
+                      <label className="flex items-center gap-1 cursor-pointer whitespace-nowrap">
+                        <input
+                          type="checkbox"
+                          checked={row.isCSU}
+                          onChange={(e) => {
+                            const updated = [...currentRows]
+                            updated[index] = { ...updated[index], isCSU: e.target.checked }
+                            updateModuleContent('tuition-comparison-table', { tuitionTableRows: updated })
+                          }}
+                          className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                        />
+                        <span className="text-xs text-csu-medium-gray">CSU</span>
+                      </label>
+                      {currentRows.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = currentRows.filter((_, i) => i !== index)
+                            updateModuleContent('tuition-comparison-table', { tuitionTableRows: updated })
+                          }}
+                          className="text-csu-medium-gray hover:text-red-500"
+                          title="Remove row"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })()}
+
+          {/* Cost Calculator Widget Form */}
+          {selectedModuleId === 'cost-calculator-widget' && (
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="calculatorHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Section Heading
+                </label>
+                <input
+                  type="text"
+                  id="calculatorHeading"
+                  value={moduleContent['cost-calculator-widget']?.calculatorHeading || 'Calculate Your Costs'}
+                  onChange={(e) => updateModuleContent('cost-calculator-widget', { calculatorHeading: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                />
+              </div>
+              <div>
+                <label htmlFor="calculatorIframeUrl" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Calculator Embed URL
+                </label>
+                <input
+                  type="url"
+                  id="calculatorIframeUrl"
+                  value={moduleContent['cost-calculator-widget']?.calculatorIframeUrl || ''}
+                  onChange={(e) => updateModuleContent('cost-calculator-widget', { calculatorIframeUrl: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  placeholder="https://savewithcsu.com/calculator or similar"
+                />
+                <p className="text-xs text-csu-medium-gray mt-1">Enter the URL of the cost calculator to embed</p>
+              </div>
+              <div>
+                <label htmlFor="calculatorHeight" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Widget Height (pixels)
+                </label>
+                <input
+                  type="number"
+                  id="calculatorHeight"
+                  value={moduleContent['cost-calculator-widget']?.calculatorHeight || 400}
+                  onChange={(e) => updateModuleContent('cost-calculator-widget', { calculatorHeight: parseInt(e.target.value) || 400 })}
+                  className="w-32 px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  min={200}
+                  max={800}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Get Started Today Banner Form */}
+          {selectedModuleId === 'get-started-today-banner' && (
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="getStartedHeading" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Banner Heading
+                </label>
+                <input
+                  type="text"
+                  id="getStartedHeading"
+                  value={moduleContent['get-started-today-banner']?.getStartedHeading || 'Get Started Today!'}
+                  onChange={(e) => updateModuleContent('get-started-today-banner', { getStartedHeading: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                />
+              </div>
+              <div>
+                <label htmlFor="getStartedSubheading" className="block text-sm font-medium text-csu-near-black mb-1">
+                  Subheading (optional)
+                </label>
+                <input
+                  type="text"
+                  id="getStartedSubheading"
+                  value={moduleContent['get-started-today-banner']?.getStartedSubheading || ''}
+                  onChange={(e) => updateModuleContent('get-started-today-banner', { getStartedSubheading: e.target.value })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                  placeholder="Optional subheading text"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-csu-near-black mb-1">Background Color</label>
+                <select
+                  value={moduleContent['get-started-today-banner']?.getStartedBgColor || 'navy'}
+                  onChange={(e) => updateModuleContent('get-started-today-banner', { getStartedBgColor: e.target.value as 'navy' | 'gold' | 'gradient' })}
+                  className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none bg-white"
+                >
+                  <option value="navy">Navy Blue</option>
+                  <option value="gold">Gold</option>
+                  <option value="gradient">Navy to Gold Gradient</option>
+                </select>
+              </div>
+              <div className="flex gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={moduleContent['get-started-today-banner']?.getStartedShowApply ?? true}
+                    onChange={(e) => updateModuleContent('get-started-today-banner', { getStartedShowApply: e.target.checked })}
+                    className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                  />
+                  <span className="text-sm font-medium text-csu-near-black">Show Apply Button</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={moduleContent['get-started-today-banner']?.getStartedShowRequestInfo ?? true}
+                    onChange={(e) => updateModuleContent('get-started-today-banner', { getStartedShowRequestInfo: e.target.checked })}
+                    className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
+                  />
+                  <span className="text-sm font-medium text-csu-near-black">Show Request Info Button</span>
+                </label>
+              </div>
+            </div>
+          )}
+
           {/* Other modules placeholder */}
-          {selectedModuleId && !['partner-headline', 'partner-logo', 'partner-benefits-card', 'benefits-copy', 'lead-capture-form', 'faq-accordion', 'value-proposition-cards', 'csu-by-the-numbers', 'accreditations-section', 'tuition-comparison-banner', 'degree-programs-list', 'scholarship-highlight', 'video-testimonial', 'hero-banner', 'secondary-cta-banner', 'more-info-card', 'footnotes-disclaimers'].includes(selectedModuleId) && (
+          {selectedModuleId && !['partner-headline', 'partner-logo', 'partner-benefits-card', 'benefits-copy', 'lead-capture-form', 'faq-accordion', 'value-proposition-cards', 'csu-by-the-numbers', 'accreditations-section', 'tuition-comparison-banner', 'degree-programs-list', 'scholarship-highlight', 'video-testimonial', 'hero-banner', 'secondary-cta-banner', 'more-info-card', 'footnotes-disclaimers', 'welcome-bar', 'stats-banner', 'tiered-pricing-display', 'why-choose-csu', 'cta-buttons-only', 'contact-info-block', 'tuition-comparison-table', 'cost-calculator-widget', 'get-started-today-banner'].includes(selectedModuleId) && (
             <p className="text-sm text-csu-medium-gray">
               Content editing for this module is coming soon.
             </p>

@@ -161,6 +161,77 @@ export interface FootnotesDisclaimersContent {
   disclaimers: string[]
 }
 
+// New Module Content Types (9 new modules)
+
+export interface WelcomeBarContent {
+  greeting: string
+  ctaText: string
+  ctaUrl: string
+}
+
+export interface StatsBannerContent {
+  stats: [StatItem, StatItem, StatItem]
+  style: 'horizontal' | 'cards'
+}
+
+export interface TieredPricingDisplayContent {
+  heading: string
+  tiers: [
+    { level: string; discount: string; originalPrice?: string },
+    { level: string; discount: string; originalPrice?: string },
+    { level: string; discount: string; originalPrice?: string }
+  ]
+  footnote?: string
+}
+
+export interface WhyChooseCSUContent {
+  heading: string
+  benefits: string[]
+}
+
+export interface CTAButtonsOnlyContent {
+  showApplyButton: boolean
+  applyButtonText: string
+  showRequestInfoButton: boolean
+  requestInfoButtonText: string
+  alignment: 'left' | 'center' | 'right'
+  style: 'side-by-side' | 'stacked'
+}
+
+export interface ContactInfoBlockContent {
+  heading: string
+  email: string
+  phone: string
+  showLiveChat: boolean
+  liveChatUrl?: string
+  additionalInfo?: string
+}
+
+export interface TuitionComparisonTableContent {
+  heading: string
+  subheading?: string
+  rows: Array<{
+    institution: string
+    tuitionPerCredit: string
+    isCSU: boolean
+  }>
+}
+
+export interface CostCalculatorWidgetContent {
+  heading: string
+  iframeUrl: string
+  height: number
+  fallbackText: string
+}
+
+export interface GetStartedTodayBannerContent {
+  heading: string
+  subheading?: string
+  showApplyButton: boolean
+  showRequestInfoButton: boolean
+  backgroundColor: 'navy' | 'gold' | 'gradient'
+}
+
 // Module State
 export interface ModuleState {
   enabled: boolean
@@ -205,26 +276,79 @@ export interface DraftSchema {
 
 // Module Names (for type safety)
 export const MODULE_IDS = {
+  // Header Elements
   HEADER: 'header',
+  WELCOME_BAR: 'welcome-bar',
+  // Hero Section
+  HERO_BANNER: 'hero-banner',
+  STATS_BANNER: 'stats-banner',
+  // Partner Identity
   PARTNER_HEADLINE: 'partner-headline',
   PARTNER_LOGO: 'partner-logo',
+  // Benefits & Value Proposition
   PARTNER_BENEFITS_CARD: 'partner-benefits-card',
   BENEFITS_COPY: 'benefits-copy',
-  LEAD_CAPTURE_FORM: 'lead-capture-form',
-  FAQ_ACCORDION: 'faq-accordion',
+  TIERED_PRICING_DISPLAY: 'tiered-pricing-display',
+  WHY_CHOOSE_CSU: 'why-choose-csu',
   VALUE_PROPOSITION_CARDS: 'value-proposition-cards',
-  CSU_BY_THE_NUMBERS: 'csu-by-the-numbers',
-  ACCREDITATIONS_SECTION: 'accreditations-section',
-  TUITION_COMPARISON_BANNER: 'tuition-comparison-banner',
+  // Program Information
   DEGREE_PROGRAMS_LIST: 'degree-programs-list',
   SCHOLARSHIP_HIGHLIGHT: 'scholarship-highlight',
+  // Lead Capture
+  LEAD_CAPTURE_FORM: 'lead-capture-form',
+  CTA_BUTTONS_ONLY: 'cta-buttons-only',
+  CONTACT_INFO_BLOCK: 'contact-info-block',
+  // Social Proof & Trust
   VIDEO_TESTIMONIAL: 'video-testimonial',
-  HERO_BANNER: 'hero-banner',
-  SECONDARY_CTA_BANNER: 'secondary-cta-banner',
+  FAQ_ACCORDION: 'faq-accordion',
+  CSU_BY_THE_NUMBERS: 'csu-by-the-numbers',
+  ACCREDITATIONS_SECTION: 'accreditations-section',
+  // Tuition & Cost
+  TUITION_COMPARISON_TABLE: 'tuition-comparison-table',
+  TUITION_COMPARISON_BANNER: 'tuition-comparison-banner',
+  COST_CALCULATOR_WIDGET: 'cost-calculator-widget',
+  // Secondary CTA & Navigation
   LOOKING_FOR_MORE_INFO: 'looking-for-more-info',
+  SECONDARY_CTA_BANNER: 'secondary-cta-banner',
+  GET_STARTED_TODAY_BANNER: 'get-started-today-banner',
+  // Footer & Compliance
   FOOTNOTES_DISCLAIMERS: 'footnotes-disclaimers',
   FOOTER: 'footer',
+  // Legacy
   CONSENT_DISCLOSURE: 'consent-disclosure',
 } as const
 
 export type ModuleId = (typeof MODULE_IDS)[keyof typeof MODULE_IDS]
+
+// Module Categories
+export type ModuleCategory =
+  | 'header-elements'
+  | 'hero-section'
+  | 'partner-identity'
+  | 'benefits-value-proposition'
+  | 'program-information'
+  | 'lead-capture'
+  | 'social-proof-trust'
+  | 'tuition-cost'
+  | 'secondary-cta-navigation'
+  | 'footer-compliance'
+
+export interface CategoryDefinition {
+  id: ModuleCategory
+  name: string
+  description: string
+  defaultExpanded: boolean
+}
+
+export const MODULE_CATEGORIES: CategoryDefinition[] = [
+  { id: 'header-elements', name: 'Header Elements', description: 'Header and welcome elements', defaultExpanded: true },
+  { id: 'hero-section', name: 'Hero Section', description: 'Hero banners and key stats', defaultExpanded: true },
+  { id: 'partner-identity', name: 'Partner Identity', description: 'Partner branding elements', defaultExpanded: true },
+  { id: 'benefits-value-proposition', name: 'Benefits & Value Proposition', description: 'Benefits and value messaging', defaultExpanded: true },
+  { id: 'program-information', name: 'Program Information', description: 'Degree programs and scholarships', defaultExpanded: false },
+  { id: 'lead-capture', name: 'Lead Capture', description: 'Forms and contact methods', defaultExpanded: true },
+  { id: 'social-proof-trust', name: 'Social Proof & Trust', description: 'Testimonials and accreditations', defaultExpanded: false },
+  { id: 'tuition-cost', name: 'Tuition & Cost', description: 'Pricing and cost tools', defaultExpanded: false },
+  { id: 'secondary-cta-navigation', name: 'Secondary CTA & Navigation', description: 'Additional calls to action', defaultExpanded: false },
+  { id: 'footer-compliance', name: 'Footer & Compliance', description: 'Footer and legal disclaimers', defaultExpanded: true },
+]
