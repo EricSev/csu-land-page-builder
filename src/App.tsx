@@ -1694,60 +1694,88 @@ function App() {
                     </div>
                   )}
 
-                  {module.id === 'partner-benefits-card' && (
-                    <div className="p-6">
-                      <div className="bg-csu-gold/10 border border-csu-gold rounded-lg p-6 max-w-md mx-auto">
-                        {moduleContent['partner-benefits-card']?.includeLogo && moduleContent['partner-logo']?.logoUrl && (
-                          <div className="flex justify-center mb-4">
-                            <img
-                              src={moduleContent['partner-logo'].logoUrl}
-                              alt={moduleContent['partner-logo']?.logoAlt || 'Partner Logo'}
-                              className="max-w-[120px] max-h-12 object-contain"
-                            />
+                  {module.id === 'partner-benefits-card' && (() => {
+                    const hasUserContent = moduleContent['partner-benefits-card']?.benefits?.some((b: string) => b?.trim()) ||
+                      moduleContent['partner-benefits-card']?.discountPercentage ||
+                      moduleContent['partner-benefits-card']?.customDiscount?.trim()
+
+                    return (
+                      <div className="p-6">
+                        <div className="bg-csu-gold/10 border border-csu-gold rounded-lg p-6 max-w-md mx-auto">
+                          {moduleContent['partner-benefits-card']?.includeLogo && moduleContent['partner-logo']?.logoUrl && (
+                            <div className="flex justify-center mb-4">
+                              <img
+                                src={moduleContent['partner-logo'].logoUrl}
+                                alt={moduleContent['partner-logo']?.logoAlt || 'Partner Logo'}
+                                className="max-w-[120px] max-h-12 object-contain"
+                              />
+                            </div>
+                          )}
+                          <h3 className="text-xl font-bold text-csu-navy mb-4">
+                            {moduleContent['partner-benefits-card']?.benefitsTitle || 'Your Benefits'}
+                          </h3>
+                          {hasUserContent ? (
+                            <ul className="space-y-2 text-csu-dark-gray">
+                              {(moduleContent['partner-benefits-card']?.benefits || [])
+                                .filter((b: string) => b && b.trim())
+                                .map((benefit: string, index: number) => (
+                                  <li key={index} className="flex items-center gap-2">
+                                    <span className="text-csu-gold">✓</span>
+                                    {index === 0 && moduleContent['partner-benefits-card']?.discountPercentage
+                                      ? (moduleContent['partner-benefits-card']?.discountPercentage === 'custom'
+                                          ? (moduleContent['partner-benefits-card']?.customDiscount || 'Custom') + ' '
+                                          : moduleContent['partner-benefits-card']?.discountPercentage + ' ') + benefit
+                                      : benefit}
+                                  </li>
+                                ))}
+                            </ul>
+                          ) : (
+                            <div className="text-csu-medium-gray italic text-center py-4 border-2 border-dashed border-csu-light-gray rounded">
+                              <p>Add benefit lines and discount percentage</p>
+                              <p className="text-xs mt-1">Click to edit this module</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })()}
+
+                  {module.id === 'benefits-copy' && (() => {
+                    const hasUserContent = moduleContent['benefits-copy']?.eligibilityStatement?.trim() ||
+                      moduleContent['benefits-copy']?.tuitionParagraph?.trim() ||
+                      moduleContent['benefits-copy']?.flexibilityParagraph?.trim()
+
+                    return (
+                      <div className="p-6 max-w-2xl mx-auto space-y-4">
+                        {hasUserContent ? (
+                          <>
+                            <p className="text-csu-dark-gray leading-relaxed font-medium">
+                              {moduleContent['benefits-copy']?.eligibilityStatement || ''}
+                            </p>
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <div className="bg-csu-lightest-gray rounded-lg p-4">
+                                <h4 className="font-bold text-csu-navy mb-2">Tuition Benefits</h4>
+                                <p className="text-csu-dark-gray text-sm leading-relaxed">
+                                  {moduleContent['benefits-copy']?.tuitionParagraph || ''}
+                                </p>
+                              </div>
+                              <div className="bg-csu-lightest-gray rounded-lg p-4">
+                                <h4 className="font-bold text-csu-navy mb-2">Flexible Learning</h4>
+                                <p className="text-csu-dark-gray text-sm leading-relaxed">
+                                  {moduleContent['benefits-copy']?.flexibilityParagraph || ''}
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
+                            <p>Add eligibility statement and benefit paragraphs</p>
+                            <p className="text-xs mt-1">Click to edit this module</p>
                           </div>
                         )}
-                        <h3 className="text-xl font-bold text-csu-navy mb-4">
-                          {moduleContent['partner-benefits-card']?.benefitsTitle || 'Your Benefits'}
-                        </h3>
-                        <ul className="space-y-2 text-csu-dark-gray">
-                          {(moduleContent['partner-benefits-card']?.benefits || ['Tuition Discount', 'Flexible Online Learning', 'No Application Fee', ''])
-                            .filter(b => b && b.trim())
-                            .map((benefit, index) => (
-                              <li key={index} className="flex items-center gap-2">
-                                <span className="text-csu-gold">✓</span>
-                                {index === 0 && moduleContent['partner-benefits-card']?.discountPercentage
-                                  ? (moduleContent['partner-benefits-card']?.discountPercentage === 'custom'
-                                      ? (moduleContent['partner-benefits-card']?.customDiscount || 'Custom') + ' '
-                                      : moduleContent['partner-benefits-card']?.discountPercentage + ' ') + benefit
-                                  : benefit}
-                              </li>
-                            ))}
-                        </ul>
                       </div>
-                    </div>
-                  )}
-
-                  {module.id === 'benefits-copy' && (
-                    <div className="p-6 max-w-2xl mx-auto space-y-4">
-                      <p className="text-csu-dark-gray leading-relaxed font-medium">
-                        {moduleContent['benefits-copy']?.eligibilityStatement || 'As a valued partner, you and your eligible family members can take advantage of exclusive benefits.'}
-                      </p>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-csu-lightest-gray rounded-lg p-4">
-                          <h4 className="font-bold text-csu-navy mb-2">Tuition Benefits</h4>
-                          <p className="text-csu-dark-gray text-sm leading-relaxed">
-                            {moduleContent['benefits-copy']?.tuitionParagraph || 'Enjoy exclusive tuition discounts at Columbia Southern University. Our affordable programs make quality education accessible to you and your family.'}
-                          </p>
-                        </div>
-                        <div className="bg-csu-lightest-gray rounded-lg p-4">
-                          <h4 className="font-bold text-csu-navy mb-2">Flexible Learning</h4>
-                          <p className="text-csu-dark-gray text-sm leading-relaxed">
-                            {moduleContent['benefits-copy']?.flexibilityParagraph || 'Our flexible online programs are designed to fit your busy schedule. Study anytime, anywhere, at your own pace.'}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                    )
+                  })()}
 
                   {module.id === 'lead-capture-form' && (
                     <div className="p-6 bg-csu-lightest-gray">
@@ -1786,79 +1814,105 @@ function App() {
                     </div>
                   )}
 
-                  {module.id === 'faq-accordion' && (
-                    <div className="p-6 max-w-2xl mx-auto">
-                      <h3 className="text-xl font-bold text-csu-navy mb-4">Frequently Asked Questions</h3>
-                      <div className="space-y-2">
-                        {(moduleContent['faq-accordion']?.faqs || [
-                          { question: 'How do I apply?', answer: 'Visit our application page and complete the online form. Our admissions team will guide you through the process.' },
-                          { question: 'What programs are available?', answer: 'CSU offers over 50 online degree programs including business, criminal justice, fire science, and more.' },
-                          { question: 'How much is tuition?', answer: 'Tuition varies by program. Partner employees receive exclusive discounts on all programs.' },
-                          { question: 'Is financial aid available?', answer: 'Yes! CSU offers various financial aid options including federal aid, military benefits, and payment plans.' }
-                        ]).map((faq, i) => (
-                          <div key={i} className="border border-csu-light-gray rounded">
-                            <div className="p-3 font-medium text-csu-near-black bg-csu-lightest-gray">
-                              {faq.question}
-                            </div>
-                            <div className="p-3 text-sm text-csu-dark-gray">
-                              {faq.answer}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  {module.id === 'faq-accordion' && (() => {
+                    const userFaqs = moduleContent['faq-accordion']?.faqs
+                    const hasUserContent = userFaqs && userFaqs.length > 0 && userFaqs.some((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim())
 
-                  {module.id === 'value-proposition-cards' && (
-                    <div className="p-6">
-                      <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                        {(moduleContent['value-proposition-cards']?.propositions || [
-                          { heading: 'Affordable', body: 'Lower tuition than traditional universities with flexible payment options.', imageUrl: '' },
-                          { heading: 'Flexible', body: '100% online courses designed for working adults and busy schedules.', imageUrl: '' },
-                          { heading: 'Supportive', body: 'Dedicated advisors and 24/7 tech support to help you succeed.', imageUrl: '' }
-                        ]).map((prop, i) => (
-                          <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
-                            {prop.imageUrl ? (
-                              <img src={prop.imageUrl} alt={prop.heading} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
-                            ) : (
-                              <div className="w-16 h-16 bg-csu-navy rounded-full mx-auto mb-3"></div>
-                            )}
-                            <h4 className="font-bold text-csu-navy">{prop.heading}</h4>
-                            <p className="text-sm text-csu-dark-gray mt-2">{prop.body}</p>
+                    return (
+                      <div className="p-6 max-w-2xl mx-auto">
+                        <h3 className="text-xl font-bold text-csu-navy mb-4">Frequently Asked Questions</h3>
+                        {hasUserContent ? (
+                          <div className="space-y-2">
+                            {userFaqs.filter((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim()).map((faq: { question: string; answer: string }, i: number) => (
+                              <div key={i} className="border border-csu-light-gray rounded">
+                                <div className="p-3 font-medium text-csu-near-black bg-csu-lightest-gray">
+                                  {faq.question || 'Question'}
+                                </div>
+                                <div className="p-3 text-sm text-csu-dark-gray">
+                                  {faq.answer || 'Answer'}
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
+                            <p>Add frequently asked questions and answers</p>
+                            <p className="text-xs mt-1">Click to edit this module</p>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
+                    )
+                  })()}
+
+                  {module.id === 'value-proposition-cards' && (() => {
+                    const userProps = moduleContent['value-proposition-cards']?.propositions
+                    const hasUserContent = userProps && userProps.some((prop: { heading: string; body: string; imageUrl: string }) => prop.heading?.trim() || prop.body?.trim())
+
+                    return (
+                      <div className="p-6">
+                        {hasUserContent ? (
+                          <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                            {userProps.map((prop: { heading: string; body: string; imageUrl: string }, i: number) => (
+                              <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
+                                {prop.imageUrl ? (
+                                  <img src={prop.imageUrl} alt={prop.heading} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
+                                ) : (
+                                  <div className="w-16 h-16 bg-csu-navy rounded-full mx-auto mb-3"></div>
+                                )}
+                                <h4 className="font-bold text-csu-navy">{prop.heading || 'Card Title'}</h4>
+                                <p className="text-sm text-csu-dark-gray mt-2">{prop.body || 'Card description'}</p>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-4xl mx-auto">
+                            <p>Add value proposition cards with headings and descriptions</p>
+                            <p className="text-xs mt-1">Click to edit this module</p>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })()}
 
                   {module.id === 'tuition-comparison-banner' && (() => {
-                    const bullets = moduleContent['tuition-comparison-banner']?.comparisonBullets || [
-                      'Lower tuition than national average',
-                      'No hidden fees',
-                      'Flexible payment plans'
-                    ]
+                    const userBullets = moduleContent['tuition-comparison-banner']?.comparisonBullets
+                    const hasUserContent = moduleContent['tuition-comparison-banner']?.comparisonTitle?.trim() ||
+                      moduleContent['tuition-comparison-banner']?.comparisonBody?.trim() ||
+                      (userBullets && userBullets.some((b: string) => b?.trim()))
+
                     return (
                       <div className="p-6 bg-csu-navy text-white">
                         <div className="max-w-2xl mx-auto">
-                          <h3 className="text-xl font-bold mb-2 text-center">
-                            {moduleContent['tuition-comparison-banner']?.comparisonTitle || 'Compare Our Tuition'}
-                          </h3>
-                          <p className="text-white/80 text-center mb-4">
-                            {moduleContent['tuition-comparison-banner']?.comparisonBody || 'See how CSU stacks up against other universities'}
-                          </p>
-                          <ul className="space-y-2 mb-4">
-                            {bullets.filter(b => b).map((bullet, i) => (
-                              <li key={i} className="flex items-center gap-2">
-                                <span className="text-csu-gold">✓</span>
-                                {bullet}
-                              </li>
-                            ))}
-                          </ul>
-                          {(moduleContent['tuition-comparison-banner']?.comparisonShowCTA ?? true) && (
-                            <div className="text-center">
-                              <button className="px-6 py-2 bg-csu-gold text-csu-navy font-medium rounded hover:bg-csu-gold/90">
-                                Compare Now
-                              </button>
+                          {hasUserContent ? (
+                            <>
+                              <h3 className="text-xl font-bold mb-2 text-center">
+                                {moduleContent['tuition-comparison-banner']?.comparisonTitle || ''}
+                              </h3>
+                              <p className="text-white/80 text-center mb-4">
+                                {moduleContent['tuition-comparison-banner']?.comparisonBody || ''}
+                              </p>
+                              {userBullets && userBullets.filter((b: string) => b?.trim()).length > 0 && (
+                                <ul className="space-y-2 mb-4">
+                                  {userBullets.filter((b: string) => b?.trim()).map((bullet: string, i: number) => (
+                                    <li key={i} className="flex items-center gap-2">
+                                      <span className="text-csu-gold">✓</span>
+                                      {bullet}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                              {(moduleContent['tuition-comparison-banner']?.comparisonShowCTA ?? true) && (
+                                <div className="text-center">
+                                  <button className="px-6 py-2 bg-csu-gold text-csu-navy font-medium rounded hover:bg-csu-gold/90">
+                                    Compare Now
+                                  </button>
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <div className="text-white/60 italic text-center py-8 border-2 border-dashed border-white/30 rounded">
+                              <p>Add tuition comparison title, body, and bullet points</p>
+                              <p className="text-xs mt-1">Click to edit this module</p>
                             </div>
                           )}
                         </div>
@@ -1866,23 +1920,30 @@ function App() {
                     )
                   })()}
 
-                  {module.id === 'csu-by-the-numbers' && (
-                    <div className="p-6">
-                      <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-center">
-                        {(moduleContent['csu-by-the-numbers']?.stats || [
-                          { number: '30+', label: 'Years' },
-                          { number: '50+', label: 'Programs' },
-                          { number: '30K+', label: 'Students' },
-                          { number: '100%', label: 'Online' },
-                        ]).map((stat, i) => (
-                          <div key={i}>
-                            <div className="text-2xl font-bold text-csu-navy">{stat.number}</div>
-                            <div className="text-sm text-csu-dark-gray">{stat.label}</div>
+                  {module.id === 'csu-by-the-numbers' && (() => {
+                    const userStats = moduleContent['csu-by-the-numbers']?.stats
+                    const hasUserContent = userStats && userStats.some((stat: { number: string; label: string }) => stat.number?.trim() || stat.label?.trim())
+
+                    return (
+                      <div className="p-6">
+                        {hasUserContent ? (
+                          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-center">
+                            {userStats.map((stat: { number: string; label: string }, i: number) => (
+                              <div key={i}>
+                                <div className="text-2xl font-bold text-csu-navy">{stat.number || '0'}</div>
+                                <div className="text-sm text-csu-dark-gray">{stat.label || 'Label'}</div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-2xl mx-auto">
+                            <p>Add statistics with numbers and labels</p>
+                            <p className="text-xs mt-1">Click to edit this module</p>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
+                    )
+                  })()}
 
                   {module.id === 'accreditations-section' && (() => {
                     const accreds = moduleContent['accreditations-section']?.accreditations || {
@@ -1918,61 +1979,80 @@ function App() {
                   })()}
 
                   {module.id === 'degree-programs-list' && (() => {
-                    const programs = moduleContent['degree-programs-list']?.programs || [
-                      { name: 'Bachelor of Science in Business Administration', url: 'https://www.columbiasouthern.edu/degrees/bachelors/business-administration' },
-                      { name: 'Bachelor of Science in Criminal Justice', url: 'https://www.columbiasouthern.edu/degrees/bachelors/criminal-justice' },
-                      { name: 'Bachelor of Science in Fire Science', url: 'https://www.columbiasouthern.edu/degrees/bachelors/fire-science' },
-                    ]
+                    const userPrograms = moduleContent['degree-programs-list']?.programs
+                    const hasUserContent = userPrograms && userPrograms.some((p: { name: string; url: string }) => p.name?.trim())
+
                     return (
                       <div className="p-6">
                         <h3 className="text-xl font-bold text-csu-navy text-center mb-4">
                           {moduleContent['degree-programs-list']?.programsHeading || 'Popular Degree Programs'}
                         </h3>
-                        <div className="max-w-xl mx-auto">
-                          <ul className="space-y-2">
-                            {programs.filter(p => p.name).map((program, i) => (
-                              <li key={i}>
-                                <a
-                                  href={program.url || '#'}
-                                  className="text-csu-navy hover:text-csu-gold underline"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {program.name}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                        {hasUserContent ? (
+                          <div className="max-w-xl mx-auto">
+                            <ul className="space-y-2">
+                              {userPrograms.filter((p: { name: string; url: string }) => p.name?.trim()).map((program: { name: string; url: string }, i: number) => (
+                                <li key={i}>
+                                  <a
+                                    href={program.url || '#'}
+                                    className="text-csu-navy hover:text-csu-gold underline"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {program.name}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : (
+                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-xl mx-auto">
+                            <p>Add degree programs with names and URLs</p>
+                            <p className="text-xs mt-1">Click to edit this module</p>
+                          </div>
+                        )}
                       </div>
                     )
                   })()}
 
-                  {module.id === 'scholarship-highlight' && (
-                    <div className="p-6 bg-csu-gold/10 border-l-4 border-csu-gold">
-                      <div className="max-w-2xl mx-auto">
-                        <h3 className="text-xl font-bold text-csu-navy mb-3">
-                          {moduleContent['scholarship-highlight']?.scholarshipName || 'Partner Scholarship Program'}
-                        </h3>
-                        <p className="text-csu-dark-gray mb-4">
-                          {moduleContent['scholarship-highlight']?.scholarshipDescription || 'Eligible employees and their families may qualify for exclusive scholarship opportunities through our partnership. Contact an enrollment counselor to learn more about your benefits.'}
-                        </p>
-                        <div className="flex items-center gap-4">
-                          <a
-                            href={moduleContent['scholarship-highlight']?.scholarshipEligibilityUrl || 'https://www.columbiasouthern.edu/tuition-financing/scholarships'}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-csu-navy underline hover:text-csu-gold"
-                          >
-                            View Eligibility Requirements
-                          </a>
-                          <button className="bg-csu-gold text-csu-navy px-4 py-2 rounded font-semibold hover:bg-csu-gold/80 transition-colors">
-                            {moduleContent['scholarship-highlight']?.scholarshipCtaText || 'Apply for Scholarship'}
-                          </button>
+                  {module.id === 'scholarship-highlight' && (() => {
+                    const hasUserContent = moduleContent['scholarship-highlight']?.scholarshipName?.trim() ||
+                      moduleContent['scholarship-highlight']?.scholarshipDescription?.trim()
+
+                    return (
+                      <div className="p-6 bg-csu-gold/10 border-l-4 border-csu-gold">
+                        <div className="max-w-2xl mx-auto">
+                          {hasUserContent ? (
+                            <>
+                              <h3 className="text-xl font-bold text-csu-navy mb-3">
+                                {moduleContent['scholarship-highlight']?.scholarshipName || ''}
+                              </h3>
+                              <p className="text-csu-dark-gray mb-4">
+                                {moduleContent['scholarship-highlight']?.scholarshipDescription || ''}
+                              </p>
+                              <div className="flex items-center gap-4">
+                                <a
+                                  href={moduleContent['scholarship-highlight']?.scholarshipEligibilityUrl || 'https://www.columbiasouthern.edu/tuition-financing/scholarships'}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-csu-navy underline hover:text-csu-gold"
+                                >
+                                  View Eligibility Requirements
+                                </a>
+                                <button className="bg-csu-gold text-csu-navy px-4 py-2 rounded font-semibold hover:bg-csu-gold/80 transition-colors">
+                                  {moduleContent['scholarship-highlight']?.scholarshipCtaText || 'Apply for Scholarship'}
+                                </button>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
+                              <p>Add scholarship name and description</p>
+                              <p className="text-xs mt-1">Click to edit this module</p>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )
+                  })()}
 
                   {module.id === 'video-testimonial' && (() => {
                     const videoUrl = moduleContent['video-testimonial']?.videoUrl || ''
