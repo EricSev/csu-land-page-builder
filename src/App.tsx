@@ -293,6 +293,7 @@ function App() {
   const [showExportModal, setShowExportModal] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
   const [isSavingDraft, setIsSavingDraft] = useState(false)
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [exportRequester, setExportRequester] = useState({
     firstName: '',
     lastName: '',
@@ -816,6 +817,8 @@ function App() {
     const blob = new Blob([JSON.stringify(draft, null, 2)], { type: 'application/json' })
     saveAs(blob, filename)
     setIsSavingDraft(false)
+    setShowSaveSuccess(true)
+    setTimeout(() => setShowSaveSuccess(false), 3000)
   }
 
   // Download JSON draft from export modal
@@ -4053,6 +4056,18 @@ function App() {
                 Close
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Save Success Toast */}
+      {showSaveSuccess && (
+        <div className="fixed bottom-4 right-4 z-50 animate-fade-in-up">
+          <div className="bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Draft saved successfully!</span>
           </div>
         </div>
       )}
