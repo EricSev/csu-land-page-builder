@@ -1,3 +1,146 @@
+# Claude Progress Report - Session 8 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation, adding URL validation for Edit flow, required field
+validation before export, and inline field-level error messages with real-time validation.
+
+## Completed Features (69 passing, 47.9% complete)
+
+### New in Session 8:
+- Feature #66: URL validation for supported CSU URL patterns in Edit flow
+- Feature #67: URL parser extracts partner name from URL path
+- Feature #70: Required field validation before export (export blocked until all required fields filled)
+- Feature #71: Field-level error messages inline (URL validation with red border and error text)
+
+### Implementation Details:
+- Added YouTube URL validation to Video Testimonial module (regex pattern matching)
+- Added URL validation to Partner Logo URL field
+- Both validations show:
+  - Red border on invalid input
+  - Inline error message below the field
+  - Error clears when valid input entered
+
+### Skipped Features:
+- Feature #68: URL parser extracts discount percentage - Skipped due to CORS limitation
+  (Client-side app cannot fetch external pages without backend proxy)
+- Feature #69: Partial extraction warning indicators - Skipped for same reason
+
+---
+
+# Claude Progress Report - Session 7 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation, adding Footnotes/Disclaimers module, viewport toggles,
+zoom control, Save Draft functionality, auto-save to localStorage, and auto-save settings toggle.
+
+## Completed Features (55 passing, 38.2% complete)
+
+### New in Session 7:
+- Feature #43: Footnotes/Disclaimers module with dynamic textareas (max 6)
+- Feature #44: Image format validation (PNG/JPG only)
+- Feature #45: Image size validation (max 500x500px)
+- Feature #46: Live preview real-time updates
+- Feature #47: Preview viewport toggle (Desktop - 1920px)
+- Feature #48: Preview viewport toggle (Tablet - 768px)
+- Feature #49: Preview viewport toggle (Mobile - 375px)
+- Feature #50: Preview zoom control (25-100%)
+- Feature #51: Save Draft to JSON file with filename including partner slug and date
+- Feature #52: Draft metadata includes version and timestamps
+- Feature #53: Draft validation on load with specific error messages
+- Feature #54: Auto-save to localStorage (with 24-hour expiry)
+- Feature #55: Auto-save toggle in Settings panel
+
+---
+
+# Claude Progress Report - Session 6 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation of module content forms, adding Scholarship Highlight,
+Video Testimonial (with YouTube embed), Hero Banner, Secondary CTA Banner, and Looking for More Info Card.
+
+## Completed Features (42 passing, 29.2% complete)
+
+### New in Session 6:
+- Feature #37: Degree Programs List with dynamic program entries (max 8)
+- Feature #38: Scholarship Highlight module with name, description, eligibility URL, and CTA text
+- Feature #39: Video Testimonial with YouTube URL embedding, title, and caption
+- Feature #40: Hero Banner with background image URL, overlay opacity slider, headline, and subheadline
+- Feature #41: Secondary CTA Banner with heading and button checkboxes (Apply Now, Request Info)
+- Feature #42: Looking for More Info Card with heading, body, link URL, and image URL
+
+---
+
+# Claude Progress Report - Session 5 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation of module content forms for Benefits Copy, Lead Capture Form,
+FAQ Accordion, Value Proposition Cards, and CSU by the Numbers with full live preview updates.
+
+## Completed Features (36 passing, 25.0% complete)
+
+### New in Session 5:
+- Feature #28: Benefits Copy module with eligibility, tuition, and flexibility text fields
+- Feature #29: Lead Capture Form configurable heading and submit button text
+- Feature #30: Lead Capture Form 6 checkbox toggles for field inclusion (First Name, Last Name, Email, Phone, Program Interest, Comments)
+- Feature #31: FAQ Accordion with 4 default Q&A pairs
+- Feature #32: FAQ Accordion add question button (up to 6 FAQs max)
+- Feature #33: Value Proposition Cards with 3 cards (heading, body, image URL)
+- Feature #34: CSU by the Numbers with 4 stat number/label pairs
+- Feature #35: Accreditations Section with 5 logo checkboxes (SACSCOC, Quality Matters, ACBSP, Blackboard, Military)
+- Feature #36: Tuition Comparison Banner with heading, body, 3 bullets, and CTA checkbox
+
+---
+
+# Claude Progress Report - Session 4 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation of module content forms with live preview updates,
+including Partner Headline styles, Partner Logo image upload/URL, and Partner Benefits
+Card with discount dropdown, benefit lines, and include logo checkbox.
+
+## Completed Features (27 passing, 18.8% complete)
+
+### New in Session 4:
+- Feature #21: Partner Headline form fields with headline style dropdown (centered/left-aligned/with-background)
+- Feature #22: Partner Logo image upload with validation (PNG, JPEG, GIF, WebP, max 500x500px)
+- Feature #23: Partner Logo URL input alternative
+- Feature #24: Partner Benefits Card discount dropdown (10%, 15%, 20%, Custom)
+- Feature #25: Partner Benefits Card custom discount text input
+- Feature #26: Partner Benefits Card 4 benefit line text inputs
+- Feature #27: Partner Benefits Card include logo checkbox
+
+---
+
+# Claude Progress Report - Session 3 (Coding Agent)
+Date: January 10, 2026
+
+## Summary
+This session continued implementation of the CSU Landing Page Builder, adding drag-and-drop
+module reordering, content panel forms, settings panel with header/footer style toggles,
+and clickable preview modules.
+
+## Completed Features (20 passing, 13.9% complete)
+
+### New in Session 3:
+- Feature #10: Toggle module on and off (module visibility in preview)
+- Feature #11: Drag and drop module reordering (using dnd-kit)
+- Feature #12: Locked modules cannot be toggled (Header/Footer always enabled)
+- Feature #13: Click module name opens content panel (form fields displayed)
+- Feature #14: Click module in preview jumps to content fields
+- Feature #15: Header module displays CSU logo (linked to homepage)
+- Feature #16: Header module Apply Now button (linked to application)
+- Feature #17: Header navigation style toggle (Minimal/Full)
+- Feature #18: Footer module displays copyright year
+- Feature #19: Footer module displays address and privacy link
+- Feature #20: Footer navigation style toggle (Minimal/Full)
+
+---
+
 # Claude Progress Report - Session 2 (Coding Agent)
 Date: January 10, 2026
 

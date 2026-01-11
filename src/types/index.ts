@@ -132,6 +132,7 @@ export interface VideoTestimonialContent {
   youtubeUrl: string
   videoTitle: string
   caption: string
+  urlError?: string
 }
 
 export interface HeroBannerContent {
