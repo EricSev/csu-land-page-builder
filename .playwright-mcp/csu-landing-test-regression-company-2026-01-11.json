@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "created": "2026-01-11T11:06:41.107Z",
+  "modified": "2026-01-11T11:06:41.107Z",
+  "metadata": {
+    "partnerName": "Test Regression Company",
+    "templateType": "learning-partner",
+    "sourceUrl": ""
+  },
+  "settings": {
+    "headerStyle": "minimal",
+    "footerStyle": "minimal"
+  },
+  "modules": {
+    "header": {
+      "enabled": true,
+      "order": 1,
+      "content": {}
+    },
+    "partner-headline": {
+      "enabled": true,
+      "order": 2,
+      "content": {}
+    },
+    "partner-logo": {
+      "enabled": true,
+      "order": 3,
+      "content": {
+        "logoUrl": "https://example.com/valid-logo.png"
+      }
+    },
+    "partner-benefits-card": {
+      "enabled": true,
+      "order": 4,
+      "content": {}
+    },
+    "benefits-copy": {
+      "enabled": true,
+      "order": 5,
+      "content": {}
+    },
+    "lead-capture-form": {
+      "enabled": true,
+      "order": 6,
+      "content": {
+        "formTitle": "Get Your Exclusive Info",
+        "submitButtonText": "Request Now"
+      }
+    },
+    "faq-accordion": {
+      "enabled": true,
+      "order": 7,
+      "content": {}
+    },
+    "footer": {
+      "enabled": true,
+      "order": 8,
+      "content": {}
+    }
+  }
+}
