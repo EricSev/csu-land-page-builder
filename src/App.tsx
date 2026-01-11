@@ -43,6 +43,7 @@ interface ModuleContent {
   logoAlt?: string
   logoError?: string
   logoFileName?: string
+  logoDimensions?: string
   logoUrlError?: string
   // Partner Benefits Card
   benefitsTitle?: string
@@ -542,6 +543,7 @@ function App() {
   const generateHtmlFile = () => {
     const enabledModules = modules.filter(m => m.enabled).sort((a, b) => a.order - b.order)
     const partnerHeadline = moduleContent['partner-headline']
+    const partnerLogo = moduleContent['partner-logo']
     const benefitsCard = moduleContent['partner-benefits-card']
     const benefitsCopy = moduleContent['benefits-copy']
     const leadForm = moduleContent['lead-capture-form']
@@ -619,6 +621,13 @@ function App() {
       <p>${partnerHeadline?.subheadline || 'Exclusive Education Benefits for You'}</p>
     </div>
   </section>
+
+  <!-- Partner Logo -->
+  ${enabledModules.some(m => m.id === 'partner-logo') && partnerLogo?.logoUrl ? `
+  <div class="container" style="text-align: center; padding: 40px 0;">
+    <img src="${partnerLogo.logoUrl}" alt="${partnerLogo?.logoAlt || partnerName + ' Logo'}" style="max-width: 200px; max-height: 80px; object-fit: contain;">
+  </div>
+  ` : ''}
 
   <!-- Benefits Card -->
   ${enabledModules.some(m => m.id === 'partner-benefits-card') ? `
@@ -1356,7 +1365,7 @@ function App() {
                       }`}
                     />
                     {urlError && (
-                      <p className="mt-2 text-sm text-red-500">{urlError}</p>
+                      <p role="alert" className="mt-2 text-sm text-red-500">{urlError}</p>
                     )}
                     <p className="mt-2 text-sm text-csu-medium-gray">
                       Supported URLs: columbiasouthern.edu landing pages and partner directories
@@ -1450,7 +1459,7 @@ function App() {
                       </div>
                     </div>
                     {draftError && (
-                      <p className="mt-2 text-sm text-red-500">{draftError}</p>
+                      <p role="alert" className="mt-2 text-sm text-red-500">{draftError}</p>
                     )}
                   </div>
                 </div>
@@ -2461,6 +2470,13 @@ function App() {
                           return
                         }
 
+                        // Validate file size (max 5MB)
+                        const maxSize = 5 * 1024 * 1024 // 5MB
+                        if (file.size > maxSize) {
+                          updateModuleContent('partner-logo', { logoError: `File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum file size is 5MB.` })
+                          return
+                        }
+
                         // Read file and validate dimensions
                         const reader = new FileReader()
                         reader.onload = (event) => {
@@ -2474,6 +2490,7 @@ function App() {
                               updateModuleContent('partner-logo', {
                                 logoUrl: event.target?.result as string,
                                 logoFileName: file.name,
+                                logoDimensions: `${img.width}x${img.height}px`,
                                 logoError: undefined
                               })
                             }
@@ -2486,9 +2503,9 @@ function App() {
                     />
                   </div>
                   {moduleContent['partner-logo']?.logoError && (
-                    <p className="mt-1 text-sm text-red-500">{moduleContent['partner-logo'].logoError}</p>
+                    <p role="alert" className="mt-1 text-sm text-red-500">{moduleContent['partner-logo'].logoError}</p>
                   )}
-                  <p className="mt-1 text-xs text-csu-medium-gray">PNG or JPG only. Max 500x500px.</p>
+                  <p className="mt-1 text-xs text-csu-medium-gray">PNG or JPG only. Max 500x500px, 5MB.</p>
                 </div>
                 <div>
                   <label htmlFor="logoUrlInput" className="block text-sm font-medium text-csu-near-black mb-1">
@@ -2520,7 +2537,7 @@ function App() {
                     placeholder="https://example.com/logo.png"
                   />
                   {moduleContent['partner-logo']?.logoUrlError && (
-                    <p className="mt-1 text-sm text-red-500">{moduleContent['partner-logo'].logoUrlError}</p>
+                    <p role="alert" className="mt-1 text-sm text-red-500">{moduleContent['partner-logo'].logoUrlError}</p>
                   )}
                   <p className="mt-1 text-xs text-csu-medium-gray">Direct link to image file</p>
                 </div>
@@ -2543,6 +2560,9 @@ function App() {
                   )}
                   {moduleContent['partner-logo']?.logoFileName && (
                     <p className="mt-1 text-xs text-csu-medium-gray truncate max-w-[96px]">{moduleContent['partner-logo'].logoFileName}</p>
+                  )}
+                  {moduleContent['partner-logo']?.logoDimensions && (
+                    <p className="text-xs text-csu-navy font-medium">{moduleContent['partner-logo'].logoDimensions}</p>
                   )}
                 </div>
               </div>
@@ -3297,7 +3317,7 @@ function App() {
                   placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 />
                 {moduleContent['video-testimonial']?.videoUrlError && (
-                  <p className="mt-1 text-sm text-red-500">{moduleContent['video-testimonial'].videoUrlError}</p>
+                  <p role="alert" className="mt-1 text-sm text-red-500">{moduleContent['video-testimonial'].videoUrlError}</p>
                 )}
                 <p className="text-xs text-csu-medium-gray mt-1">Supports youtube.com and youtu.be URLs</p>
               </div>
