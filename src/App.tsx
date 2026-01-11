@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -290,6 +290,7 @@ function App() {
   const [previewZoom, setPreviewZoom] = useState(75)
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
+  const [scrollSyncEnabled, setScrollSyncEnabled] = useState(false)
   const [contentPanelCollapsed, setContentPanelCollapsed] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
@@ -303,6 +304,51 @@ function App() {
     approvedBy: '' as '' | 'yes' | 'no' | 'pending',
     additionalNotes: '',
   })
+
+  // Ref for the preview container to detect scroll position
+  const previewContainerRef = useRef<HTMLDivElement>(null)
+
+  // Scroll sync: update selected module based on scroll position in preview
+  const handlePreviewScroll = useCallback(() => {
+    if (!scrollSyncEnabled || !previewContainerRef.current) return
+
+    const container = previewContainerRef.current
+    const enabledModules = modules.filter(m => m.enabled).sort((a, b) => a.order - b.order)
+
+    // Find which module is most visible in the viewport
+    let bestMatch: string | null = null
+    let bestVisibility = 0
+
+    for (const module of enabledModules) {
+      const element = container.querySelector(`[data-module-id="${module.id}"]`) as HTMLElement
+      if (!element) continue
+
+      const rect = element.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
+
+      // Calculate how much of the element is visible
+      const visibleTop = Math.max(rect.top, containerRect.top)
+      const visibleBottom = Math.min(rect.bottom, containerRect.bottom)
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop)
+
+      // Favor elements that start near the top of the container
+      const distanceFromTop = Math.abs(rect.top - containerRect.top)
+      const visibility = visibleHeight > 0 ? visibleHeight - distanceFromTop * 0.1 : 0
+
+      if (visibility > bestVisibility) {
+        bestVisibility = visibility
+        bestMatch = module.id
+      }
+    }
+
+    if (bestMatch && bestMatch !== selectedModuleId) {
+      setSelectedModuleId(bestMatch)
+      // Also expand the content panel if it's collapsed
+      if (contentPanelCollapsed) {
+        setContentPanelCollapsed(false)
+      }
+    }
+  }, [scrollSyncEnabled, modules, selectedModuleId, contentPanelCollapsed])
 
   // Check if export form is valid (required fields filled)
   const isExportFormValid = () => {
@@ -475,7 +521,7 @@ function App() {
       Field25: exportRequester.firstName,
       Field26: exportRequester.lastName,
       Field100: exportRequester.email,
-      Field169: exportRequester.approvedBy === 'yes' ? 'Yes' : exportRequester.approvedBy === 'no' ? 'No' : 'Pending Approval',
+      Field169: exportRequester.approvedBy === 'yes' ? 'Yes' : exportRequester.approvedBy === 'no' ? 'No' : 'Not Applicable',
       Field98: exportRequester.additionalNotes || 'No additional notes',
       Field105: `csu-landing-${partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.html`,
       Field125: `csu-landing-${partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-assets.zip`,
@@ -1396,6 +1442,29 @@ function App() {
                       Content parsed successfully! Loading builder...
                     </div>
                   )}
+
+                  {/* Manual Entry Fallback */}
+                  <div className="pt-4 border-t border-csu-light-gray">
+                    <p className="text-sm text-csu-medium-gray text-center mb-3">
+                      Or enter partner name manually
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={partnerName}
+                        onChange={(e) => setPartnerName(e.target.value)}
+                        placeholder="Enter partner name..."
+                        className="flex-1 px-4 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                      />
+                      <button
+                        onClick={handleSetupComplete}
+                        disabled={!partnerName.trim()}
+                        className="px-4 py-2 bg-csu-gold text-csu-near-black rounded-lg font-medium hover:bg-csu-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -1616,11 +1685,26 @@ function App() {
                 aria-label="Preview zoom level"
               />
               <span className={`text-xs w-8 ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>{previewZoom}%</span>
+              <div className="border-l border-csu-light-gray h-4 mx-2" />
+              <label className="flex items-center gap-1 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={scrollSyncEnabled}
+                  onChange={(e) => setScrollSyncEnabled(e.target.checked)}
+                  className="w-3 h-3"
+                  aria-label="Enable scroll sync"
+                />
+                <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Scroll Sync</span>
+              </label>
             </div>
           </div>
 
           {/* Preview Content */}
-          <div className="flex-1 overflow-auto p-4">
+          <div
+            ref={previewContainerRef}
+            onScroll={handlePreviewScroll}
+            className="flex-1 overflow-auto p-4"
+          >
             <div
               className="bg-white mx-auto shadow-lg transition-all duration-200"
               style={{
@@ -2782,6 +2866,31 @@ function App() {
                   ))}
                 </div>
               </div>
+              {/* Hidden Fields Info */}
+              <div className="mt-4 pt-4 border-t border-csu-light-gray">
+                <div className="flex items-center gap-2 mb-2">
+                  <svg className="w-4 h-4 text-csu-medium-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                  </svg>
+                  <span className="text-sm font-medium text-csu-near-black">Hidden Fields (Auto-Captured)</span>
+                </div>
+                <p className="text-xs text-csu-medium-gray mb-2">
+                  The following data will be captured invisibly with each form submission:
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { name: 'Partner ID', value: partnerName || 'Partner Name' },
+                    { name: 'Source URL', value: 'Current page URL' },
+                    { name: 'UTM Parameters', value: 'Campaign tracking data' },
+                    { name: 'Submission Time', value: 'Date & timestamp' },
+                  ].map((field, index) => (
+                    <div key={index} className="flex items-center gap-2 text-xs bg-csu-lightest-gray px-2 py-1 rounded">
+                      <span className="text-csu-dark-gray font-medium">{field.name}:</span>
+                      <span className="text-csu-medium-gray truncate">{field.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -3881,7 +3990,7 @@ function App() {
                     <option value="">Select an option</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
-                    <option value="pending">Pending Approval</option>
+                    <option value="pending">Not Applicable</option>
                   </select>
                 </div>
 
