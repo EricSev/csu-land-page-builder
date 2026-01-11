@@ -158,11 +158,12 @@ interface SortableModuleProps {
   module: Module
   isSelected: boolean
   isComplete: boolean
+  darkMode: boolean
   onToggle: (id: string) => void
   onSelect: (id: string) => void
 }
 
-function SortableModule({ module, isSelected, isComplete, onToggle, onSelect }: SortableModuleProps) {
+function SortableModule({ module, isSelected, isComplete, darkMode, onToggle, onSelect }: SortableModuleProps) {
   const {
     attributes,
     listeners,
@@ -188,14 +189,14 @@ function SortableModule({ module, isSelected, isComplete, onToggle, onSelect }: 
       style={style}
       className={`flex items-center gap-2 p-2 rounded-lg transition-colors ${
         isSelected
-          ? 'bg-csu-navy/10 border border-csu-navy'
-          : 'hover:bg-csu-lightest-gray border border-transparent'
+          ? darkMode ? 'bg-gray-700 border border-csu-gold' : 'bg-csu-navy/10 border border-csu-navy'
+          : darkMode ? 'hover:bg-gray-700 border border-transparent' : 'hover:bg-csu-lightest-gray border border-transparent'
       } ${module.locked ? 'opacity-75' : ''} ${isDragging ? 'shadow-lg' : ''}`}
     >
       {/* Drag Handle - only for non-locked modules */}
       {!module.locked ? (
         <button
-          className="cursor-grab active:cursor-grabbing p-1 text-csu-medium-gray hover:text-csu-dark-gray"
+          className={`cursor-grab active:cursor-grabbing p-1 ${darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-csu-medium-gray hover:text-csu-dark-gray'}`}
           aria-label={`Drag to reorder ${module.name}`}
           {...attributes}
           {...listeners}
@@ -214,13 +215,13 @@ function SortableModule({ module, isSelected, isComplete, onToggle, onSelect }: 
         checked={module.enabled}
         onChange={() => onToggle(module.id)}
         disabled={module.locked}
-        className="w-4 h-4 text-csu-navy border-csu-light-gray rounded focus:ring-csu-navy disabled:opacity-50"
+        className={`w-4 h-4 rounded focus:ring-csu-navy disabled:opacity-50 ${darkMode ? 'text-csu-gold border-gray-500 bg-gray-700' : 'text-csu-navy border-csu-light-gray'}`}
         aria-label={`Toggle ${module.name}`}
       />
 
       {/* Module Name - clickable to select */}
       <button
-        className={`flex-1 text-left text-sm ${module.enabled ? 'text-csu-near-black' : 'text-csu-medium-gray line-through'}`}
+        className={`flex-1 text-left text-sm ${module.enabled ? (darkMode ? 'text-white' : 'text-csu-near-black') : (darkMode ? 'text-gray-500 line-through' : 'text-csu-medium-gray line-through')}`}
         onClick={() => !module.locked && onSelect(module.id)}
         disabled={module.locked}
       >
@@ -286,6 +287,7 @@ function App() {
   const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
   const [previewZoom, setPreviewZoom] = useState(75)
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const [exportRequester, setExportRequester] = useState({
     firstName: '',
@@ -1435,9 +1437,9 @@ function App() {
 
   // Builder mode - placeholder for now
   return (
-    <div className="min-h-screen bg-csu-lightest-gray flex flex-col">
+    <div className={`min-h-screen flex flex-col transition-colors duration-200 ${darkMode ? 'bg-gray-900' : 'bg-csu-lightest-gray'}`}>
       {/* Header */}
-      <header className="bg-csu-navy text-white py-3 px-6 shadow-lg flex-shrink-0">
+      <header className={`py-3 px-6 shadow-lg flex-shrink-0 ${darkMode ? 'bg-gray-800' : 'bg-csu-navy'} text-white`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
@@ -1484,9 +1486,9 @@ function App() {
       {/* Main Content - Three Panel Layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Module Panel - Left Sidebar */}
-        <aside className="w-module-panel min-w-module-panel max-w-module-panel bg-white border-r border-csu-light-gray overflow-y-auto flex-shrink-0">
+        <aside className={`w-module-panel min-w-module-panel max-w-module-panel border-r overflow-y-auto flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
           <div className="p-4">
-            <h2 className="font-semibold text-csu-near-black mb-4">Modules</h2>
+            <h2 className={`font-semibold mb-4 ${darkMode ? 'text-white' : 'text-csu-near-black'}`}>Modules</h2>
 
             {/* Module List with Drag and Drop */}
             <DndContext
@@ -1505,6 +1507,7 @@ function App() {
                       module={module}
                       isSelected={selectedModuleId === module.id}
                       isComplete={isModuleComplete(module.id)}
+                      darkMode={darkMode}
                       onToggle={handleModuleToggle}
                       onSelect={setSelectedModuleId}
                     />
@@ -1515,7 +1518,7 @@ function App() {
 
             <button
               onClick={handleClearDraft}
-              className="mt-6 text-sm text-csu-navy underline hover:no-underline"
+              className={`mt-6 text-sm underline hover:no-underline ${darkMode ? 'text-csu-gold' : 'text-csu-navy'}`}
             >
               &larr; Back to start
             </button>
@@ -1523,32 +1526,32 @@ function App() {
         </aside>
 
         {/* Preview Panel - Right/Center */}
-        <main className="flex-1 bg-csu-lightest-gray overflow-hidden flex flex-col">
+        <main className={`flex-1 overflow-hidden flex flex-col transition-colors duration-200 ${darkMode ? 'bg-gray-900' : 'bg-csu-lightest-gray'}`}>
           {/* Preview Controls */}
-          <div className="bg-white border-b border-csu-light-gray px-4 py-2 flex items-center justify-between flex-shrink-0">
+          <div className={`border-b px-4 py-2 flex items-center justify-between flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-csu-dark-gray">Viewport:</span>
+              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Viewport:</span>
               <button
                 onClick={() => setViewport('desktop')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'desktop' ? 'bg-csu-navy text-white' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300'}`}
+                className={`px-2 py-1 text-xs rounded ${viewport === 'desktop' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
               >
                 Desktop
               </button>
               <button
                 onClick={() => setViewport('tablet')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'tablet' ? 'bg-csu-navy text-white' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300'}`}
+                className={`px-2 py-1 text-xs rounded ${viewport === 'tablet' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
               >
                 Tablet
               </button>
               <button
                 onClick={() => setViewport('mobile')}
-                className={`px-2 py-1 text-xs rounded ${viewport === 'mobile' ? 'bg-csu-navy text-white' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300'}`}
+                className={`px-2 py-1 text-xs rounded ${viewport === 'mobile' ? (darkMode ? 'bg-csu-gold text-csu-near-black' : 'bg-csu-navy text-white') : (darkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-csu-dark-gray hover:bg-gray-300')}`}
               >
                 Mobile
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-csu-dark-gray">Zoom:</span>
+              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>Zoom:</span>
               <input
                 type="range"
                 min="25"
@@ -1558,7 +1561,7 @@ function App() {
                 className="w-24"
                 aria-label="Preview zoom level"
               />
-              <span className="text-xs text-csu-dark-gray w-8">{previewZoom}%</span>
+              <span className={`text-xs w-8 ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>{previewZoom}%</span>
             </div>
           </div>
 
@@ -2234,14 +2237,14 @@ function App() {
       </div>
 
       {/* Content Panel - Bottom (Collapsible) */}
-      <div className="bg-white border-t border-csu-light-gray h-64 overflow-y-auto flex-shrink-0">
+      <div className={`border-t h-64 overflow-y-auto flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-csu-near-black">
+            <h2 className={`font-semibold ${darkMode ? 'text-white' : 'text-csu-near-black'}`}>
               Content Editor {selectedModuleId && `- ${modules.find(m => m.id === selectedModuleId)?.name}`}
             </h2>
             <button
-              className="text-sm text-csu-dark-gray hover:text-csu-near-black"
+              className={`text-sm ${darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-csu-dark-gray hover:text-csu-near-black'}`}
               aria-label="Collapse content panel"
             >
               Collapse
@@ -2250,7 +2253,7 @@ function App() {
 
           {/* No module selected */}
           {!selectedModuleId && (
-            <p className="text-sm text-csu-dark-gray">
+            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray'}`}>
               Select a module from the left panel to edit its content here.
             </p>
           )}
@@ -3517,6 +3520,28 @@ function App() {
                         checked={autoSaveEnabled}
                         onChange={(e) => setAutoSaveEnabled(e.target.checked)}
                         className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-csu-navy/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-csu-navy"></div>
+                    </div>
+                  </label>
+                </div>
+
+                {/* Dark Mode Toggle */}
+                <div>
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div>
+                      <span className="block text-sm font-medium text-csu-near-black">Dark Mode</span>
+                      <span className="block text-xs text-csu-medium-gray mt-0.5">
+                        Switch builder interface to dark theme
+                      </span>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={darkMode}
+                        onChange={(e) => setDarkMode(e.target.checked)}
+                        className="sr-only peer"
+                        aria-label="Toggle dark mode"
                       />
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-csu-navy/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-csu-navy"></div>
                     </div>
