@@ -288,6 +288,7 @@ function App() {
   const [previewZoom, setPreviewZoom] = useState(75)
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
+  const [contentPanelCollapsed, setContentPanelCollapsed] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const [exportRequester, setExportRequester] = useState({
     firstName: '',
@@ -2237,17 +2238,18 @@ function App() {
       </div>
 
       {/* Content Panel - Bottom (Collapsible) */}
-      <div className={`border-t h-64 overflow-y-auto flex-shrink-0 transition-colors duration-200 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
-        <div className="p-4">
+      <div className={`border-t overflow-hidden flex-shrink-0 transition-all duration-200 ${contentPanelCollapsed ? 'h-12' : 'h-64'} ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-csu-light-gray'}`}>
+        <div className={`p-4 ${contentPanelCollapsed ? 'overflow-hidden' : 'overflow-y-auto h-full'}`}>
           <div className="flex items-center justify-between mb-4">
             <h2 className={`font-semibold ${darkMode ? 'text-white' : 'text-csu-near-black'}`}>
               Content Editor {selectedModuleId && `- ${modules.find(m => m.id === selectedModuleId)?.name}`}
             </h2>
             <button
+              onClick={() => setContentPanelCollapsed(!contentPanelCollapsed)}
               className={`text-sm ${darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-csu-dark-gray hover:text-csu-near-black'}`}
-              aria-label="Collapse content panel"
+              aria-label={contentPanelCollapsed ? 'Expand content panel' : 'Collapse content panel'}
             >
-              Collapse
+              {contentPanelCollapsed ? 'Expand' : 'Collapse'}
             </button>
           </div>
 
