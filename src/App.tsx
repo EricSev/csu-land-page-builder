@@ -1144,7 +1144,7 @@ function App() {
 
   if (mode === 'selection') {
     return (
-      <div className="min-h-screen bg-csu-lightest-gray flex flex-col">
+      <div className="min-h-screen bg-csu-lightest-gray flex flex-col overflow-x-hidden">
         {/* Header */}
         <header className="bg-csu-navy text-white py-4 px-6 shadow-lg">
           <div className="flex items-center justify-between">
@@ -1238,7 +1238,7 @@ function App() {
   // Setup mode - partner name and template selection OR URL input
   if (mode === 'setup') {
     return (
-      <div className="min-h-screen bg-csu-lightest-gray flex flex-col">
+      <div className="min-h-screen bg-csu-lightest-gray flex flex-col overflow-x-hidden">
         {/* Header */}
         <header className="bg-csu-navy text-white py-4 px-6 shadow-lg">
           <div className="flex items-center justify-between">
@@ -1466,7 +1466,7 @@ function App() {
 
   // Builder mode - placeholder for now
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-200 ${darkMode ? 'bg-gray-900' : 'bg-csu-lightest-gray'}`}>
+    <div className={`min-h-screen flex flex-col overflow-x-hidden transition-colors duration-200 ${darkMode ? 'bg-gray-900' : 'bg-csu-lightest-gray'}`}>
       {/* Header */}
       <header className={`py-3 px-6 shadow-lg flex-shrink-0 ${darkMode ? 'bg-gray-800' : 'bg-csu-navy'} text-white`}>
         <div className="flex items-center justify-between">
@@ -2221,7 +2221,7 @@ function App() {
                             <div className="md:w-1/3">
                               <img
                                 src={imageUrl}
-                                alt=""
+                                alt="More information section image"
                                 className="w-full h-48 md:h-full object-cover"
                               />
                             </div>
