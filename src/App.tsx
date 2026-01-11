@@ -127,7 +127,8 @@ const LEARNING_PARTNER_MODULES: Module[] = [
   { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 4 },
   { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 5 },
   { id: 'lead-capture-form', name: 'Lead Capture Form', enabled: true, locked: false, order: 6 },
-  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 7 },
+  { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 7 },
+  { id: 'footer', name: 'Footer', enabled: true, locked: true, order: 8 },
 ]
 
 // Default modules for Channel Partner template
@@ -290,6 +291,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [contentPanelCollapsed, setContentPanelCollapsed] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
+  const [isSavingDraft, setIsSavingDraft] = useState(false)
   const [exportRequester, setExportRequester] = useState({
     firstName: '',
     lastName: '',
@@ -686,7 +689,10 @@ function App() {
 
   // Handle export submission
   const handleExport = () => {
-    if (!isExportFormValid()) return
+    // Prevent double-clicks
+    if (!isExportFormValid() || isExporting) return
+
+    setIsExporting(true)
 
     // Generate Wufoo text
     const wufooText = generateWufooText()
@@ -701,6 +707,7 @@ function App() {
     // Show export results
     setShowExportModal(false)
     setShowExportResults(true)
+    setIsExporting(false)
   }
 
   // Download HTML file
@@ -775,6 +782,10 @@ function App() {
 
   // Save draft to JSON file
   const handleSaveDraft = () => {
+    // Prevent double-clicks
+    if (isSavingDraft) return
+
+    setIsSavingDraft(true)
     const draft = {
       version: '1.0',
       created: new Date().toISOString(),
@@ -804,6 +815,7 @@ function App() {
 
     const blob = new Blob([JSON.stringify(draft, null, 2)], { type: 'application/json' })
     saveAs(blob, filename)
+    setIsSavingDraft(false)
   }
 
   // Download JSON draft from export modal
@@ -1486,9 +1498,22 @@ function App() {
             </button>
             <button
               onClick={handleSaveDraft}
-              className="px-3 py-1.5 text-sm bg-csu-navy border border-white/30 rounded hover:bg-white/10 transition-colors"
+              disabled={isSavingDraft}
+              className={`px-3 py-1.5 text-sm bg-csu-navy border border-white/30 rounded transition-colors ${
+                isSavingDraft ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'
+              }`}
             >
-              Save Draft
+              {isSavingDraft ? (
+                <span className="flex items-center gap-1">
+                  <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Saving...
+                </span>
+              ) : (
+                'Save Draft'
+              )}
             </button>
             <button
               onClick={() => setShowExportModal(true)}
@@ -2767,41 +2792,59 @@ function App() {
                   )}
                 </div>
                 {currentFaqs.map((faq, index) => (
-                  <div key={index} className="grid grid-cols-2 gap-3 p-3 bg-csu-lightest-gray rounded-lg">
-                    <div>
-                      <label htmlFor={`faq-question-${index}`} className="block text-xs font-medium text-csu-dark-gray mb-1">
-                        Question {index + 1}
-                      </label>
-                      <input
-                        type="text"
-                        id={`faq-question-${index}`}
-                        value={faq.question || ''}
-                        onChange={(e) => {
-                          const updatedFaqs = [...currentFaqs]
-                          updatedFaqs[index] = { ...updatedFaqs[index], question: e.target.value }
+                  <div key={index} className="relative p-3 bg-csu-lightest-gray rounded-lg">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor={`faq-question-${index}`} className="block text-xs font-medium text-csu-dark-gray mb-1">
+                          Question {index + 1}
+                        </label>
+                        <input
+                          type="text"
+                          id={`faq-question-${index}`}
+                          value={faq.question || ''}
+                          onChange={(e) => {
+                            const updatedFaqs = [...currentFaqs]
+                            updatedFaqs[index] = { ...updatedFaqs[index], question: e.target.value }
+                            updateModuleContent('faq-accordion', { faqs: updatedFaqs })
+                          }}
+                          className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
+                          placeholder={`Question ${index + 1}`}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor={`faq-answer-${index}`} className="block text-xs font-medium text-csu-dark-gray mb-1">
+                          Answer {index + 1}
+                        </label>
+                        <textarea
+                          id={`faq-answer-${index}`}
+                          value={faq.answer || ''}
+                          onChange={(e) => {
+                            const updatedFaqs = [...currentFaqs]
+                            updatedFaqs[index] = { ...updatedFaqs[index], answer: e.target.value }
+                            updateModuleContent('faq-accordion', { faqs: updatedFaqs })
+                          }}
+                          rows={2}
+                          className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none resize-none"
+                          placeholder={`Answer ${index + 1}`}
+                        />
+                      </div>
+                    </div>
+                    {/* Delete button - only show if more than 1 FAQ exists */}
+                    {currentFaqs.length > 1 && (
+                      <button
+                        onClick={() => {
+                          const updatedFaqs = currentFaqs.filter((_, i) => i !== index)
                           updateModuleContent('faq-accordion', { faqs: updatedFaqs })
                         }}
-                        className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
-                        placeholder={`Question ${index + 1}`}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor={`faq-answer-${index}`} className="block text-xs font-medium text-csu-dark-gray mb-1">
-                        Answer {index + 1}
-                      </label>
-                      <textarea
-                        id={`faq-answer-${index}`}
-                        value={faq.answer || ''}
-                        onChange={(e) => {
-                          const updatedFaqs = [...currentFaqs]
-                          updatedFaqs[index] = { ...updatedFaqs[index], answer: e.target.value }
-                          updateModuleContent('faq-accordion', { faqs: updatedFaqs })
-                        }}
-                        rows={2}
-                        className="w-full px-2 py-1.5 text-sm border border-csu-light-gray rounded focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none resize-none"
-                        placeholder={`Answer ${index + 1}`}
-                      />
-                    </div>
+                        className="absolute top-2 right-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
+                        aria-label={`Remove FAQ ${index + 1}`}
+                        title={`Remove FAQ ${index + 1}`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
@@ -3844,14 +3887,24 @@ function App() {
                 </button>
                 <button
                   onClick={handleExport}
-                  disabled={!isExportFormValid()}
+                  disabled={!isExportFormValid() || isExporting}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    isExportFormValid()
+                    isExportFormValid() && !isExporting
                       ? 'bg-csu-gold text-csu-near-black hover:bg-csu-gold/90'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}
                 >
-                  Export Files
+                  {isExporting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Exporting...
+                    </span>
+                  ) : (
+                    'Export Files'
+                  )}
                 </button>
               </div>
             </div>
