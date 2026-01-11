@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "created": "2026-01-11T10:14:05.824Z",
+  "modified": "2026-01-11T10:14:05.824Z",
+  "metadata": {
+    "partnerName": "UNIQUE_TEST_33333",
+    "templateType": "learning-partner",
+    "sourceUrl": ""
+  },
+  "settings": {
+    "headerStyle": "minimal",
+    "footerStyle": "minimal"
+  },
+  "modules": {
+    "header": {
+      "enabled": true,
+      "order": 1,
+      "content": {}
+    },
+    "partner-headline": {
+      "enabled": true,
+      "order": 2,
+      "content": {}
+    },
+    "partner-logo": {
+      "enabled": true,
+      "order": 3,
+      "content": {}
+    },
+    "partner-benefits-card": {
+      "enabled": true,
+      "order": 4,
+      "content": {
+        "benefits": [
+          "BENEFIT_VERIFY_44444",
+          "Flexible Online Learning",
+          "No Application Fee",
+          ""
+        ]
+      }
+    },
+    "benefits-copy": {
+      "enabled": true,
+      "order": 5,
+      "content": {}
+    },
+    "lead-capture-form": {
+      "enabled": true,
+      "order": 6,
+      "content": {}
+    },
+    "faq-accordion": {
+      "enabled": true,
+      "order": 7,
+      "content": {}
+    },
+    "footer": {
+      "enabled": true,
+      "order": 8,
+      "content": {}
+    }
+  }
+}
