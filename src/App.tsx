@@ -2316,45 +2316,24 @@ function App() {
                   tabIndex={module.locked ? -1 : 0}
                 >
                   {module.id === 'header' && (
-                    <div className="py-4 px-4">
-                      {/* CSU Corporate Header - matches columbiasouthern.edu */}
-                      <div className="flex items-center justify-between max-w-[1200px] mx-auto">
-                        <a
-                          href="https://www.columbiasouthern.edu"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:opacity-80 transition-opacity"
-                          aria-label="Columbia Southern University Homepage"
-                        >
-                          <img
-                            src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png"
-                            alt="Columbia Southern University logo"
-                            className="h-14"
-                          />
-                        </a>
-                        <div className="flex items-center gap-3">
-                          <a href="tel:+18009778449" className="text-[15px] px-4 py-3 text-csu-beige hover:text-csu-gold transition-colors">
-                            800-977-8449
-                          </a>
-                          <a href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer" className="text-[15px] px-4 py-3 text-csu-beige hover:text-csu-gold transition-colors">
-                            Login Options
-                          </a>
-                          <a
-                            href="https://mycsu.columbiasouthern.edu/prospect/application"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-5 py-3 border-2 border-csu-beige text-csu-beige rounded-[5px] text-[15px] hover:bg-white/10 transition-colors"
-                          >
-                            Apply Now
-                          </a>
-                          <a
-                            href="https://www.columbiasouthern.edu/info-form"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-5 py-3 bg-csu-gold text-csu-navy rounded-[5px] text-[15px] font-bold hover:bg-csu-gold/90 transition-colors"
-                          >
-                            Request Info
-                          </a>
+                    <div className="preview-header">
+                      {/* CSU Corporate Header - matches perkspot.html structure */}
+                      <div className="dark utility-navigation">
+                        <div className="site-wrap flex">
+                          <div className="site-logo">
+                            <a href="https://www.columbiasouthern.edu" target="_blank" rel="noopener noreferrer">
+                              <img
+                                src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png"
+                                alt="Columbia Southern University logo, homepage"
+                              />
+                            </a>
+                          </div>
+                          <ul className="button-group flex">
+                            <li><a className="button" href="tel:+18009778449">800-977-8449</a></li>
+                            <li><a className="button" href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer">Login Options</a></li>
+                            <li><a className="button ghost" href="https://mycsu.columbiasouthern.edu/prospect/application" target="_blank" rel="noopener noreferrer">Apply Now</a></li>
+                            <li><a className="button solid" href="https://www.columbiasouthern.edu/info-form" target="_blank" rel="noopener noreferrer">Request Info</a></li>
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -2362,27 +2341,30 @@ function App() {
 
                   {/* CSU Global Menu Preview */}
                   {module.id === 'csu-global-menu' && (
-                    <div className="bg-white border-b border-gray-200">
-                      <div className="py-3 px-4">
-                        <div className="flex items-center justify-between max-w-[1200px] mx-auto">
-                          <nav className="flex items-center gap-8">
-                            <a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Academics</a>
-                            <a href="https://www.columbiasouthern.edu/admissions/getting-started/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Admissions</a>
-                            <a href="https://www.columbiasouthern.edu/student-support/support-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Student Support</a>
-                            <a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Tuition & Financing</a>
-                            <a href="https://www.columbiasouthern.edu/about-csu/about-csu/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">About</a>
-                            <a href="https://www.columbiasouthern.edu/military/military-tuition-information/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Military</a>
-                            <a href="https://www.columbiasouthern.edu/careers/careers-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Careers</a>
-                          </nav>
-                          <a href="https://www.columbiasouthern.edu/search/" target="_blank" rel="noopener noreferrer" className="text-csu-navy hover:text-csu-gold transition-colors" aria-label="Search">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                          </a>
+                    <div className="preview-header">
+                      <div className="light">
+                        <nav className="navigation-wrapper site-wrap flex">
+                          <ul className="site-navigation">
+                            <li><button className="toggle" type="button">Academics</button></li>
+                            <li><button className="toggle" type="button">Admissions</button></li>
+                            <li><button className="toggle" type="button">Student Support</button></li>
+                            <li><button className="toggle" type="button">Tuition &amp; Financing</button></li>
+                            <li><button className="toggle" type="button">About</button></li>
+                            <li><button className="toggle" type="button">Military</button></li>
+                            <li><button className="toggle" type="button">Careers</button></li>
+                          </ul>
+                          <div className="site-search">
+                            <button className="toggle" type="button">
+                              <span className="offscreen">Open Search</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </nav>
+                        <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
+                          <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
                         </div>
-                      </div>
-                      <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
-                        <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
                       </div>
                     </div>
                   )}

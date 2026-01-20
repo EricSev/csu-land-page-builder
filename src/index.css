@@ -119,3 +119,174 @@ body {
 .animate-fade-in-up {
   animation: fade-in-up 0.3s ease-out;
 }
+
+/* ============================================
+   Preview Header Styles (matches perkspot.html export)
+   ============================================ */
+
+/* Dark theme for header */
+.preview-header .dark {
+  background-color: #002855;
+  color: #fff;
+}
+
+/* Light theme for navigation */
+.preview-header .light {
+  background-color: #fff;
+  color: #5B6770;
+}
+
+/* Utility navigation */
+.preview-header .utility-navigation {
+  padding: 10px;
+}
+
+.preview-header .utility-navigation .site-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-header .utility-navigation .site-logo {
+  margin: 15px 0;
+  max-width: 200px;
+}
+
+.preview-header .site-logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Site wrap - max width container */
+.preview-header .site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  padding: 0 16px;
+}
+
+/* Button group */
+.preview-header .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.preview-header .button-group > li {
+  margin: 0;
+  list-style: none;
+}
+
+/* Base button styles */
+.preview-header .button {
+  display: inline-block;
+  margin: 0.5em 0;
+  padding: 1em 1.25em;
+  background-color: transparent;
+  border: transparent 2px solid;
+  border-radius: 0;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.preview-header .button:hover {
+  opacity: 0.85;
+}
+
+/* Button colors in dark context */
+.preview-header .dark .button {
+  color: #DFD1A7;
+}
+
+.preview-header .dark .button.ghost {
+  border-color: #DFD1A7;
+  color: #DFD1A7;
+}
+
+.preview-header .dark .button.solid {
+  background-color: #C6AA76;
+  color: #002855;
+}
+
+/* Button spacing in flex button groups */
+.preview-header .button-group.flex .button.ghost,
+.preview-header .button-group.flex .button.solid {
+  margin-left: 0.75em;
+  margin-right: 0.75em;
+  border-radius: 5px;
+}
+
+/* Navigation wrapper */
+.preview-header .navigation-wrapper {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Site navigation */
+.preview-header .site-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+}
+
+.preview-header .site-navigation > li {
+  list-style: none;
+}
+
+.preview-header .site-navigation > li > button.toggle {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #002855;
+  padding: 0.75em 1em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.preview-header .site-navigation > li > button.toggle:hover {
+  color: #C6AA76;
+}
+
+/* Site search */
+.preview-header .site-search {
+  display: flex;
+  align-items: center;
+}
+
+.preview-header .site-search button.toggle {
+  background: transparent;
+  border: none;
+  padding: 0.75em;
+  cursor: pointer;
+  color: #002855;
+  transition: color 0.2s ease;
+}
+
+.preview-header .site-search button.toggle:hover {
+  color: #C6AA76;
+}
+
+.preview-header .site-search .offscreen {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
