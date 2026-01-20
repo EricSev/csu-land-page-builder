@@ -2316,9 +2316,9 @@ function App() {
                   tabIndex={module.locked ? -1 : 0}
                 >
                   {module.id === 'header' && (
-                    <div className="py-3 px-4">
+                    <div className="py-4 px-4">
                       {/* CSU Corporate Header - matches columbiasouthern.edu */}
-                      <div className="flex items-center justify-between max-w-6xl mx-auto">
+                      <div className="flex items-center justify-between max-w-[1200px] mx-auto">
                         <a
                           href="https://www.columbiasouthern.edu"
                           target="_blank"
@@ -2329,21 +2329,21 @@ function App() {
                           <img
                             src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png"
                             alt="Columbia Southern University logo"
-                            className="h-12"
+                            className="h-14"
                           />
                         </a>
-                        <div className="flex items-center gap-2">
-                          <a href="tel:+18009778449" className="text-sm px-3 py-2 hover:text-csu-gold transition-colors">
+                        <div className="flex items-center gap-3">
+                          <a href="tel:+18009778449" className="text-[15px] px-4 py-3 text-csu-beige hover:text-csu-gold transition-colors">
                             800-977-8449
                           </a>
-                          <a href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer" className="text-sm px-3 py-2 hover:text-csu-gold transition-colors">
+                          <a href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer" className="text-[15px] px-4 py-3 text-csu-beige hover:text-csu-gold transition-colors">
                             Login Options
                           </a>
                           <a
                             href="https://mycsu.columbiasouthern.edu/prospect/application"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 border border-white rounded text-sm hover:bg-white/10 transition-colors"
+                            className="px-5 py-3 border-2 border-csu-beige text-csu-beige rounded-[5px] text-[15px] hover:bg-white/10 transition-colors"
                           >
                             Apply Now
                           </a>
@@ -2351,7 +2351,7 @@ function App() {
                             href="https://www.columbiasouthern.edu/info-form"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 bg-csu-gold text-csu-near-black rounded text-sm font-semibold hover:bg-csu-gold/90 transition-colors"
+                            className="px-5 py-3 bg-csu-gold text-csu-navy rounded-[5px] text-[15px] font-bold hover:bg-csu-gold/90 transition-colors"
                           >
                             Request Info
                           </a>
@@ -2364,15 +2364,15 @@ function App() {
                   {module.id === 'csu-global-menu' && (
                     <div className="bg-white border-b border-gray-200">
                       <div className="py-3 px-4">
-                        <div className="flex items-center justify-between max-w-6xl mx-auto">
-                          <nav className="flex items-center gap-6">
-                            <a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Academics</a>
-                            <a href="https://www.columbiasouthern.edu/admissions/getting-started/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Admissions</a>
-                            <a href="https://www.columbiasouthern.edu/student-support/support-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Student Support</a>
-                            <a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Tuition & Financing</a>
-                            <a href="https://www.columbiasouthern.edu/about-csu/about-csu/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">About</a>
-                            <a href="https://www.columbiasouthern.edu/military/military-tuition-information/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Military</a>
-                            <a href="https://www.columbiasouthern.edu/careers/careers-overview/" target="_blank" rel="noopener noreferrer" className="text-sm text-csu-navy font-medium hover:text-csu-gold transition-colors">Careers</a>
+                        <div className="flex items-center justify-between max-w-[1200px] mx-auto">
+                          <nav className="flex items-center gap-8">
+                            <a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Academics</a>
+                            <a href="https://www.columbiasouthern.edu/admissions/getting-started/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Admissions</a>
+                            <a href="https://www.columbiasouthern.edu/student-support/support-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Student Support</a>
+                            <a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Tuition & Financing</a>
+                            <a href="https://www.columbiasouthern.edu/about-csu/about-csu/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">About</a>
+                            <a href="https://www.columbiasouthern.edu/military/military-tuition-information/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Military</a>
+                            <a href="https://www.columbiasouthern.edu/careers/careers-overview/" target="_blank" rel="noopener noreferrer" className="text-base text-csu-navy font-medium hover:text-csu-gold transition-colors">Careers</a>
                           </nav>
                           <a href="https://www.columbiasouthern.edu/search/" target="_blank" rel="noopener noreferrer" className="text-csu-navy hover:text-csu-gold transition-colors" aria-label="Search">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
