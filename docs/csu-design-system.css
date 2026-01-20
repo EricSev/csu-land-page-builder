@@ -1,0 +1,656 @@
+/*
+ * CSU Design System
+ * Source: https://www.columbiasouthern.edu
+ * 
+ * This is the authoritative CSS for the landing page builder.
+ * All class names, color values, and structure must match exactly.
+ */
+
+/* ===========================================
+   FONT IMPORTS - REQUIRED
+   =========================================== */
+@import url("https://use.typekit.net/yxt5svl.css");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap");
+
+/* ===========================================
+   CSS CUSTOM PROPERTIES
+   =========================================== */
+:root {
+  /* Brand Colors */
+  --color-navy: #002855;
+  --color-gold: #C6AA76;
+  --color-gold-light: #DFD1A7;
+  --color-teal: #207788;
+  --color-teal-light: #77C5D5;
+  
+  /* Text Colors */
+  --color-text-primary: #1D252D;
+  --color-text-secondary: #5B6770;
+  --color-text-muted: #A2AAAD;
+  --color-text-inverse: #fff;
+  
+  /* Background Colors */
+  --color-bg-dark: #002855;
+  --color-bg-light: #fff;
+  --color-bg-gray: #f7f7f7;
+  
+  /* Semantic */
+  --color-error: #bb2403;
+  --color-success: #C5E86C;
+  --color-link: #207788;
+  --color-link-hover: #bb2403;
+  
+  /* Typography */
+  --font-display: "Nunito Sans", sans-serif;
+  --font-body: "cronos-pro", sans-serif;
+  
+  /* Spacing */
+  --space-xs: 0.25em;
+  --space-sm: 0.5em;
+  --space-md: 1em;
+  --space-lg: 1.5em;
+  --space-xl: 2em;
+  
+  /* Layout */
+  --site-max-width: 1200px;
+  --button-radius: 5px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.25s ease-in-out;
+}
+
+/* ===========================================
+   RESET & BASE
+   =========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.35;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-bg-light);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+  border-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.15rem;
+  line-height: 1.25;
+}
+
+h1, h2, h4 {
+  font-family: var(--font-display);
+}
+
+h3, h5, h6 {
+  font-family: var(--font-body);
+}
+
+h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+h3, h5 {
+  font-style: italic;
+}
+
+h1 { font-size: 2rem; font-weight: 900; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.65rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.3rem; }
+h6 { font-size: 1.125rem; text-transform: uppercase; letter-spacing: 0.025em; }
+
+/* ===========================================
+   LAYOUT CONTAINERS
+   =========================================== */
+.site-wrap {
+  margin: 0 auto;
+  max-width: var(--site-max-width);
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .site-wrap {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .site-wrap {
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+  }
+}
+
+/* ===========================================
+   THEME CONTEXTS
+   =========================================== */
+
+/* Light theme */
+.light {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-secondary);
+}
+
+.light h1,
+.light h2,
+.light h4,
+.light h5 {
+  color: var(--color-navy);
+}
+
+.light h3,
+.light h6 {
+  color: var(--color-text-secondary);
+}
+
+.light a {
+  color: var(--color-teal);
+}
+
+.light a:hover,
+.light a:focus {
+  color: var(--color-error);
+}
+
+/* Dark theme */
+.dark {
+  background-color: var(--color-navy);
+  color: var(--color-text-inverse);
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: var(--color-text-inverse);
+}
+
+.dark a {
+  color: var(--color-text-inverse);
+}
+
+.dark a:hover,
+.dark a:focus {
+  color: var(--color-gold-light);
+}
+
+.background-gray {
+  background-color: var(--color-bg-gray);
+}
+
+/* ===========================================
+   HEADER
+   =========================================== */
+header {
+  position: relative;
+  z-index: 20;
+}
+
+/* Dark utility navigation bar */
+.utility-navigation {
+  padding: 10px;
+}
+
+.utility-navigation .site-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.utility-navigation .site-logo {
+  margin: 15px 0;
+}
+
+.site-logo,
+.mobile-site-logo {
+  max-width: 200px;
+}
+
+.site-logo img,
+.mobile-site-logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Light navigation wrapper */
+.navigation-wrapper {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .navigation-wrapper > .flex {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+  }
+}
+
+/* ===========================================
+   NAVIGATION
+   =========================================== */
+.site-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-navigation > li {
+  position: relative;
+}
+
+.site-navigation > li > a,
+.site-navigation > li > button {
+  position: relative;
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-navy);
+  padding: 0.75em 1em;
+  margin: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.site-navigation > li > a:hover,
+.site-navigation > li > a:focus,
+.site-navigation > li > button:hover,
+.site-navigation > li > button:focus {
+  color: var(--color-error);
+}
+
+/* Dropdown gold top border */
+.site-navigation > li .dropdown {
+  border-top: var(--color-gold) 3px solid;
+}
+
+/* ===========================================
+   BUTTONS
+   =========================================== */
+button,
+.button {
+  display: inline-block;
+  margin: 0.5em 0;
+  padding: 1em 1.25em;
+  background-color: transparent;
+  border: transparent 2px solid;
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* === LIGHT CONTEXT BUTTONS === */
+.light button,
+.light .button {
+  color: var(--color-text-primary);
+}
+
+.light button.solid,
+.light .button.solid {
+  background-color: var(--color-gold-light);
+  color: var(--color-text-primary);
+}
+
+.light button.ghost,
+.light .button.ghost {
+  border-color: var(--color-gold-light);
+  color: var(--color-text-primary);
+}
+
+.light button.solid:hover,
+.light button.solid:focus,
+.light button.ghost:hover,
+.light button.ghost:focus,
+.light .button.solid:hover,
+.light .button.solid:focus,
+.light .button.ghost:hover,
+.light .button.ghost:focus {
+  background-color: var(--color-teal);
+  border-color: transparent;
+  color: var(--color-text-inverse);
+}
+
+/* === DARK CONTEXT BUTTONS === */
+.dark button,
+.dark .button {
+  color: var(--color-gold-light);
+}
+
+.dark button.solid,
+.dark .button.solid {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+}
+
+.dark button.ghost,
+.dark .button.ghost {
+  border-color: var(--color-gold-light);
+  color: var(--color-gold-light);
+}
+
+.dark button.solid:hover,
+.dark button.solid:focus,
+.dark button.ghost:hover,
+.dark button.ghost:focus,
+.dark .button.solid:hover,
+.dark .button.solid:focus,
+.dark .button.ghost:hover,
+.dark .button.ghost:focus {
+  background-color: var(--color-teal);
+  border-color: var(--color-text-inverse);
+  color: var(--color-text-inverse);
+}
+
+/* ===========================================
+   BUTTON GROUPS
+   =========================================== */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.button-group.flex .button.ghost,
+.button-group.flex .button.solid {
+  margin-left: 0.75em;
+  margin-right: 0.75em;
+  margin-bottom: 0;
+  border-radius: var(--button-radius);
+}
+
+.button-group.center {
+  justify-content: center;
+}
+
+.button-group > li {
+  margin: 0;
+  list-style: none;
+}
+
+/* ===========================================
+   FLEX UTILITIES
+   =========================================== */
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.center {
+  text-align: center;
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+/* ===========================================
+   GRID SYSTEM
+   =========================================== */
+.grid,
+.page-grid {
+  display: grid;
+  grid-template-rows: auto;
+}
+
+@media (max-width: 767px) {
+  .page-grid {
+    grid-template-columns: minmax(50px, 1fr);
+    grid-gap: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .page-grid {
+    grid-template-columns: repeat(6, minmax(50px, 1fr));
+    grid-gap: 30px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-grid {
+    grid-template-columns: repeat(12, minmax(50px, 1fr));
+    grid-gap: 50px;
+  }
+}
+
+/* Column ratios */
+@media (min-width: 1200px) {
+  .page-grid.columns-2-1 > *:nth-child(2n+1) {
+    grid-column: auto/span 8;
+  }
+  .page-grid.columns-2-1 > *:nth-child(2n+2) {
+    grid-column: auto/span 4;
+  }
+  
+  .page-grid.columns-1-2 > *:nth-child(2n+1) {
+    grid-column: auto/span 4;
+  }
+  .page-grid.columns-1-2 > *:nth-child(2n+2) {
+    grid-column: auto/span 8;
+  }
+}
+
+/* ===========================================
+   PAGE SECTIONS
+   =========================================== */
+.title-banner {
+  background: rgba(0, 40, 85, 0.975);
+}
+
+.title-banner h1 {
+  padding: 2.5em 0 0.5em;
+}
+
+.page-content {
+  margin: 35px 0 80px;
+}
+
+@media (max-width: 767px) {
+  .page-content {
+    margin: 20px 0 50px;
+  }
+}
+
+.padded {
+  padding: 50px 0 35px;
+}
+
+@media (min-width: 1024px) {
+  .padded {
+    padding: 7.5vh 0 5vh;
+  }
+}
+
+/* ===========================================
+   CTA BANNER
+   =========================================== */
+.cta-banner {
+  padding: 35px 0;
+  text-align: center;
+}
+
+.cta-banner.dark h1 {
+  color: var(--color-gold-light);
+}
+
+.cta-banner h1 {
+  font-size: 1.75rem;
+}
+
+.cta-banner .button-group {
+  max-width: 600px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.cta-banner .button-group .button {
+  font-size: 1rem;
+  padding: 1em;
+}
+
+/* ===========================================
+   CONTENT
+   =========================================== */
+.content {
+  font-size: 1.125rem;
+}
+
+@media (max-width: 1023px) {
+  .content {
+    font-size: 1.25rem;
+  }
+}
+
+.content p {
+  max-width: 100ch;
+  margin-bottom: 0.75em;
+  line-height: 1.5;
+}
+
+/* ===========================================
+   FOOTER
+   =========================================== */
+footer .light h1,
+footer .light h2 {
+  border-bottom: var(--color-gold-light) 1px solid;
+  margin-bottom: 0.5em;
+}
+
+footer .button-group .button {
+  padding: 0.75em;
+}
+
+footer .button-group .button:hover,
+footer .button-group .button:focus {
+  background-color: var(--color-teal);
+  border-color: transparent;
+  color: var(--color-text-inverse);
+}
+
+footer .background-gray {
+  padding: 15px 0;
+}
+
+/* ===========================================
+   LISTS
+   =========================================== */
+.link-list {
+  margin: 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+
+.link-list li a {
+  display: inline-block;
+  position: relative;
+  padding: 0.25em 0;
+}
+
+.dark .link-list li a {
+  color: var(--color-text-inverse);
+  font-weight: 600;
+}
+
+.dark .link-list li a:hover,
+.dark .link-list li a:focus {
+  color: var(--color-gold-light);
+}
+
+/* ===========================================
+   SOCIAL ICONS
+   =========================================== */
+.logo-grid.flex {
+  align-items: center;
+}
+
+.logo-grid a.social-link {
+  margin: 0 1em 0 0;
+  width: 3rem;
+  height: 3rem;
+  transition: transform var(--transition-normal);
+}
+
+.logo-grid a.social-link svg {
+  fill: var(--color-teal);
+}
+
+.logo-grid a.social-link.circle {
+  padding: 0.5em;
+  background-color: var(--color-teal);
+  border-radius: 50%;
+}
+
+.logo-grid a.social-link.circle svg {
+  fill: var(--color-text-inverse);
+}
+
+.logo-grid a.social-link:hover,
+.logo-grid a.social-link:focus {
+  transform: scale(1.1);
+}
+
+/* ===========================================
+   UTILITIES
+   =========================================== */
+.offscreen {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}

@@ -11,9 +11,10 @@ export default {
         // CSU Primary Colors
         'csu-navy': '#002855',
         'csu-gold': '#C6AA76',
+        'csu-gold-light': '#DFD1A7',
         // CSU Secondary Colors
         'csu-light-blue': '#77C5D5',
-        'csu-teal': '#7FA9AE',
+        'csu-teal': '#207788',
         'csu-lime': '#C5E86C',
         'csu-pale-blue': '#BBDDE6',
         'csu-yellow': '#F1B434',

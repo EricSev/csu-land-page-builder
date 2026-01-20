@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSU Markup Templates</title>
+  
+  <!-- REQUIRED FONTS -->
+  <link rel="stylesheet" href="https://use.typekit.net/yxt5svl.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
+  
+  <link rel="stylesheet" href="csu-design-system.css">
+</head>
+<body>
+
+<!-- =====================================================
+     TEMPLATE: COMPLETE HEADER
+     ===================================================== -->
+<header>
+  
+  <!-- DARK UTILITY BAR -->
+  <div class="dark utility-navigation">
+    <div class="site-wrap flex">
+      
+      <!-- Logo -->
+      <div class="site-logo">
+        <a href="/">
+          <img src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png" 
+               alt="Columbia Southern University logo">
+        </a>
+      </div>
+      
+      <!-- Header Buttons -->
+      <ul class="button-group flex">
+        <!-- Phone: PLAIN button (no ghost/solid) -->
+        <li>
+          <a class="button" href="tel:+18009778449">800-977-8449</a>
+        </li>
+        
+        <!-- Login: PLAIN button -->
+        <li>
+          <a class="button" href="/login">Login Options</a>
+        </li>
+        
+        <!-- Apply: GHOST button (border, no fill) -->
+        <li>
+          <a class="button ghost" href="/apply">Apply Now</a>
+        </li>
+        
+        <!-- Request Info: SOLID button (fill) -->
+        <li>
+          <a class="button solid" href="/request-info">Request Info</a>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+  
+  <!-- LIGHT NAVIGATION BAR -->
+  <div class="light">
+    <nav class="navigation-wrapper site-wrap flex">
+      
+      <!-- Mobile Logo (hidden on desktop) -->
+      <div class="mobile-site-logo">
+        <a href="/">
+          <img src="https://www.columbiasouthern.edu/media/campm3vj/csu-logo-horizontal.png" 
+               alt="Columbia Southern University logo">
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu" aria-expanded="false" aria-haspopup="true" type="button">
+        <span class="offscreen">Menu</span>
+        <!-- hamburger icon SVG -->
+      </button>
+      
+      <div class="flex">
+        <!-- Main Navigation -->
+        <ul class="site-navigation">
+          
+          <!-- Nav item WITH dropdown -->
+          <li>
+            <button class="toggle" aria-expanded="false" type="button">
+              Academics
+            </button>
+            <div class="dropdown">
+              <ul>
+                <li><a href="/programs">All Programs</a></li>
+                <li><a href="/degrees">Degree Levels</a></li>
+              </ul>
+            </div>
+          </li>
+          
+          <!-- Nav item WITH dropdown -->
+          <li>
+            <button class="toggle" aria-expanded="false" type="button">
+              Admissions
+            </button>
+            <div class="dropdown">
+              <ul>
+                <li><a href="/apply">Apply</a></li>
+                <li><a href="/tuition">Tuition</a></li>
+              </ul>
+            </div>
+          </li>
+          
+          <!-- Simple nav link (no dropdown) -->
+          <li>
+            <a href="/about">About</a>
+          </li>
+          
+          <!-- Simple nav link -->
+          <li>
+            <a href="/military">Military</a>
+          </li>
+          
+          <!-- Simple nav link -->
+          <li>
+            <a href="/careers">Careers</a>
+          </li>
+          
+        </ul>
+        
+        <!-- Search -->
+        <div class="site-search">
+          <button class="toggle" aria-expanded="false" type="button">
+            <span class="offscreen">Search</span>
+            <!-- search icon SVG -->
+          </button>
+        </div>
+        
+      </div>
+    </nav>
+  </div>
+  
+</header>
+
+
+<!-- =====================================================
+     TEMPLATE: MAIN CONTENT
+     ===================================================== -->
+<main id="content-start">
+  
+  <!-- Title Banner -->
+  <section class="title-banner dark">
+    <div class="site-wrap">
+      <h1>Page Title</h1>
+    </div>
+  </section>
+  
+  <!-- Two-Column Content -->
+  <section class="page-content light">
+    <div class="site-wrap page-grid columns-2-1">
+      
+      <!-- Main Content Column -->
+      <article class="content">
+        <img src="/path/to/partner-logo.png" alt="Partner Logo" class="right">
+        
+        <p><strong>Introduction paragraph with bold text.</strong></p>
+        
+        <p>Regular paragraph with <a href="/link">inline link</a> styling.</p>
+        
+        <h2>Section Heading</h2>
+        <p>More content here.</p>
+        
+        <!-- Button Group in Content -->
+        <div class="button-group">
+          <a class="button solid" href="/apply">Apply Now</a>
+          <a class="button ghost" href="/info">Request Info</a>
+        </div>
+      </article>
+      
+      <!-- Sidebar Column -->
+      <aside class="sidebar">
+        <div class="card">
+          <h3>Sidebar Card</h3>
+          <p>Sidebar content here.</p>
+        </div>
+      </aside>
+      
+    </div>
+  </section>
+  
+</main>
+
+
+<!-- =====================================================
+     TEMPLATE: CTA BANNER
+     ===================================================== -->
+<section class="cta-banner dark">
+  <div class="site-wrap">
+    <h1>Get Started Today</h1>
+    <div class="button-group flex center">
+      <a class="button ghost" href="/apply">Apply Now</a>
+      <a class="button solid" href="/request-info">Request Info</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     TEMPLATE: FOOTER
+     ===================================================== -->
+<footer>
+  
+  <!-- CTA Banner -->
+  <section class="cta-banner dark">
+    <div class="site-wrap">
+      <h1>Start Your Journey</h1>
+      <div class="button-group flex center">
+        <a class="button ghost" href="/apply">Apply Now</a>
+        <a class="button solid" href="/request-info">Request Info</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer Content -->
+  <section class="light padded">
+    <div class="site-wrap page-grid columns-1-2">
+      
+      <!-- Left Column: Contact Info -->
+      <div>
+        <h2 class="h4">Columbia Southern University</h2>
+        <p>
+          21982 University Lane<br>
+          Orange Beach, Alabama 36561
+        </p>
+        <p>
+          Phone: <a href="tel:+12519813771">251-981-3771</a><br>
+          Toll Free: <a href="tel:+18009778449">800-977-8449</a>
+        </p>
+        
+        <!-- Social Links -->
+        <ul class="logo-grid flex">
+          <li>
+            <a class="social-link circle" href="https://facebook.com" title="Facebook">
+              <!-- FB SVG icon -->
+              <span class="offscreen">Facebook</span>
+            </a>
+          </li>
+          <li>
+            <a class="social-link circle" href="https://twitter.com" title="Twitter">
+              <!-- Twitter SVG icon -->
+              <span class="offscreen">Twitter</span>
+            </a>
+          </li>
+        </ul>
+        
+        <p><small>&copy; 2026 Columbia Southern University</small></p>
+      </div>
+      
+      <!-- Right Column: Link Columns -->
+      <div class="grid columns-3 grid-gap-30">
+        <div>
+          <h3 class="h4">Admissions</h3>
+          <ul class="link-list">
+            <li><a href="/getting-started">Getting Started</a></li>
+            <li><a href="/catalog">Download Catalog</a></li>
+            <li><a href="/tuition">Tuition</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="h4">Academics</h3>
+          <ul class="link-list">
+            <li><a href="/programs">Programs</a></li>
+            <li><a href="/handbook">Student Handbook</a></li>
+            <li><a href="/alumni">Alumni</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="h4">About</h3>
+          <ul class="link-list">
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/accreditation">Accreditation</a></li>
+            <li><a href="/careers">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- Bottom Bar -->
+  <div class="light background-gray">
+    <div class="site-wrap">
+      <ul class="button-group flex center">
+        <li><a class="button" href="/privacy">Privacy Policy</a></li>
+        <li><a class="button" href="/accessibility">Accessibility</a></li>
+        <li><a class="button" href="/sitemap">Site Map</a></li>
+      </ul>
+    </div>
+  </div>
+  
+</footer>
+
+
+<!-- =====================================================
+     TEMPLATE: BUTTON VARIANTS REFERENCE
+     ===================================================== -->
+
+<!-- 
+DARK CONTEXT BUTTONS
+==================== 
+-->
+<div class="dark" style="padding: 20px;">
+  <!-- Plain button (text only) -->
+  <a class="button" href="#">Plain Button</a>
+  
+  <!-- Ghost button (border, no fill) -->
+  <a class="button ghost" href="#">Ghost Button</a>
+  
+  <!-- Solid button (filled) -->
+  <a class="button solid" href="#">Solid Button</a>
+</div>
+
+<!-- 
+LIGHT CONTEXT BUTTONS
+===================== 
+-->
+<div class="light" style="padding: 20px;">
+  <!-- Plain button -->
+  <a class="button" href="#">Plain Button</a>
+  
+  <!-- Ghost button -->
+  <a class="button ghost" href="#">Ghost Button</a>
+  
+  <!-- Solid button -->
+  <a class="button solid" href="#">Solid Button</a>
+</div>
+
+
+<!-- =====================================================
+     TEMPLATE: GRID LAYOUTS
+     ===================================================== -->
+
+<!-- Two-column 2:1 ratio -->
+<section class="light">
+  <div class="site-wrap page-grid columns-2-1">
+    <div>Main content (8 cols)</div>
+    <div>Sidebar (4 cols)</div>
+  </div>
+</section>
+
+<!-- Two-column 1:2 ratio -->
+<section class="light">
+  <div class="site-wrap page-grid columns-1-2">
+    <div>Sidebar (4 cols)</div>
+    <div>Main content (8 cols)</div>
+  </div>
+</section>
+
+<!-- Three-column equal -->
+<section class="light">
+  <div class="site-wrap grid columns-3 grid-gap-30">
+    <div>Column 1</div>
+    <div>Column 2</div>
+    <div>Column 3</div>
+  </div>
+</section>
+
+
+</body>
+</html>

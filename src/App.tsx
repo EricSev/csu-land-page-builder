@@ -626,53 +626,267 @@ function App() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${partnerName} - Columbia Southern University</title>
-  <!-- CSU Global Stylesheet - for exact branding match -->
-  <link rel="stylesheet" href="https://www.columbiasouthern.edu/css/scss/sites/global.css">
-  <!-- Google Fonts for Nunito Sans -->
+  <!-- Adobe Typekit - cronos-pro font -->
+  <link rel="stylesheet" href="https://use.typekit.net/yxt5svl.css">
+  <!-- Google Fonts - Nunito Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
   <!-- jQuery (required for CSU navigation) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!-- CSU Global Scripts (for navigation menu functionality) -->
   <script src="https://www.columbiasouthern.edu/scripts/globals.js"></script>
   <style>
-    /* Custom page content styles (supplement CSU global.css) */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    /* ===========================================
+       CSU Design System - CSS Custom Properties
+       =========================================== */
+    :root {
+      /* Brand Colors */
+      --color-navy: #002855;
+      --color-gold: #C6AA76;
+      --color-gold-light: #DFD1A7;
+      --color-teal: #207788;
+      --color-teal-light: #77C5D5;
 
-    /* Hero Section */
-    .hero { background: linear-gradient(135deg, #002855 0%, #003d7a 100%); color: white; padding: 60px 0; text-align: center; }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 16px; }
-    .hero p { font-size: 1.25rem; opacity: 0.9; }
+      /* Text Colors */
+      --color-text-primary: #1D252D;
+      --color-text-secondary: #5B6770;
+      --color-text-muted: #A2AAAD;
+      --color-text-inverse: #fff;
 
-    /* Benefits Card */
+      /* Background Colors */
+      --color-bg-dark: #002855;
+      --color-bg-light: #fff;
+      --color-bg-gray: #f7f7f7;
+
+      /* Semantic */
+      --color-error: #bb2403;
+      --color-success: #C5E86C;
+      --color-link: #207788;
+      --color-link-hover: #bb2403;
+
+      /* Typography */
+      --font-display: "Nunito Sans", sans-serif;
+      --font-body: "cronos-pro", sans-serif;
+
+      /* Spacing */
+      --space-xs: 0.25em;
+      --space-sm: 0.5em;
+      --space-md: 1em;
+      --space-lg: 1.5em;
+      --space-xl: 2em;
+
+      /* Layout */
+      --site-max-width: 1200px;
+      --button-radius: 5px;
+
+      /* Transitions */
+      --transition-fast: 0.15s ease-in-out;
+      --transition-normal: 0.25s ease-in-out;
+    }
+
+    /* ===========================================
+       RESET & BASE
+       =========================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-family: sans-serif; line-height: 1.35; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; padding: 0; font-family: var(--font-body); background-color: var(--color-bg-light); color: var(--color-text-primary); overflow-x: hidden; }
+    img { max-width: 100%; vertical-align: middle; border-style: none; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { font-weight: 700; text-decoration: none; }
+
+    /* ===========================================
+       TYPOGRAPHY
+       =========================================== */
+    h1, h2, h3, h4, h5, h6 { margin: 0 0 0.15rem; line-height: 1.25; }
+    h1, h2, h4 { font-family: var(--font-display); }
+    h3, h5, h6 { font-family: var(--font-body); }
+    h2, h3, h4, h5, h6 { font-weight: 700; }
+    h3, h5 { font-style: italic; }
+    h1 { font-size: 2rem; font-weight: 900; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.65rem; }
+    h4 { font-size: 1.4rem; }
+    h5 { font-size: 1.3rem; }
+    h6 { font-size: 1.125rem; text-transform: uppercase; letter-spacing: 0.025em; }
+
+    /* ===========================================
+       LAYOUT CONTAINERS
+       =========================================== */
+    .site-wrap { margin: 0 auto; max-width: var(--site-max-width); position: relative; }
+    @media (max-width: 767px) { .site-wrap { padding-left: 15px; padding-right: 15px; } }
+    @media (min-width: 768px) and (max-width: 1199px) { .site-wrap { padding-left: 2.5vw; padding-right: 2.5vw; } }
+
+    /* ===========================================
+       THEME CONTEXTS
+       =========================================== */
+    .light { background-color: var(--color-bg-light); color: var(--color-text-secondary); }
+    .light h1, .light h2, .light h4, .light h5 { color: var(--color-navy); }
+    .light h3, .light h6 { color: var(--color-text-secondary); }
+    .light a { color: var(--color-teal); }
+    .light a:hover, .light a:focus { color: var(--color-error); }
+
+    .dark { background-color: var(--color-navy); color: var(--color-text-inverse); }
+    .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 { color: var(--color-text-inverse); }
+    .dark a { color: var(--color-text-inverse); }
+    .dark a:hover, .dark a:focus { color: var(--color-gold-light); }
+
+    .background-gray { background-color: var(--color-bg-gray); }
+
+    /* ===========================================
+       HEADER
+       =========================================== */
+    header { position: relative; z-index: 20; }
+    .utility-navigation { padding: 10px; }
+    .utility-navigation .site-wrap { display: flex; justify-content: space-between; align-items: center; }
+    .utility-navigation .site-logo { margin: 15px 0; }
+    .site-logo, .mobile-site-logo { max-width: 200px; }
+    .site-logo img, .mobile-site-logo img { display: block; max-width: 100%; height: auto; }
+    .navigation-wrapper { padding-top: 1rem; padding-bottom: 1rem; }
+    @media (min-width: 1024px) { .navigation-wrapper > .flex { position: relative; align-items: center; justify-content: center; margin: 20px auto; } }
+
+    /* ===========================================
+       NAVIGATION
+       =========================================== */
+    .site-navigation { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; }
+    .site-navigation > li { position: relative; }
+    .site-navigation > li > a, .site-navigation > li > button { position: relative; display: block; font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--color-navy); padding: 0.75em 1em; margin: 0; background: transparent; border: none; cursor: pointer; transition: all 0.3s ease; }
+    .site-navigation > li > a:hover, .site-navigation > li > a:focus, .site-navigation > li > button:hover, .site-navigation > li > button:focus { color: var(--color-error); }
+    .site-navigation > li .dropdown { border-top: var(--color-gold) 3px solid; }
+
+    /* ===========================================
+       BUTTONS
+       =========================================== */
+    button, .button { display: inline-block; margin: 0.5em 0; padding: 1em 1.25em; background-color: transparent; border: transparent 2px solid; border-radius: 0; font-family: var(--font-display); font-size: 0.9375rem; font-weight: 700; text-align: center; line-height: 1.15; cursor: pointer; transition: all var(--transition-fast); }
+
+    /* Light Context Buttons */
+    .light button, .light .button { color: var(--color-text-primary); }
+    .light button.solid, .light .button.solid { background-color: var(--color-gold-light); color: var(--color-text-primary); }
+    .light button.ghost, .light .button.ghost { border-color: var(--color-gold-light); color: var(--color-text-primary); }
+    .light button.solid:hover, .light button.solid:focus, .light button.ghost:hover, .light button.ghost:focus,
+    .light .button.solid:hover, .light .button.solid:focus, .light .button.ghost:hover, .light .button.ghost:focus { background-color: var(--color-teal); border-color: transparent; color: var(--color-text-inverse); }
+
+    /* Dark Context Buttons */
+    .dark button, .dark .button { color: var(--color-gold-light); }
+    .dark button.solid, .dark .button.solid { background-color: var(--color-gold); color: var(--color-navy); }
+    .dark button.ghost, .dark .button.ghost { border-color: var(--color-gold-light); color: var(--color-gold-light); }
+    .dark button.solid:hover, .dark button.solid:focus, .dark button.ghost:hover, .dark button.ghost:focus,
+    .dark .button.solid:hover, .dark .button.solid:focus, .dark .button.ghost:hover, .dark .button.ghost:focus { background-color: var(--color-teal); border-color: var(--color-text-inverse); color: var(--color-text-inverse); }
+
+    /* ===========================================
+       BUTTON GROUPS
+       =========================================== */
+    .button-group { display: flex; flex-wrap: wrap; align-items: center; list-style: none; margin: 0; padding: 0; }
+    .button-group.flex .button.ghost, .button-group.flex .button.solid { margin-left: 0.75em; margin-right: 0.75em; margin-bottom: 0; border-radius: var(--button-radius); }
+    .button-group.center { justify-content: center; }
+    .button-group > li { margin: 0; list-style: none; }
+
+    /* ===========================================
+       FLEX UTILITIES
+       =========================================== */
+    .flex { display: flex; flex-wrap: wrap; }
+    .center { text-align: center; justify-content: center; }
+    .items-center { align-items: center; }
+
+    /* ===========================================
+       GRID SYSTEM
+       =========================================== */
+    .grid, .page-grid { display: grid; grid-template-rows: auto; }
+    @media (max-width: 767px) { .page-grid { grid-template-columns: minmax(50px, 1fr); grid-gap: 30px; } }
+    @media (min-width: 768px) and (max-width: 1199px) { .page-grid { grid-template-columns: repeat(6, minmax(50px, 1fr)); grid-gap: 30px; } }
+    @media (min-width: 1200px) { .page-grid { grid-template-columns: repeat(12, minmax(50px, 1fr)); grid-gap: 50px; } }
+    @media (min-width: 1200px) {
+      .page-grid.columns-2-1 > *:nth-child(2n+1) { grid-column: auto/span 8; }
+      .page-grid.columns-2-1 > *:nth-child(2n+2) { grid-column: auto/span 4; }
+      .page-grid.columns-1-2 > *:nth-child(2n+1) { grid-column: auto/span 4; }
+      .page-grid.columns-1-2 > *:nth-child(2n+2) { grid-column: auto/span 8; }
+    }
+
+    /* ===========================================
+       PAGE SECTIONS
+       =========================================== */
+    .title-banner { background: rgba(0, 40, 85, 0.975); }
+    .title-banner h1 { padding: 2.5em 0 0.5em; }
+    .page-content { margin: 35px 0 80px; }
+    @media (max-width: 767px) { .page-content { margin: 20px 0 50px; } }
+    .padded { padding: 50px 0 35px; }
+    @media (min-width: 1024px) { .padded { padding: 7.5vh 0 5vh; } }
+
+    /* ===========================================
+       CTA BANNER
+       =========================================== */
+    .cta-banner { padding: 35px 0; text-align: center; }
+    .cta-banner.dark h1 { color: var(--color-gold-light); }
+    .cta-banner h1 { font-size: 1.75rem; }
+    .cta-banner .button-group { max-width: 600px; margin: 0 auto; justify-content: center; }
+    .cta-banner .button-group .button { font-size: 1rem; padding: 1em; }
+
+    /* ===========================================
+       CONTENT
+       =========================================== */
+    .content { font-size: 1.125rem; }
+    @media (max-width: 1023px) { .content { font-size: 1.25rem; } }
+    .content p { max-width: 100ch; margin-bottom: 0.75em; line-height: 1.5; }
+
+    /* ===========================================
+       FOOTER
+       =========================================== */
+    footer .light h1, footer .light h2 { border-bottom: var(--color-gold-light) 1px solid; margin-bottom: 0.5em; }
+    footer .button-group .button { padding: 0.75em; }
+    footer .button-group .button:hover, footer .button-group .button:focus { background-color: var(--color-teal); border-color: transparent; color: var(--color-text-inverse); }
+    footer .background-gray { padding: 15px 0; }
+
+    /* ===========================================
+       LISTS
+       =========================================== */
+    .link-list { margin: 0 0 1em; padding: 0; list-style: none; }
+    .link-list li a { display: inline-block; position: relative; padding: 0.25em 0; }
+    .dark .link-list li a { color: var(--color-text-inverse); font-weight: 600; }
+    .dark .link-list li a:hover, .dark .link-list li a:focus { color: var(--color-gold-light); }
+
+    /* ===========================================
+       SOCIAL ICONS
+       =========================================== */
+    .logo-grid.flex { align-items: center; }
+    .logo-grid a.social-link { margin: 0 1em 0 0; width: 3rem; height: 3rem; transition: transform var(--transition-normal); }
+    .logo-grid a.social-link svg { fill: var(--color-teal); }
+    .logo-grid a.social-link.circle { padding: 0.5em; background-color: var(--color-teal); border-radius: 50%; }
+    .logo-grid a.social-link.circle svg { fill: var(--color-text-inverse); }
+    .logo-grid a.social-link:hover, .logo-grid a.social-link:focus { transform: scale(1.1); }
+
+    /* ===========================================
+       UTILITIES
+       =========================================== */
+    .offscreen { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+
+    /* ===========================================
+       BENEFITS CARD (Partner Pages)
+       =========================================== */
     .benefits-card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 32px; margin: -40px auto 40px; max-width: 600px; position: relative; z-index: 10; }
-    .benefits-card h3 { color: #002855; margin-bottom: 20px; font-size: 1.5rem; }
-    .benefits-list { list-style: none; }
+    .benefits-card h3 { color: var(--color-navy); margin-bottom: 20px; font-size: 1.5rem; }
+    .benefits-list { list-style: none; margin: 0; padding: 0; }
     .benefits-list li { padding: 8px 0; display: flex; align-items: center; gap: 12px; }
-    .benefits-list li::before { content: "✓"; color: #C6AA76; font-weight: bold; }
+    .benefits-list li::before { content: "✓"; color: var(--color-gold); font-weight: bold; }
 
-    /* Content Section */
-    .content-section { padding: 60px 0; }
-    .content-section h4 { color: #002855; margin-bottom: 12px; font-size: 1.25rem; }
-    .content-section p { color: #5B6770; margin-bottom: 24px; }
-
-    /* Lead Form */
+    /* ===========================================
+       LEAD FORM
+       =========================================== */
     .lead-form { background: #DDE5ED; padding: 40px 0; }
-    .lead-form h3 { color: #002855; text-align: center; margin-bottom: 24px; }
-    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 600px; margin: 0 auto; }
+    .lead-form h3 { color: var(--color-navy); text-align: center; margin-bottom: 24px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 600px; margin: 0 auto; padding: 0 15px; }
     .form-field { background: white; padding: 12px; border: 1px solid #D0D3D4; border-radius: 4px; }
     .form-field.full { grid-column: 1 / -1; }
-    .submit-btn { background: #002855; color: white; padding: 14px 32px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-top: 16px; }
+    .submit-btn { background: var(--color-navy); color: white; padding: 14px 32px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-top: 16px; font-family: var(--font-display); font-weight: 700; }
+    .submit-btn:hover { background-color: var(--color-teal); }
 
-    /* Footer */
-    .footer { background: #002855; color: white; padding: 24px 0; text-align: center; }
-    .footer a { color: #C6AA76; text-decoration: none; }
+    @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.75rem; }
-      .form-grid { grid-template-columns: 1fr; }
-    }
+    /* ===========================================
+       THREE COLUMN GRID (Footer)
+       =========================================== */
+    .grid.columns-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 767px) { .grid.columns-3 { grid-template-columns: 1fr; } }
+    .grid-gap-30 { grid-gap: 30px; }
   </style>
 </head>
 <body>
@@ -942,9 +1156,9 @@ function App() {
   </script>
   \` : ''}
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
+  <!-- Hero Section (Title Banner) -->
+  <section class="title-banner dark">
+    <div class="site-wrap">
       <h1>${partnerHeadline?.headline || partnerName + ' Employees'}</h1>
       <p>${partnerHeadline?.subheadline || 'Exclusive Education Benefits for You'}</p>
     </div>
@@ -952,40 +1166,50 @@ function App() {
 
   <!-- Partner Logo -->
   ${enabledModules.some(m => m.id === 'partner-logo') && partnerLogo?.logoUrl ? `
-  <div class="container" style="text-align: center; padding: 40px 0;">
-    <img src="${partnerLogo.logoUrl}" alt="${partnerLogo?.logoAlt || partnerName + ' Logo'}" style="max-width: 200px; max-height: 80px; object-fit: contain;">
-  </div>
+  <section class="light" style="padding: 40px 0; text-align: center;">
+    <div class="site-wrap">
+      <img src="${partnerLogo.logoUrl}" alt="${partnerLogo?.logoAlt || partnerName + ' Logo'}" style="max-width: 200px; max-height: 80px; object-fit: contain;">
+    </div>
+  </section>
   ` : ''}
 
   <!-- Benefits Card -->
   ${enabledModules.some(m => m.id === 'partner-benefits-card') ? `
-  <div class="container">
-    <div class="benefits-card">
-      <h3>${benefitsCard?.benefitsTitle || 'Your Benefits'}</h3>
-      <ul class="benefits-list">
-        ${(benefitsCard?.benefits || ['Tuition Discount', 'Flexible Online Learning', 'No Application Fee']).filter(b => b).map(benefit => `
-        <li>${benefit}</li>
-        `).join('')}
-      </ul>
+  <section class="light">
+    <div class="site-wrap">
+      <div class="benefits-card">
+        <h3>${benefitsCard?.benefitsTitle || 'Your Benefits'}</h3>
+        <ul class="benefits-list">
+          ${(benefitsCard?.benefits || ['Tuition Discount', 'Flexible Online Learning', 'No Application Fee']).filter(b => b).map(benefit => `
+          <li>${benefit}</li>
+          `).join('')}
+        </ul>
+      </div>
     </div>
-  </div>
+  </section>
   ` : ''}
 
   <!-- Benefits Copy -->
   ${enabledModules.some(m => m.id === 'benefits-copy') ? `
-  <section class="content-section">
-    <div class="container">
-      <p>${benefitsCopy?.benefitsCopy || 'As a valued partner, you and your eligible family members can take advantage of exclusive benefits.'}</p>
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 32px;">
-        <div>
-          <h4>Tuition Benefits</h4>
-          <p>${benefitsCopy?.tuitionParagraph || 'Enjoy exclusive tuition discounts at Columbia Southern University.'}</p>
+  <section class="page-content light">
+    <div class="site-wrap page-grid columns-2-1">
+      <article class="content">
+        <p>${benefitsCopy?.benefitsCopy || 'As a valued partner, you and your eligible family members can take advantage of exclusive benefits.'}</p>
+
+        <h2>Tuition Benefits</h2>
+        <p>${benefitsCopy?.tuitionParagraph || 'Enjoy exclusive tuition discounts at Columbia Southern University.'}</p>
+
+        <h2>Flexible Learning</h2>
+        <p>${benefitsCopy?.flexibilityParagraph || 'Our flexible online programs are designed to fit your busy schedule.'}</p>
+
+        <div class="button-group">
+          <a class="button solid" href="https://mycsu.columbiasouthern.edu/prospect/application">Apply Now</a>
+          <a class="button ghost" href="https://www.columbiasouthern.edu/info-form">Request Info</a>
         </div>
-        <div>
-          <h4>Flexible Learning</h4>
-          <p>${benefitsCopy?.flexibilityParagraph || 'Our flexible online programs are designed to fit your busy schedule.'}</p>
-        </div>
-      </div>
+      </article>
+      <aside class="sidebar">
+        <!-- Sidebar content if needed -->
+      </aside>
     </div>
   </section>
   ` : ''}
@@ -993,7 +1217,7 @@ function App() {
   <!-- Lead Capture Form -->
   ${enabledModules.some(m => m.id === 'lead-capture-form') ? `
   <section class="lead-form">
-    <div class="container">
+    <div class="site-wrap">
       <h3>${leadForm?.formTitle || 'Request Information'}</h3>
       <div class="form-grid">
         ${leadForm?.formFieldToggles?.firstName !== false ? '<div class="form-field">First Name</div>' : ''}
@@ -1003,7 +1227,7 @@ function App() {
         ${leadForm?.formFieldToggles?.program !== false ? '<div class="form-field full">Program Interest</div>' : ''}
         ${leadForm?.formFieldToggles?.comments !== false ? '<div class="form-field full">Comments</div>' : ''}
       </div>
-      <div style="text-align: center;">
+      <div class="center">
         <button class="submit-btn">${leadForm?.submitButtonText || 'Submit'}</button>
       </div>
     </div>
@@ -1011,10 +1235,103 @@ function App() {
   ` : ''}
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>© ${new Date().getFullYear()} Columbia Southern University</p>
-      <p><a href="https://www.columbiasouthern.edu/privacy-policy">Privacy Policy</a></p>
+  <footer>
+    <!-- CTA Banner -->
+    <section class="cta-banner dark">
+      <div class="site-wrap">
+        <h1>Start Your Journey Today</h1>
+        <div class="button-group flex center">
+          <a class="button ghost" href="https://mycsu.columbiasouthern.edu/prospect/application">Apply Now</a>
+          <a class="button solid" href="https://www.columbiasouthern.edu/info-form">Request Info</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Content -->
+    <section class="light padded">
+      <div class="site-wrap page-grid columns-1-2">
+        <!-- Left Column: Contact Info -->
+        <div>
+          <h2 class="h4">Columbia Southern University</h2>
+          <p>
+            21982 University Lane<br>
+            Orange Beach, Alabama 36561
+          </p>
+          <p>
+            Phone: <a href="tel:+12519813771">251-981-3771</a><br>
+            Toll Free: <a href="tel:+18009778449">800-977-8449</a>
+          </p>
+
+          <!-- Social Links -->
+          <ul class="logo-grid flex">
+            <li>
+              <a class="social-link circle" href="https://www.facebook.com/ColumbiaSouthernUniversity" title="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                </svg>
+                <span class="offscreen">Facebook</span>
+              </a>
+            </li>
+            <li>
+              <a class="social-link circle" href="https://twitter.com/ColumbiaSouth" title="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+                <span class="offscreen">Twitter</span>
+              </a>
+            </li>
+            <li>
+              <a class="social-link circle" href="https://www.linkedin.com/school/columbia-southern-university/" title="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+                </svg>
+                <span class="offscreen">LinkedIn</span>
+              </a>
+            </li>
+          </ul>
+
+          <p><small>&copy; ${new Date().getFullYear()} Columbia Southern University</small></p>
+        </div>
+
+        <!-- Right Column: Link Columns -->
+        <div class="grid columns-3 grid-gap-30">
+          <div>
+            <h3 class="h4">Admissions</h3>
+            <ul class="link-list">
+              <li><a href="https://www.columbiasouthern.edu/admissions/getting-started/">Getting Started</a></li>
+              <li><a href="https://www.columbiasouthern.edu/request-catalog/">Download Catalog</a></li>
+              <li><a href="https://www.columbiasouthern.edu/tuition-financing/tuition-overview/">Tuition</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h4">Academics</h3>
+            <ul class="link-list">
+              <li><a href="https://www.columbiasouthern.edu/online-degree/view-all-programs/">Programs</a></li>
+              <li><a href="https://www.columbiasouthern.edu/student-handbook/">Student Handbook</a></li>
+              <li><a href="https://www.columbiasouthern.edu/alumni/">Alumni</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h4">About</h3>
+            <ul class="link-list">
+              <li><a href="https://www.columbiasouthern.edu/about-csu/contact-us/">Contact</a></li>
+              <li><a href="https://www.columbiasouthern.edu/about-csu/accreditation-licensure/">Accreditation</a></li>
+              <li><a href="https://www.columbiasouthern.edu/careers/careers-overview/">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Bar -->
+    <div class="light background-gray">
+      <div class="site-wrap">
+        <ul class="button-group flex center">
+          <li><a class="button" href="https://www.columbiasouthern.edu/privacy-policy">Privacy Policy</a></li>
+          <li><a class="button" href="https://www.columbiasouthern.edu/accessibility/">Accessibility</a></li>
+          <li><a class="button" href="https://www.columbiasouthern.edu/sitemap/">Site Map</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
 </body>
