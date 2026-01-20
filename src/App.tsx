@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
 import { ExtractionWarningBanner, ExtractionWarning } from './components/ExtractionWarningBanner'
 import { ModuleSidebar } from './components/ModuleSidebar'
+import { Header } from './components/Header'
 
 type AppMode = 'selection' | 'setup' | 'builder'
 type StartMode = 'new' | 'edit' | 'load'
@@ -2317,54 +2318,26 @@ function App() {
                 >
                   {module.id === 'header' && (
                     <div className="preview-header">
-                      {/* CSU Corporate Header - matches perkspot.html structure */}
-                      <div className="dark utility-navigation">
-                        <div className="site-wrap flex">
-                          <div className="site-logo">
-                            <a href="https://www.columbiasouthern.edu" target="_blank" rel="noopener noreferrer">
-                              <img
-                                src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png"
-                                alt="Columbia Southern University logo, homepage"
-                              />
-                            </a>
-                          </div>
-                          <ul className="button-group flex">
-                            <li><a className="button" href="tel:+18009778449">800-977-8449</a></li>
-                            <li><a className="button" href="https://www.columbiasouthern.edu/login" target="_blank" rel="noopener noreferrer">Login Options</a></li>
-                            <li><a className="button ghost" href="https://mycsu.columbiasouthern.edu/prospect/application" target="_blank" rel="noopener noreferrer">Apply Now</a></li>
-                            <li><a className="button solid" href="https://www.columbiasouthern.edu/info-form" target="_blank" rel="noopener noreferrer">Request Info</a></li>
-                          </ul>
-                        </div>
-                      </div>
+                      <Header
+                        showMobileCta={false}
+                        showUtilityNav={true}
+                        showGlobalMenu={false}
+                        previewMode={true}
+                      />
                     </div>
                   )}
 
                   {/* CSU Global Menu Preview */}
                   {module.id === 'csu-global-menu' && (
                     <div className="preview-header">
-                      <div className="light">
-                        <nav className="navigation-wrapper site-wrap flex">
-                          <ul className="site-navigation">
-                            <li><button className="toggle" type="button">Academics</button></li>
-                            <li><button className="toggle" type="button">Admissions</button></li>
-                            <li><button className="toggle" type="button">Student Support</button></li>
-                            <li><button className="toggle" type="button">Tuition &amp; Financing</button></li>
-                            <li><button className="toggle" type="button">About</button></li>
-                            <li><button className="toggle" type="button">Military</button></li>
-                            <li><button className="toggle" type="button">Careers</button></li>
-                          </ul>
-                          <div className="site-search">
-                            <button className="toggle" type="button">
-                              <span className="offscreen">Open Search</span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                              </svg>
-                            </button>
-                          </div>
-                        </nav>
-                        <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
-                          <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
-                        </div>
+                      <Header
+                        showMobileCta={false}
+                        showUtilityNav={false}
+                        showGlobalMenu={true}
+                        previewMode={true}
+                      />
+                      <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
+                        <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
                       </div>
                     </div>
                   )}

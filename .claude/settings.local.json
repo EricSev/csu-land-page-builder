@@ -12,7 +12,8 @@
       "WebFetch(domain:www.columbiasouthern.edu)",
       "Bash(git add:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd CSU Global Menu with full mega-menu export\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(ls:*)"
     ]
   }
 }
