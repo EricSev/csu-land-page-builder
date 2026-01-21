@@ -814,6 +814,23 @@ function App() {
     @media (min-width: 1024px) { .padded { padding: 7.5vh 0 5vh; } }
 
     /* ===========================================
+       HERO SECTION
+       =========================================== */
+    .hero { position: relative; background-position: center; background-repeat: no-repeat; background-size: cover; }
+    .hero[class*=gradient]::before { display: block; content: " "; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    @media (max-width: 767px) { .hero.gradient-left { background-image: none !important; padding: 50px 0 35px; } }
+    @media (min-width: 768px) and (max-width: 1199px) { .hero.gradient-left { padding: 50px 0; } }
+    @media (min-width: 1200px) { .hero.gradient-left { padding: 65px 0 50px; } }
+    .hero.gradient-left h1 { margin-bottom: 0.25em; }
+    @media (min-width: 1024px) { .hero.gradient-left h1 { font-size: 2rem; } }
+    @media (max-width: 767px) { .hero.gradient-left.dark::before { background: linear-gradient(to bottom, rgba(0, 40, 85, 0.95) 0%, rgba(0, 40, 85, 0.75) 35%, rgba(0, 40, 85, 0.1) 100%); } }
+    @media (min-width: 768px) and (max-width: 1199px) { .hero.gradient-left.dark::before { background: linear-gradient(to right, rgba(0, 40, 85, 0.95) 0%, rgba(0, 40, 85, 0.85) 45%, rgba(0, 40, 85, 0.5) 100%); } }
+    @media (min-width: 1200px) { .hero.gradient-left.dark::before { background: linear-gradient(to right, rgba(0, 40, 85, 0.95) 0%, rgba(0, 40, 85, 0.85) 45%, rgba(0, 40, 85, 0) 100%); } }
+    .hero .page-grid .content { position: relative; z-index: 5; }
+    @media (min-width: 768px) and (max-width: 1199px) { .hero.gradient-left .page-grid:not([class*=columns]) .content { grid-column: auto/span 4; } }
+    @media (min-width: 1200px) { .hero.gradient-left .page-grid:not([class*=columns]) .content { grid-column: auto/span 8; } }
+
+    /* ===========================================
        CTA BANNER
        =========================================== */
     .cta-banner { padding: 35px 0; text-align: center; }
@@ -888,6 +905,27 @@ function App() {
     .grid.columns-3 { grid-template-columns: repeat(3, 1fr); }
     @media (max-width: 767px) { .grid.columns-3 { grid-template-columns: 1fr; } }
     .grid-gap-30 { grid-gap: 30px; }
+
+    /* ===========================================
+       WELCOME BAR (Partner Pages)
+       =========================================== */
+    .welcome-bar { padding: 0; }
+    .welcome-bar.dark { background-color: var(--color-navy); color: var(--color-text-inverse); }
+    .welcome-bar .site-wrap { display: flex; justify-content: space-between; align-items: center; }
+    .welcome-bar .button.solid { background-color: var(--color-gold); color: var(--color-navy); }
+    .welcome-bar .button.solid:hover, .welcome-bar .button.solid:focus { background-color: var(--color-teal); border-color: var(--color-text-inverse); color: var(--color-text-inverse); }
+
+    /* ===========================================
+       STATS BANNER (Partner Pages)
+       =========================================== */
+    .stats-banner { background-color: var(--color-gold); padding: 24px 0; }
+    .stats-banner .site-wrap { display: flex; justify-content: space-around; align-items: center; }
+    .stats-banner.cards .site-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stats-banner .stat-item { text-align: center; }
+    .stats-banner.cards .stat-item { background: #fff; border-radius: 8px; padding: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .stats-banner .stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--color-navy); line-height: 1.2; }
+    .stats-banner .stat-label { font-family: var(--font-body); font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 4px; }
+    @media (max-width: 767px) { .stats-banner .site-wrap, .stats-banner.cards .site-wrap { flex-direction: column; gap: 16px; grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -1157,13 +1195,52 @@ function App() {
   </script>
   \` : ''}
 
-  <!-- Hero Section (Title Banner) -->
+  <!-- Welcome Bar -->
+  \${enabledModules.some(m => m.id === 'welcome-bar') ? \`
+  <div class="welcome-bar dark">
+    <div class="site-wrap flex" style="justify-content: space-between; align-items: center; padding: 12px 16px;">
+      <span style="font-family: 'Nunito Sans', sans-serif; font-size: 1rem; font-weight: 700;">\${moduleContent['welcome-bar']?.welcomeGreeting || 'Welcome, ${partnerName || 'Partner'} Employees!'}</span>
+      <a class="button solid" href="\${moduleContent['welcome-bar']?.welcomeCtaUrl || '#request-info'}" style="border-radius: 5px; padding: 0.75em 1.25em; font-size: 0.875rem;">\${moduleContent['welcome-bar']?.welcomeCtaText || 'Get Started'}</a>
+    </div>
+  </div>
+  \` : ''}
+
+  <!-- Hero Section -->
+  \${enabledModules.some(m => m.id === 'hero-banner') ? \`
+  <section class="hero gradient-left dark" style="background-image: url(\${moduleContent['hero-banner']?.heroBackgroundUrl || ''});">
+    <div class="site-wrap page-grid">
+      <div class="content">
+        <h1>\${moduleContent['hero-banner']?.heroHeadline || 'Your Future Starts Here'}</h1>
+        \${moduleContent['hero-banner']?.heroSubheadline ? \`<p>\${moduleContent['hero-banner']?.heroSubheadline}</p>\` : ''}
+      </div>
+    </div>
+  </section>
+  \` : \`
   <section class="title-banner dark">
     <div class="site-wrap">
       <h1>${partnerHeadline?.headline || partnerName + ' Employees'}</h1>
       <p>${partnerHeadline?.subheadline || 'Exclusive Education Benefits for You'}</p>
     </div>
   </section>
+  \`}
+
+  <!-- Stats Banner -->
+  \${enabledModules.some(m => m.id === 'stats-banner') ? \`
+  <section class="stats-banner\${(moduleContent['stats-banner']?.statsBannerStyle === 'cards') ? ' cards' : ''}">
+    <div class="site-wrap">
+      \${(moduleContent['stats-banner']?.statsBannerStats || [
+        { value: '20%', label: 'Discount' },
+        { value: '50+', label: 'Programs' },
+        { value: '$0', label: 'Textbooks' }
+      ]).map(stat => \`
+      <div class="stat-item">
+        <div class="stat-value">\${stat.value || '—'}</div>
+        <div class="stat-label">\${stat.label || 'Label'}</div>
+      </div>
+      \`).join('')}
+    </div>
+  </section>
+  \` : ''}
 
   <!-- Partner Logo -->
   ${enabledModules.some(m => m.id === 'partner-logo') && partnerLogo?.logoUrl ? `
@@ -2329,13 +2406,27 @@ function App() {
 
                   {/* CSU Global Menu Preview */}
                   {module.id === 'csu-global-menu' && (
-                    <div className="preview-header">
-                      <Header
-                        showMobileCta={false}
-                        showUtilityNav={false}
-                        showGlobalMenu={true}
-                        previewMode={true}
-                      />
+                    <div className="preview-global-nav">
+                      <div className="preview-site-wrap">
+                        <ul className="site-navigation">
+                          <li><button className="toggle">Academics</button></li>
+                          <li><button className="toggle">Admissions</button></li>
+                          <li><button className="toggle">Student Support</button></li>
+                          <li><button className="toggle">Tuition &amp; Financing</button></li>
+                          <li><button className="toggle">About</button></li>
+                          <li><button className="toggle">Military</button></li>
+                          <li><button className="toggle">Careers</button></li>
+                        </ul>
+                        <div className="site-search">
+                          <button type="button" aria-label="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="preview-global-nav-border"></div>
                       <div className="bg-csu-pale-blue/30 px-4 py-1.5 text-center">
                         <span className="text-xs text-csu-dark-gray">Preview: Exported HTML includes full dropdown menus with images</span>
                       </div>
@@ -2344,14 +2435,14 @@ function App() {
 
                   {/* Welcome Bar Preview */}
                   {module.id === 'welcome-bar' && (
-                    <div className="bg-csu-near-black text-white py-2 px-4">
-                      <div className="max-w-4xl mx-auto flex items-center justify-between">
-                        <span className="text-sm">
+                    <div className="preview-welcome-bar">
+                      <div className="preview-site-wrap">
+                        <span className="welcome-text">
                           {moduleContent['welcome-bar']?.welcomeGreeting || `Welcome, ${partnerName || 'Partner'} Employees!`}
                         </span>
                         <a
                           href={moduleContent['welcome-bar']?.welcomeCtaUrl || '#request-info'}
-                          className="px-4 py-1 bg-csu-gold text-csu-navy text-sm font-medium rounded hover:bg-csu-gold/90"
+                          className="button solid"
                         >
                           {moduleContent['welcome-bar']?.welcomeCtaText || 'Get Started'}
                         </a>
@@ -2359,39 +2450,47 @@ function App() {
                     </div>
                   )}
 
-                  {module.id === 'partner-headline' && (
-                    <div className={`p-8 ${
-                      (moduleContent['partner-headline']?.headlineStyle || 'centered') === 'centered' ? 'text-center' :
-                      (moduleContent['partner-headline']?.headlineStyle) === 'left-aligned' ? 'text-left' :
-                      'text-center bg-csu-navy text-white'
-                    }`}>
-                      <h1 className={`text-3xl font-bold ${
-                        (moduleContent['partner-headline']?.headlineStyle) === 'with-background' ? 'text-white' : 'text-csu-navy'
-                      }`}>
-                        {moduleContent['partner-headline']?.headline || `${partnerName || 'Partner Name'} Employees`}
-                      </h1>
-                      <p className={`text-lg mt-2 ${
-                        (moduleContent['partner-headline']?.headlineStyle) === 'with-background' ? 'text-white/80' : 'text-csu-dark-gray'
-                      }`}>
-                        {moduleContent['partner-headline']?.subheadline || 'Exclusive Education Benefits for You'}
-                      </p>
-                    </div>
-                  )}
+                  {module.id === 'partner-headline' && (() => {
+                    const headlineStyle = moduleContent['partner-headline']?.headlineStyle || 'centered'
+                    const headline = moduleContent['partner-headline']?.headline || `${partnerName || 'Partner Name'} Employees`
+                    const subheadline = moduleContent['partner-headline']?.subheadline || 'Exclusive Education Benefits for You'
+
+                    // Use title-banner style for 'with-background' style
+                    if (headlineStyle === 'with-background') {
+                      return (
+                        <section className="preview-title-banner">
+                          <div className="preview-site-wrap">
+                            <h1>{headline}</h1>
+                            {subheadline && <p>{subheadline}</p>}
+                          </div>
+                        </section>
+                      )
+                    }
+
+                    // Centered or left-aligned style
+                    return (
+                      <section className={`preview-partner-headline ${headlineStyle}`}>
+                        <div className="preview-site-wrap">
+                          <h1>{headline}</h1>
+                          {subheadline && <p>{subheadline}</p>}
+                        </div>
+                      </section>
+                    )
+                  })()}
 
                   {module.id === 'partner-logo' && (
-                    <div className="p-6 flex justify-center">
-                      {moduleContent['partner-logo']?.logoUrl ? (
-                        <img
-                          src={moduleContent['partner-logo'].logoUrl}
-                          alt={moduleContent['partner-logo']?.logoAlt || `${partnerName} Logo`}
-                          className="max-w-[200px] max-h-24 object-contain"
-                        />
-                      ) : (
-                        <div className="w-48 h-24 bg-csu-lightest-gray rounded flex items-center justify-center text-csu-medium-gray">
-                          Partner Logo
-                        </div>
-                      )}
-                    </div>
+                    <section className="preview-partner-logo">
+                      <div className="preview-site-wrap">
+                        {moduleContent['partner-logo']?.logoUrl ? (
+                          <img
+                            src={moduleContent['partner-logo'].logoUrl}
+                            alt={moduleContent['partner-logo']?.logoAlt || `${partnerName} Logo`}
+                          />
+                        ) : (
+                          <span className="logo-placeholder">Partner Logo</span>
+                        )}
+                      </div>
+                    </section>
                   )}
 
                   {module.id === 'partner-benefits-card' && (() => {
@@ -2400,43 +2499,41 @@ function App() {
                       moduleContent['partner-benefits-card']?.customDiscount?.trim()
 
                     return (
-                      <div className="p-6">
-                        <div className="bg-csu-gold/10 border border-csu-gold rounded-lg p-6 max-w-md mx-auto">
-                          {moduleContent['partner-benefits-card']?.includeLogo && moduleContent['partner-logo']?.logoUrl && (
-                            <div className="flex justify-center mb-4">
-                              <img
-                                src={moduleContent['partner-logo'].logoUrl}
-                                alt={moduleContent['partner-logo']?.logoAlt || 'Partner Logo'}
-                                className="max-w-[120px] max-h-12 object-contain"
-                              />
-                            </div>
-                          )}
-                          <h3 className="text-xl font-bold text-csu-navy mb-4">
-                            {moduleContent['partner-benefits-card']?.benefitsTitle || 'Your Benefits'}
-                          </h3>
-                          {hasUserContent ? (
-                            <ul className="space-y-2 text-csu-dark-gray">
-                              {(moduleContent['partner-benefits-card']?.benefits || [])
-                                .filter((b: string) => b && b.trim())
-                                .map((benefit: string, index: number) => (
-                                  <li key={index} className="flex items-center gap-2">
-                                    <span className="text-csu-gold">✓</span>
-                                    {index === 0 && moduleContent['partner-benefits-card']?.discountPercentage
-                                      ? (moduleContent['partner-benefits-card']?.discountPercentage === 'custom'
-                                          ? (moduleContent['partner-benefits-card']?.customDiscount || 'Custom') + ' '
-                                          : moduleContent['partner-benefits-card']?.discountPercentage + ' ') + benefit
-                                      : benefit}
-                                  </li>
-                                ))}
-                            </ul>
-                          ) : (
-                            <div className="text-csu-medium-gray italic text-center py-4 border-2 border-dashed border-csu-light-gray rounded">
-                              <p>Add benefit lines and discount percentage</p>
-                              <p className="text-xs mt-1">Click to edit this module</p>
-                            </div>
-                          )}
+                      <section className="preview-benefits-card-wrapper">
+                        <div className="preview-site-wrap">
+                          <div className="preview-benefits-card">
+                            {moduleContent['partner-benefits-card']?.includeLogo && moduleContent['partner-logo']?.logoUrl && (
+                              <div className="partner-logo">
+                                <img
+                                  src={moduleContent['partner-logo'].logoUrl}
+                                  alt={moduleContent['partner-logo']?.logoAlt || 'Partner Logo'}
+                                />
+                              </div>
+                            )}
+                            <h3>{moduleContent['partner-benefits-card']?.benefitsTitle || 'Your Benefits'}</h3>
+                            {hasUserContent ? (
+                              <ul className="benefits-list">
+                                {(moduleContent['partner-benefits-card']?.benefits || [])
+                                  .filter((b: string) => b && b.trim())
+                                  .map((benefit: string, index: number) => (
+                                    <li key={index}>
+                                      {index === 0 && moduleContent['partner-benefits-card']?.discountPercentage
+                                        ? (moduleContent['partner-benefits-card']?.discountPercentage === 'custom'
+                                            ? (moduleContent['partner-benefits-card']?.customDiscount || 'Custom') + ' '
+                                            : moduleContent['partner-benefits-card']?.discountPercentage + ' ') + benefit
+                                        : benefit}
+                                    </li>
+                                  ))}
+                              </ul>
+                            ) : (
+                              <div className="empty-state">
+                                <p>Add benefit lines and discount percentage</p>
+                                <p style={{ fontSize: '0.75rem', marginTop: '4px' }}>Click to edit this module</p>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2446,72 +2543,69 @@ function App() {
                       moduleContent['benefits-copy']?.flexibilityParagraph?.trim()
 
                     return (
-                      <div className="p-6 max-w-2xl mx-auto space-y-4">
-                        {hasUserContent ? (
-                          <>
-                            <p className="text-csu-dark-gray leading-relaxed font-medium">
-                              {moduleContent['benefits-copy']?.eligibilityStatement || ''}
-                            </p>
-                            <div className="grid md:grid-cols-2 gap-4">
-                              <div className="bg-csu-lightest-gray rounded-lg p-4">
-                                <h4 className="font-bold text-csu-navy mb-2">Tuition Benefits</h4>
-                                <p className="text-csu-dark-gray text-sm leading-relaxed">
-                                  {moduleContent['benefits-copy']?.tuitionParagraph || ''}
+                      <section className="preview-benefits-copy">
+                        <div className="preview-site-wrap">
+                          {hasUserContent ? (
+                            <>
+                              {moduleContent['benefits-copy']?.eligibilityStatement && (
+                                <p className="eligibility-statement">
+                                  {moduleContent['benefits-copy'].eligibilityStatement}
                                 </p>
+                              )}
+                              <div className="benefits-grid">
+                                <div className="benefit-block">
+                                  <h4>Tuition Benefits</h4>
+                                  <p>{moduleContent['benefits-copy']?.tuitionParagraph || ''}</p>
+                                </div>
+                                <div className="benefit-block">
+                                  <h4>Flexible Learning</h4>
+                                  <p>{moduleContent['benefits-copy']?.flexibilityParagraph || ''}</p>
+                                </div>
                               </div>
-                              <div className="bg-csu-lightest-gray rounded-lg p-4">
-                                <h4 className="font-bold text-csu-navy mb-2">Flexible Learning</h4>
-                                <p className="text-csu-dark-gray text-sm leading-relaxed">
-                                  {moduleContent['benefits-copy']?.flexibilityParagraph || ''}
-                                </p>
-                              </div>
+                            </>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add eligibility statement and benefit paragraphs</p>
+                              <p style={{ fontSize: '0.75rem', marginTop: '4px' }}>Click to edit this module</p>
                             </div>
-                          </>
-                        ) : (
-                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
-                            <p>Add eligibility statement and benefit paragraphs</p>
-                            <p className="text-xs mt-1">Click to edit this module</p>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
                   {module.id === 'lead-capture-form' && (
-                    <div className="p-6 bg-csu-lightest-gray">
-                      <div className="max-w-md mx-auto bg-white rounded-lg p-6 shadow">
-                        <h3 className="text-xl font-bold text-csu-navy mb-4">
-                          {moduleContent['lead-capture-form']?.formTitle || 'Request Information'}
-                        </h3>
-                        <div className="space-y-3">
+                    <section className="preview-lead-form">
+                      <div className="preview-site-wrap">
+                        <h3>{moduleContent['lead-capture-form']?.formTitle || 'Request Information'}</h3>
+                        <div className="form-grid">
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.firstName ?? true) && (
-                            <div className="h-10 bg-gray-100 rounded border flex items-center px-3 text-sm text-csu-medium-gray">First Name</div>
+                            <div className="form-field">First Name</div>
                           )}
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.lastName ?? true) && (
-                            <div className="h-10 bg-gray-100 rounded border flex items-center px-3 text-sm text-csu-medium-gray">Last Name</div>
+                            <div className="form-field">Last Name</div>
                           )}
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.email ?? true) && (
-                            <div className="h-10 bg-gray-100 rounded border flex items-center px-3 text-sm text-csu-medium-gray">Email</div>
+                            <div className="form-field">Email</div>
                           )}
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.phone ?? true) && (
-                            <div className="h-10 bg-gray-100 rounded border flex items-center px-3 text-sm text-csu-medium-gray">Phone</div>
+                            <div className="form-field">Phone</div>
                           )}
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.program ?? true) && (
-                            <div className="h-10 bg-gray-100 rounded border flex items-center px-3 text-sm text-csu-medium-gray">Program Interest</div>
+                            <div className="form-field full">Program Interest</div>
                           )}
                           {(moduleContent['lead-capture-form']?.formFieldToggles?.comments ?? true) && (
-                            <div className="h-20 bg-gray-100 rounded border flex items-start p-3 text-sm text-csu-medium-gray">Comments</div>
+                            <div className="form-field full textarea">Comments</div>
                           )}
-                          <button className="w-full py-2 bg-csu-navy text-white rounded font-medium">
-                            {moduleContent['lead-capture-form']?.submitButtonText || 'Submit'}
-                          </button>
-                          {/* Consent Disclosure - Locked text, cannot be edited */}
-                          <p className="text-xs text-csu-medium-gray mt-3 leading-relaxed">
-                            By submitting this request, you consent to Columbia Southern University using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See <a href="https://www.columbiasouthern.edu/privacy-policy" className="text-csu-navy underline hover:no-underline">Privacy Policy</a>.
-                          </p>
                         </div>
+                        <button className="submit-btn">
+                          {moduleContent['lead-capture-form']?.submitButtonText || 'Submit'}
+                        </button>
+                        <p className="disclaimer">
+                          By submitting this request, you consent to Columbia Southern University using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See <a href="https://www.columbiasouthern.edu/privacy-policy">Privacy Policy</a>.
+                        </p>
                       </div>
-                    </div>
+                    </section>
                   )}
 
                   {/* CTA Buttons Only Preview */}
@@ -2521,27 +2615,27 @@ function App() {
                     const alignment = moduleContent['cta-buttons-only']?.ctaAlignment || 'center'
                     const style = moduleContent['cta-buttons-only']?.ctaStyle || 'side-by-side'
 
-                    const justifyClass = alignment === 'left' ? 'justify-start' : alignment === 'right' ? 'justify-end' : 'justify-center'
-                    const flexDirection = style === 'stacked' ? 'flex-col items-center' : 'flex-row'
+                    const alignClass = alignment === 'left' ? 'align-left' : alignment === 'right' ? 'align-right' : 'align-center'
+                    const layoutClass = style === 'stacked' ? 'stacked' : 'side-by-side'
 
                     return (
-                      <div className="p-6">
-                        <div className={`flex gap-4 ${justifyClass} ${flexDirection}`}>
+                      <section className="preview-cta-buttons">
+                        <div className={`button-group ${alignClass} ${layoutClass}`}>
                           {showApply && (
-                            <a href="#" className="px-6 py-3 bg-csu-gold text-csu-navy font-semibold rounded hover:bg-csu-gold/90">
+                            <a href="#" className="button solid gold">
                               {moduleContent['cta-buttons-only']?.ctaApplyText || 'Apply Now'}
                             </a>
                           )}
                           {showRequestInfo && (
-                            <a href="#" className="px-6 py-3 bg-csu-navy text-white font-semibold rounded hover:bg-csu-navy/90">
+                            <a href="#" className="button solid navy">
                               {moduleContent['cta-buttons-only']?.ctaRequestInfoText || 'Request Info'}
                             </a>
                           )}
                         </div>
                         {!showApply && !showRequestInfo && (
-                          <p className="text-csu-medium-gray italic text-center">Enable at least one button to display</p>
+                          <p className="empty-state">Enable at least one button to display</p>
                         )}
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2553,34 +2647,34 @@ function App() {
                     const showLiveChat = moduleContent['contact-info-block']?.contactShowLiveChat ?? true
 
                     return (
-                      <div className="p-6 bg-csu-lightest-gray">
-                        <div className="max-w-md mx-auto text-center">
-                          <h3 className="text-xl font-bold text-csu-navy mb-4">{heading}</h3>
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-center gap-2">
-                              <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                      <section className="preview-contact-info">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          <div className="contact-list">
+                            <div className="contact-item">
+                              <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                               </svg>
-                              <a href={`mailto:${email}`} className="text-csu-navy hover:text-csu-gold">{email}</a>
+                              <a href={`mailto:${email}`}>{email}</a>
                             </div>
-                            <div className="flex items-center justify-center gap-2">
-                              <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                            <div className="contact-item">
+                              <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                               </svg>
-                              <a href={`tel:${phone}`} className="text-csu-navy hover:text-csu-gold">{phone}</a>
+                              <a href={`tel:${phone}`}>{phone}</a>
                             </div>
                             {showLiveChat && (
-                              <div className="flex items-center justify-center gap-2">
-                                <svg className="w-5 h-5 text-csu-gold" fill="currentColor" viewBox="0 0 20 20">
+                              <div className="contact-item">
+                                <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
                                 </svg>
-                                <a href={moduleContent['contact-info-block']?.contactLiveChatUrl || '#'} className="text-csu-navy hover:text-csu-gold">Live Chat</a>
+                                <a href={moduleContent['contact-info-block']?.contactLiveChatUrl || '#'}>Live Chat</a>
                               </div>
                             )}
                           </div>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2589,28 +2683,30 @@ function App() {
                     const hasUserContent = userFaqs && userFaqs.length > 0 && userFaqs.some((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim())
 
                     return (
-                      <div className="p-6 max-w-2xl mx-auto">
-                        <h3 className="text-xl font-bold text-csu-navy mb-4">Frequently Asked Questions</h3>
-                        {hasUserContent ? (
-                          <div className="space-y-2">
-                            {userFaqs.filter((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim()).map((faq: { question: string; answer: string }, i: number) => (
-                              <div key={i} className="border border-csu-light-gray rounded">
-                                <div className="p-3 font-medium text-csu-near-black bg-csu-lightest-gray">
-                                  {faq.question || 'Question'}
+                      <section className="preview-faq-accordion">
+                        <div className="preview-site-wrap">
+                          <h2>Frequently Asked Questions</h2>
+                          {hasUserContent ? (
+                            <div className="accordion">
+                              {userFaqs.filter((faq: { question: string; answer: string }) => faq.question?.trim() || faq.answer?.trim()).map((faq: { question: string; answer: string }, i: number) => (
+                                <div key={i} className="accordion-item">
+                                  <button className="accordion-toggle">
+                                    {faq.question || 'Question'}
+                                  </button>
+                                  <div className="accordion-content">
+                                    {faq.answer || 'Answer'}
+                                  </div>
                                 </div>
-                                <div className="p-3 text-sm text-csu-dark-gray">
-                                  {faq.answer || 'Answer'}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
-                            <p>Add frequently asked questions and answers</p>
-                            <p className="text-xs mt-1">Click to edit this module</p>
-                          </div>
-                        )}
-                      </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add frequently asked questions and answers</p>
+                              <p style={{ fontSize: '0.75rem', marginTop: '4px' }}>Click to edit this module</p>
+                            </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
@@ -2619,28 +2715,28 @@ function App() {
                     const hasUserContent = userProps && userProps.some((prop: { heading: string; body: string; imageUrl?: string }) => prop.heading?.trim() || prop.body?.trim())
 
                     return (
-                      <div className="p-6">
-                        {hasUserContent ? (
-                          <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                            {userProps.map((prop: { heading: string; body: string; imageUrl?: string }, i: number) => (
-                              <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
-                                {prop.imageUrl ? (
-                                  <img src={prop.imageUrl} alt={prop.heading} className="w-16 h-16 rounded-full mx-auto mb-3 object-cover" />
-                                ) : (
-                                  <div className="w-16 h-16 bg-csu-navy rounded-full mx-auto mb-3"></div>
-                                )}
-                                <h4 className="font-bold text-csu-navy">{prop.heading || 'Card Title'}</h4>
-                                <p className="text-sm text-csu-dark-gray mt-2">{prop.body || 'Card description'}</p>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-4xl mx-auto">
-                            <p>Add value proposition cards with headings and descriptions</p>
-                            <p className="text-xs mt-1">Click to edit this module</p>
-                          </div>
-                        )}
-                      </div>
+                      <section className="preview-value-props">
+                        <div className="preview-site-wrap">
+                          {hasUserContent ? (
+                            <div className="cards-grid">
+                              {userProps.map((prop: { heading: string; body: string; imageUrl?: string }, i: number) => (
+                                <div key={i} className="prop-card">
+                                  <div className="icon">
+                                    {prop.imageUrl && <img src={prop.imageUrl} alt={prop.heading} />}
+                                  </div>
+                                  <h4>{prop.heading || 'Card Title'}</h4>
+                                  <p>{prop.body || 'Card description'}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add value proposition cards with headings and descriptions</p>
+                              <p style={{ fontSize: '0.75rem', marginTop: '4px' }}>Click to edit this module</p>
+                            </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
@@ -2655,21 +2751,23 @@ function App() {
                     const footnote = moduleContent['tiered-pricing-display']?.tieredPricingFootnote
 
                     return (
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-csu-navy text-center mb-6">{heading}</h3>
-                        <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
-                          {tiers.map((tier, i) => (
-                            <div key={i} className="bg-csu-lightest-gray rounded-lg p-4 text-center">
-                              <div className="text-sm text-csu-dark-gray mb-2">{tier.level || 'Level'}</div>
-                              <div className="text-3xl font-bold text-csu-gold">{tier.discount || '—'}</div>
-                              {tier.originalPrice && (
-                                <div className="text-xs text-csu-medium-gray line-through mt-1">{tier.originalPrice}</div>
-                              )}
-                            </div>
-                          ))}
+                      <section className="preview-tiered-pricing">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          <div className="tiers-grid">
+                            {tiers.map((tier, i) => (
+                              <div key={i} className="tier-card">
+                                <div className="tier-level">{tier.level || 'Level'}</div>
+                                <div className="tier-discount">{tier.discount || '—'}</div>
+                                {tier.originalPrice && (
+                                  <div className="tier-original">{tier.originalPrice}</div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                          {footnote && <p className="footnote">{footnote}</p>}
                         </div>
-                        {footnote && <p className="text-xs text-csu-medium-gray text-center mt-4">{footnote}</p>}
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2686,22 +2784,22 @@ function App() {
                     ]
 
                     return (
-                      <div className="p-6 bg-csu-lightest-gray">
-                        <div className="max-w-2xl mx-auto">
-                          <h3 className="text-xl font-bold text-csu-navy mb-4">{heading}</h3>
-                          <ul className="grid grid-cols-2 gap-2">
+                      <section className="preview-why-choose">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          <ul className="benefits-grid">
                             {benefits.filter(b => b?.trim()).map((benefit, i) => (
-                              <li key={i} className="flex items-center gap-2 text-csu-dark-gray">
-                                <span className="text-csu-gold">✓</span>
+                              <li key={i}>
+                                <span className="check">✓</span>
                                 {benefit}
                               </li>
                             ))}
                           </ul>
                           {benefits.filter(b => b?.trim()).length === 0 && (
-                            <p className="text-csu-medium-gray italic">Add benefits to display here</p>
+                            <p className="empty-state">Add benefits to display here</p>
                           )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2712,42 +2810,42 @@ function App() {
                       (userBullets && userBullets.some((b: string) => b?.trim()))
 
                     return (
-                      <div className="p-6 bg-csu-navy text-white">
-                        <div className="max-w-2xl mx-auto">
+                      <section className="preview-tuition-banner dark">
+                        <div className="preview-site-wrap">
                           {hasUserContent ? (
                             <>
-                              <h3 className="text-xl font-bold mb-2 text-center">
+                              <h3>
                                 {moduleContent['tuition-comparison-banner']?.comparisonTitle || ''}
                               </h3>
-                              <p className="text-white/80 text-center mb-4">
+                              <p className="banner-body">
                                 {moduleContent['tuition-comparison-banner']?.comparisonBody || ''}
                               </p>
                               {userBullets && userBullets.filter((b: string) => b?.trim()).length > 0 && (
-                                <ul className="space-y-2 mb-4">
+                                <ul className="bullet-list">
                                   {userBullets.filter((b: string) => b?.trim()).map((bullet: string, i: number) => (
-                                    <li key={i} className="flex items-center gap-2">
-                                      <span className="text-csu-gold">✓</span>
+                                    <li key={i}>
+                                      <span className="check">✓</span>
                                       {bullet}
                                     </li>
                                   ))}
                                 </ul>
                               )}
                               {(moduleContent['tuition-comparison-banner']?.comparisonShowCTA ?? true) && (
-                                <div className="text-center">
-                                  <button className="px-6 py-2 bg-csu-gold text-csu-navy font-medium rounded hover:bg-csu-gold/90">
+                                <div className="cta-wrap">
+                                  <button className="button solid">
                                     Compare Now
                                   </button>
                                 </div>
                               )}
                             </>
                           ) : (
-                            <div className="text-white/60 italic text-center py-8 border-2 border-dashed border-white/30 rounded">
+                            <div className="empty-state">
                               <p>Add tuition comparison title, body, and bullet points</p>
-                              <p className="text-xs mt-1">Click to edit this module</p>
+                              <p className="hint">Click to edit this module</p>
                             </div>
                           )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2762,28 +2860,28 @@ function App() {
                     ]
 
                     return (
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-csu-navy text-center mb-2">{heading}</h3>
-                        {subheading && <p className="text-csu-dark-gray text-center mb-4">{subheading}</p>}
-                        <div className="max-w-2xl mx-auto">
-                          <table className="w-full border-collapse">
+                      <section className="preview-tuition-table">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          {subheading && <p className="subheading">{subheading}</p>}
+                          <table>
                             <thead>
-                              <tr className="bg-csu-navy text-white">
-                                <th className="p-3 text-left">Institution</th>
-                                <th className="p-3 text-right">Tuition/Credit Hour</th>
+                              <tr>
+                                <th>Institution</th>
+                                <th>Tuition/Credit Hour</th>
                               </tr>
                             </thead>
                             <tbody>
                               {rows.map((row, i) => (
-                                <tr key={i} className={`border-b border-csu-light-gray ${row.isCSU ? 'bg-csu-gold/20 font-bold' : ''}`}>
-                                  <td className="p-3">{row.institution || 'Institution'}</td>
-                                  <td className="p-3 text-right">{row.tuitionPerCredit || '$0'}</td>
+                                <tr key={i} className={row.isCSU ? 'highlight' : ''}>
+                                  <td>{row.institution || 'Institution'}</td>
+                                  <td className="tuition-cell">{row.tuitionPerCredit || '$0'}</td>
                                 </tr>
                               ))}
                             </tbody>
                           </table>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2794,24 +2892,26 @@ function App() {
                     const height = moduleContent['cost-calculator-widget']?.calculatorHeight || 400
 
                     return (
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-csu-navy text-center mb-4">{heading}</h3>
-                        {iframeUrl ? (
-                          <iframe
-                            src={iframeUrl}
-                            className="w-full border rounded-lg max-w-2xl mx-auto block"
-                            style={{ height: `${height}px` }}
-                            title="Cost Calculator"
-                          />
-                        ) : (
-                          <div className="max-w-2xl mx-auto bg-csu-lightest-gray rounded-lg p-8 text-center text-csu-medium-gray">
-                            <svg className="w-16 h-16 mx-auto mb-4 text-csu-light-gray" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clipRule="evenodd" />
-                            </svg>
-                            <p>Enter a calculator URL to embed the cost calculator</p>
-                          </div>
-                        )}
-                      </div>
+                      <section className="preview-cost-calculator">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          {iframeUrl ? (
+                            <iframe
+                              src={iframeUrl}
+                              className="calculator-iframe"
+                              style={{ height: `${height}px` }}
+                              title="Cost Calculator"
+                            />
+                          ) : (
+                            <div className="empty-state">
+                              <svg className="calc-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clipRule="evenodd" />
+                              </svg>
+                              <p>Enter a calculator URL to embed the cost calculator</p>
+                            </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
@@ -2820,23 +2920,25 @@ function App() {
                     const hasUserContent = userStats && userStats.some((stat: { number: string; label: string }) => stat.number?.trim() || stat.label?.trim())
 
                     return (
-                      <div className="p-6">
-                        {hasUserContent ? (
-                          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto text-center">
-                            {userStats.map((stat: { number: string; label: string }, i: number) => (
-                              <div key={i}>
-                                <div className="text-2xl font-bold text-csu-navy">{stat.number || '0'}</div>
-                                <div className="text-sm text-csu-dark-gray">{stat.label || 'Label'}</div>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-2xl mx-auto">
-                            <p>Add statistics with numbers and labels</p>
-                            <p className="text-xs mt-1">Click to edit this module</p>
-                          </div>
-                        )}
-                      </div>
+                      <section className="preview-csu-numbers">
+                        <div className="preview-site-wrap">
+                          {hasUserContent ? (
+                            <div className="stats-grid">
+                              {userStats.map((stat: { number: string; label: string }, i: number) => (
+                                <div key={i} className="stat-item">
+                                  <div className="stat-number">{stat.number || '0'}</div>
+                                  <div className="stat-label">{stat.label || 'Label'}</div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add statistics with numbers and labels</p>
+                              <p className="hint">Click to edit this module</p>
+                            </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
@@ -2852,24 +2954,26 @@ function App() {
                       accreds.military && 'Military Friendly'
                     ].filter(Boolean)
                     return (
-                      <div className="p-6 bg-csu-lightest-gray">
-                        <h3 className="text-xl font-bold text-csu-navy text-center mb-2">
-                          {moduleContent['accreditations-section']?.accreditationHeading || 'Accreditations'}
-                        </h3>
-                        {moduleContent['accreditations-section']?.accreditationSubheading && (
-                          <p className="text-center text-csu-dark-gray mb-4">{moduleContent['accreditations-section']?.accreditationSubheading}</p>
-                        )}
-                        <div className="flex justify-center gap-6 flex-wrap">
-                          {activeAccreds.map((acc, i) => (
-                            <div key={i} className="w-20 h-16 bg-white rounded shadow flex items-center justify-center text-xs text-csu-medium-gray text-center p-2">
-                              {acc}
-                            </div>
-                          ))}
-                          {activeAccreds.length === 0 && (
-                            <p className="text-sm text-csu-medium-gray">No accreditations selected</p>
+                      <section className="preview-accreditations">
+                        <div className="preview-site-wrap">
+                          <h3>
+                            {moduleContent['accreditations-section']?.accreditationHeading || 'Accreditations'}
+                          </h3>
+                          {moduleContent['accreditations-section']?.accreditationSubheading && (
+                            <p className="subheading">{moduleContent['accreditations-section']?.accreditationSubheading}</p>
                           )}
+                          <div className="accred-grid">
+                            {activeAccreds.map((acc, i) => (
+                              <div key={i} className="accred-item">
+                                {acc}
+                              </div>
+                            ))}
+                            {activeAccreds.length === 0 && (
+                              <p className="no-accreds">No accreditations selected</p>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2878,18 +2982,17 @@ function App() {
                     const hasUserContent = userPrograms && userPrograms.some((p: { name: string; url: string }) => p.name?.trim())
 
                     return (
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-csu-navy text-center mb-4">
-                          {moduleContent['degree-programs-list']?.programsHeading || 'Popular Degree Programs'}
-                        </h3>
-                        {hasUserContent ? (
-                          <div className="max-w-xl mx-auto">
-                            <ul className="space-y-2">
+                      <section className="preview-degree-programs">
+                        <div className="preview-site-wrap">
+                          <h3>
+                            {moduleContent['degree-programs-list']?.programsHeading || 'Popular Degree Programs'}
+                          </h3>
+                          {hasUserContent ? (
+                            <ul className="programs-list">
                               {userPrograms.filter((p: { name: string; url: string }) => p.name?.trim()).map((program: { name: string; url: string }, i: number) => (
                                 <li key={i}>
                                   <a
                                     href={program.url || '#'}
-                                    className="text-csu-navy hover:text-csu-gold underline"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                   >
@@ -2898,14 +3001,14 @@ function App() {
                                 </li>
                               ))}
                             </ul>
-                          </div>
-                        ) : (
-                          <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded max-w-xl mx-auto">
-                            <p>Add degree programs with names and URLs</p>
-                            <p className="text-xs mt-1">Click to edit this module</p>
-                          </div>
-                        )}
-                      </div>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add degree programs with names and URLs</p>
+                              <p className="hint">Click to edit this module</p>
+                            </div>
+                          )}
+                        </div>
+                      </section>
                     )
                   })()}
 
@@ -2914,38 +3017,38 @@ function App() {
                       moduleContent['scholarship-highlight']?.scholarshipDescription?.trim()
 
                     return (
-                      <div className="p-6 bg-csu-gold/10 border-l-4 border-csu-gold">
-                        <div className="max-w-2xl mx-auto">
+                      <section className="preview-scholarship">
+                        <div className="preview-site-wrap">
                           {hasUserContent ? (
                             <>
-                              <h3 className="text-xl font-bold text-csu-navy mb-3">
+                              <h3>
                                 {moduleContent['scholarship-highlight']?.scholarshipName || ''}
                               </h3>
-                              <p className="text-csu-dark-gray mb-4">
+                              <p className="description">
                                 {moduleContent['scholarship-highlight']?.scholarshipDescription || ''}
                               </p>
-                              <div className="flex items-center gap-4">
+                              <div className="actions">
                                 <a
                                   href={moduleContent['scholarship-highlight']?.scholarshipEligibilityUrl || 'https://www.columbiasouthern.edu/tuition-financing/scholarships'}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-csu-navy underline hover:text-csu-gold"
+                                  className="link"
                                 >
                                   View Eligibility Requirements
                                 </a>
-                                <button className="bg-csu-gold text-csu-navy px-4 py-2 rounded font-semibold hover:bg-csu-gold/80 transition-colors">
+                                <button className="button">
                                   {moduleContent['scholarship-highlight']?.scholarshipCtaText || 'Apply for Scholarship'}
                                 </button>
                               </div>
                             </>
                           ) : (
-                            <div className="text-csu-medium-gray italic text-center py-8 border-2 border-dashed border-csu-light-gray rounded">
+                            <div className="empty-state">
                               <p>Add scholarship name and description</p>
-                              <p className="text-xs mt-1">Click to edit this module</p>
+                              <p className="hint">Click to edit this module</p>
                             </div>
                           )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -2962,68 +3065,60 @@ function App() {
                     const videoId = getYouTubeId(videoUrl)
 
                     return (
-                      <div className="p-6">
-                        <div className="max-w-2xl mx-auto text-center">
-                          <h3 className="text-xl font-bold text-csu-navy mb-4">{videoTitle}</h3>
+                      <section className="preview-video-testimonial">
+                        <div className="preview-site-wrap">
+                          <h3>{videoTitle}</h3>
                           {videoId ? (
-                            <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
+                            <div className="video-container">
                               <iframe
                                 src={`https://www.youtube.com/embed/${videoId}`}
                                 title={videoTitle}
-                                className="absolute top-0 left-0 w-full h-full"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                               />
                             </div>
                           ) : (
-                            <div className="bg-csu-lightest-gray rounded-lg p-8 text-csu-medium-gray">
-                              <svg className="w-16 h-16 mx-auto mb-4 text-csu-light-gray" fill="currentColor" viewBox="0 0 24 24">
+                            <div className="video-placeholder">
+                              <svg fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
                               </svg>
                               <p>Enter a YouTube URL to embed a video</p>
                             </div>
                           )}
                           {videoCaption && (
-                            <p className="mt-4 text-sm text-csu-dark-gray italic">{videoCaption}</p>
+                            <p className="video-caption">{videoCaption}</p>
                           )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
                   {module.id === 'hero-banner' && (() => {
                     const bgUrl = moduleContent['hero-banner']?.heroBackgroundUrl || ''
-                    const opacity = moduleContent['hero-banner']?.heroOverlayOpacity ?? 50
                     const headline = moduleContent['hero-banner']?.heroHeadline || 'Your Future Starts Here'
                     const subheadline = moduleContent['hero-banner']?.heroSubheadline || 'Take the next step in your education journey'
 
                     return (
-                      <div
-                        className="relative min-h-[300px] flex items-center justify-center"
+                      <section
+                        className="preview-hero preview-gradient-left preview-dark"
                         style={{
-                          backgroundImage: bgUrl ? `url(${bgUrl})` : 'linear-gradient(135deg, #002855 0%, #003d7a 100%)',
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
+                          backgroundImage: bgUrl ? `url(${bgUrl})` : undefined,
                         }}
                       >
-                        {/* Overlay */}
-                        <div
-                          className="absolute inset-0 bg-csu-navy"
-                          style={{ opacity: opacity / 100 }}
-                        />
-                        {/* Content */}
-                        <div className="relative z-10 text-center text-white p-8">
-                          {headline && (
-                            <h2 className="text-3xl md:text-4xl font-bold mb-4">{headline}</h2>
-                          )}
-                          {subheadline && (
-                            <p className="text-lg md:text-xl opacity-90">{subheadline}</p>
-                          )}
-                          {!bgUrl && (
-                            <p className="mt-6 text-sm opacity-70">Upload a background image to customize the hero</p>
-                          )}
+                        <div className="preview-site-wrap preview-page-grid">
+                          <div className="preview-content">
+                            {headline && (
+                              <h1>{headline}</h1>
+                            )}
+                            {subheadline && (
+                              <p>{subheadline}</p>
+                            )}
+                            {!bgUrl && (
+                              <p className="preview-hero-placeholder">Add a background image URL to customize the hero</p>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -3037,14 +3132,16 @@ function App() {
                     const style = moduleContent['stats-banner']?.statsBannerStyle || 'horizontal'
 
                     return (
-                      <div className="p-6 bg-csu-gold">
-                        <div className={`max-w-4xl mx-auto ${style === 'horizontal' ? 'flex justify-around' : 'grid grid-cols-3 gap-4'}`}>
-                          {stats.map((stat, i) => (
-                            <div key={i} className={`text-center ${style === 'cards' ? 'bg-white rounded-lg p-4 shadow' : ''}`}>
-                              <div className="text-3xl font-bold text-csu-navy">{stat.value || '—'}</div>
-                              <div className="text-sm text-csu-dark-gray">{stat.label || 'Label'}</div>
-                            </div>
-                          ))}
+                      <div className="preview-stats-banner">
+                        <div className="preview-site-wrap">
+                          <div className={`stats-grid ${style === 'cards' ? 'cards' : ''}`}>
+                            {stats.map((stat, i) => (
+                              <div key={i} className={`stat-item ${style === 'cards' ? 'card' : ''}`}>
+                                <div className="stat-value">{stat.value || '—'}</div>
+                                <div className="stat-label">{stat.label || 'Label'}</div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     )
@@ -3056,32 +3153,22 @@ function App() {
                     const showRequestInfo = moduleContent['secondary-cta-banner']?.secondaryCtaShowRequestInfo ?? true
 
                     return (
-                      <div className="p-8 bg-csu-gold text-center">
-                        <h3 className="text-2xl font-bold text-csu-navy mb-6">{heading}</h3>
-                        <div className="flex flex-wrap justify-center gap-4">
-                          {showApply && (
-                            <a
-                              href="https://www.columbiasouthern.edu/apply"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-csu-navy text-white px-6 py-3 rounded font-semibold hover:bg-csu-navy/90 transition-colors"
-                            >
-                              Apply Now
-                            </a>
-                          )}
-                          {showRequestInfo && (
-                            <a
-                              href="#request-info"
-                              className="bg-white text-csu-navy px-6 py-3 rounded font-semibold border-2 border-csu-navy hover:bg-csu-lightest-gray transition-colors"
-                            >
-                              Request Information
-                            </a>
+                      <section className="preview-cta-banner gold">
+                        <div className="preview-site-wrap">
+                          <h3>{heading}</h3>
+                          <div className="button-group">
+                            {showApply && (
+                              <a href="#" className="button solid">Apply Now</a>
+                            )}
+                            {showRequestInfo && (
+                              <a href="#" className="button ghost">Request Information</a>
+                            )}
+                          </div>
+                          {!showApply && !showRequestInfo && (
+                            <p className="empty-state">Enable at least one button to display</p>
                           )}
                         </div>
-                        {!showApply && !showRequestInfo && (
-                          <p className="text-csu-navy/70">Enable at least one button to display</p>
-                        )}
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -3093,32 +3180,26 @@ function App() {
                     const showRequestInfo = moduleContent['get-started-today-banner']?.getStartedShowRequestInfo ?? true
                     const bgColor = moduleContent['get-started-today-banner']?.getStartedBgColor || 'navy'
 
-                    const bgClass = bgColor === 'navy' ? 'bg-csu-navy text-white'
-                      : bgColor === 'gold' ? 'bg-csu-gold text-csu-navy'
-                      : 'bg-gradient-to-r from-csu-navy to-csu-gold text-white'
+                    const themeClass = bgColor === 'gold' ? 'gold' : bgColor === 'gradient' ? 'gradient' : 'dark'
 
                     return (
-                      <div className={`p-8 ${bgClass}`}>
-                        <div className="max-w-4xl mx-auto text-center">
-                          <h3 className="text-2xl font-bold mb-2">{heading}</h3>
-                          {subheading && <p className="opacity-90 mb-6">{subheading}</p>}
-                          <div className="flex justify-center gap-4 flex-wrap">
+                      <section className={`preview-cta-banner ${themeClass}`}>
+                        <div className="preview-site-wrap">
+                          <h1>{heading}</h1>
+                          {subheading && <p>{subheading}</p>}
+                          <div className="button-group">
                             {showApply && (
-                              <a href="#" className={`px-6 py-3 font-semibold rounded ${bgColor === 'gold' ? 'bg-csu-navy text-white' : 'bg-csu-gold text-csu-navy'}`}>
-                                Apply Now
-                              </a>
+                              <a href="#" className="button solid">Apply Now</a>
                             )}
                             {showRequestInfo && (
-                              <a href="#" className="px-6 py-3 font-semibold rounded bg-white text-csu-navy border-2 border-white">
-                                Request Information
-                              </a>
+                              <a href="#" className="button ghost">Request Information</a>
                             )}
                           </div>
                           {!showApply && !showRequestInfo && (
-                            <p className="opacity-70">Enable at least one button to display</p>
+                            <p className="empty-state">Enable at least one button to display</p>
                           )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -3129,37 +3210,24 @@ function App() {
                     const imageUrl = moduleContent['more-info-card']?.moreInfoImageUrl || ''
 
                     return (
-                      <div className="p-6">
-                        <div className="max-w-4xl mx-auto bg-csu-lightest-gray rounded-lg overflow-hidden shadow-lg flex flex-col md:flex-row">
-                          {imageUrl ? (
-                            <div className="md:w-1/3">
-                              <img
-                                src={imageUrl}
-                                alt="More information section image"
-                                className="w-full h-48 md:h-full object-cover"
-                              />
+                      <section className="preview-more-info-card">
+                        <div className="preview-site-wrap">
+                          <div className="card">
+                            <div className="card-image">
+                              {imageUrl ? (
+                                <img src={imageUrl} alt="More information section image" />
+                              ) : (
+                                <span className="card-image-placeholder">Add an image</span>
+                              )}
                             </div>
-                          ) : (
-                            <div className="md:w-1/3 bg-csu-light-gray flex items-center justify-center p-8">
-                              <svg className="w-16 h-16 text-csu-medium-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
+                            <div className="card-content">
+                              <h3>{heading}</h3>
+                              <p>{body}</p>
+                              <a href={linkUrl} className="button">Learn More</a>
                             </div>
-                          )}
-                          <div className="md:w-2/3 p-6 flex flex-col justify-center">
-                            <h3 className="text-xl font-bold text-csu-navy mb-3">{heading}</h3>
-                            <p className="text-csu-dark-gray mb-4">{body}</p>
-                            <a
-                              href={linkUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-block bg-csu-navy text-white px-4 py-2 rounded font-semibold hover:bg-csu-navy/90 transition-colors self-start"
-                            >
-                              Learn More
-                            </a>
                           </div>
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 
@@ -3167,21 +3235,24 @@ function App() {
                     const disclaimers = moduleContent['footnotes-disclaimers']?.disclaimers || ['']
 
                     return (
-                      <div className="p-6 bg-csu-lightest-gray">
-                        <div className="max-w-4xl mx-auto">
-                          <h3 className="text-lg font-bold text-csu-navy mb-4">Important Information</h3>
-                          <div className="space-y-3 text-sm text-csu-dark-gray">
-                            {disclaimers.filter(d => d.trim()).map((disclaimer, index) => (
-                              <p key={index} className="leading-relaxed">
-                                <span className="font-semibold">{index + 1}.</span> {disclaimer}
-                              </p>
-                            ))}
-                            {disclaimers.filter(d => d.trim()).length === 0 && (
-                              <p className="text-csu-medium-gray italic">Add disclaimers or footnotes to display here.</p>
-                            )}
-                          </div>
+                      <section className="preview-footnotes">
+                        <div className="preview-site-wrap">
+                          <h3>Important Information</h3>
+                          {disclaimers.filter(d => d.trim()).length > 0 ? (
+                            <ul className="disclaimer-list">
+                              {disclaimers.filter(d => d.trim()).map((disclaimer, index) => (
+                                <li key={index}>
+                                  <span>{index + 1}.</span> {disclaimer}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div className="empty-state">
+                              <p>Add disclaimers or footnotes to display here.</p>
+                            </div>
+                          )}
                         </div>
-                      </div>
+                      </section>
                     )
                   })()}
 

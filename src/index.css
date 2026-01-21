@@ -301,3 +301,1782 @@ body {
   height: 1px;
   overflow: hidden;
 }
+
+/* ============================================
+   Preview Global Nav Styles (navigation-only preview)
+   ============================================ */
+
+.preview-global-nav {
+  background: #fff;
+}
+
+.preview-global-nav .preview-site-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.preview-global-nav .site-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.preview-global-nav .site-navigation > li {
+  list-style: none;
+}
+
+.preview-global-nav .site-navigation > li > button.toggle {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #002855;
+  padding: 0.75em 1em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.preview-global-nav .site-navigation > li > button.toggle:hover {
+  color: #bb2403;
+}
+
+.preview-global-nav .site-search {
+  margin-left: 1em;
+}
+
+.preview-global-nav .site-search button {
+  background: transparent;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+  color: #002855;
+  transition: color 0.2s ease;
+}
+
+.preview-global-nav .site-search button:hover {
+  color: #bb2403;
+}
+
+/* Gold underline bar */
+.preview-global-nav-border {
+  height: 4px;
+  background: linear-gradient(to right, #002855 0%, #002855 50%, #C6AA76 50%, #C6AA76 100%);
+}
+
+/* ============================================
+   Preview Hero Styles (matches csu-global.css)
+   ============================================ */
+
+/* Base hero section */
+.preview-hero {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 200px;
+}
+
+/* Gradient overlay for hero with background image */
+.preview-hero.preview-gradient-left::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 40, 85, 0.95) 0%, rgba(0, 40, 85, 0.85) 45%, rgba(0, 40, 85, 0) 100%);
+}
+
+/* Hero padding - responsive */
+.preview-hero.preview-gradient-left {
+  padding: 65px 0 50px;
+}
+
+/* Dark theme for hero */
+.preview-hero.preview-dark {
+  background-color: #002855;
+  color: #fff;
+}
+
+.preview-hero.preview-dark h1,
+.preview-hero.preview-dark h2,
+.preview-hero.preview-dark h3,
+.preview-hero.preview-dark h4,
+.preview-hero.preview-dark p {
+  color: #fff;
+}
+
+/* Hero when no background image (navy gradient fallback) */
+.preview-hero.preview-dark:not([style*="background-image"]) {
+  background: linear-gradient(135deg, #002855 0%, #003d7a 100%);
+}
+
+.preview-hero.preview-dark:not([style*="background-image"])::before {
+  display: none;
+}
+
+/* Site wrap for hero */
+.preview-hero .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+  position: relative;
+}
+
+/* Page grid for hero */
+.preview-hero .preview-page-grid {
+  display: grid;
+  grid-template-rows: auto;
+}
+
+/* Content inside hero */
+.preview-hero .preview-content {
+  position: relative;
+  z-index: 5;
+  font-size: 1.125rem;
+}
+
+.preview-hero .preview-content h1 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0 0 0.25em;
+  line-height: 1.25;
+}
+
+.preview-hero .preview-content p {
+  max-width: 100ch;
+  margin-bottom: 0.75em;
+  line-height: 1.5;
+  font-size: 1.125rem;
+}
+
+/* Placeholder text */
+.preview-hero .preview-hero-placeholder {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* ============================================
+   Preview Title Banner Styles (simple headline)
+   ============================================ */
+
+.preview-title-banner {
+  background: rgba(0, 40, 85, 0.975);
+  color: #fff;
+}
+
+.preview-title-banner .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.preview-title-banner h1 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  padding: 2.5em 0 0.5em;
+  margin: 0;
+}
+
+.preview-title-banner p {
+  color: #fff;
+  padding-bottom: 1.5em;
+}
+
+/* ============================================
+   Preview Welcome Bar Styles (matches csu-global.css)
+   ============================================ */
+
+.preview-welcome-bar {
+  background-color: #002855;
+  color: #fff;
+  padding: 12px 0;
+}
+
+.preview-welcome-bar .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-welcome-bar .welcome-text {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.preview-welcome-bar .button {
+  display: inline-block;
+  padding: 0.75em 1.25em;
+  background-color: #C6AA76;
+  border: transparent 2px solid;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  cursor: pointer;
+  text-decoration: none;
+  color: #002855;
+  transition: all 0.15s ease-in-out;
+}
+
+.preview-welcome-bar .button:hover,
+.preview-welcome-bar .button:focus {
+  background-color: #207788;
+  border-color: #fff;
+  color: #fff;
+}
+
+/* ============================================
+   Preview Stats Banner Styles (matches csu-global.css)
+   ============================================ */
+
+.preview-stats-banner {
+  background-color: #C6AA76;
+  padding: 24px 0;
+}
+
+.preview-stats-banner .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.preview-stats-banner .stats-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.preview-stats-banner .stats-grid.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.preview-stats-banner .stat-item {
+  text-align: center;
+}
+
+.preview-stats-banner .stat-item.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preview-stats-banner .stat-value {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #002855;
+  line-height: 1.2;
+}
+
+.preview-stats-banner .stat-label {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  margin-top: 4px;
+}
+
+/* ============================================
+   Preview Partner Headline Styles (simple headline without background)
+   ============================================ */
+
+.preview-partner-headline {
+  background-color: #fff;
+  padding: 32px 0;
+}
+
+.preview-partner-headline .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.preview-partner-headline.centered {
+  text-align: center;
+}
+
+.preview-partner-headline.left-aligned {
+  text-align: left;
+}
+
+.preview-partner-headline h1 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #002855;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.preview-partner-headline p {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1.125rem;
+  color: #5B6770;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Preview Partner Logo Styles
+   ============================================ */
+
+.preview-partner-logo {
+  background-color: #fff;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.preview-partner-logo .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-partner-logo img {
+  max-width: 200px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.preview-partner-logo .logo-placeholder {
+  color: #A2AAAD;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* ============================================
+   Preview Benefits Card Styles (matches export)
+   ============================================ */
+
+.preview-benefits-card-wrapper {
+  background-color: #fff;
+  padding: 24px 0;
+}
+
+.preview-benefits-card-wrapper .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.preview-benefits-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #DFD1A7;
+}
+
+.preview-benefits-card .partner-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.preview-benefits-card .partner-logo img {
+  max-width: 120px;
+  max-height: 48px;
+  object-fit: contain;
+}
+
+.preview-benefits-card h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 20px;
+}
+
+.preview-benefits-card .benefits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preview-benefits-card .benefits-list li {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #5B6770;
+}
+
+.preview-benefits-card .benefits-list li::before {
+  content: "✓";
+  color: #C6AA76;
+  font-weight: bold;
+}
+
+.preview-benefits-card .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 16px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview CTA Banner Styles (matches csu-global.css)
+   ============================================ */
+
+.preview-cta-banner {
+  padding: 35px 0;
+  text-align: center;
+}
+
+.preview-cta-banner.dark {
+  background-color: #002855;
+  color: #fff;
+}
+
+.preview-cta-banner.gold {
+  background-color: #C6AA76;
+  color: #002855;
+}
+
+.preview-cta-banner.gradient {
+  background: linear-gradient(135deg, #002855 0%, #C6AA76 100%);
+  color: #fff;
+}
+
+.preview-cta-banner .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.preview-cta-banner h1,
+.preview-cta-banner h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin: 0 0 16px;
+}
+
+.preview-cta-banner.dark h1,
+.preview-cta-banner.dark h3 {
+  color: #DFD1A7;
+}
+
+.preview-cta-banner p {
+  margin: 0 0 24px;
+  opacity: 0.9;
+}
+
+.preview-cta-banner .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.preview-cta-banner .button {
+  display: inline-block;
+  padding: 1em;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.preview-cta-banner.dark .button.ghost {
+  border-color: #DFD1A7;
+  color: #DFD1A7;
+  background: transparent;
+}
+
+.preview-cta-banner.dark .button.solid {
+  background-color: #C6AA76;
+  color: #002855;
+}
+
+.preview-cta-banner.gold .button.solid {
+  background-color: #002855;
+  color: #fff;
+}
+
+.preview-cta-banner.gold .button.ghost {
+  border-color: #002855;
+  color: #002855;
+  background: transparent;
+}
+
+.preview-cta-banner .button:hover {
+  background-color: #207788;
+  border-color: #fff;
+  color: #fff;
+}
+
+.preview-cta-banner .empty-state {
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.preview-cta-banner.gold .empty-state {
+  color: rgba(0, 40, 85, 0.7);
+}
+
+/* ============================================
+   Preview Benefits Copy Styles
+   ============================================ */
+
+.preview-benefits-copy {
+  background-color: #fff;
+  padding: 32px 0;
+}
+
+.preview-benefits-copy .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-benefits-copy .eligibility-statement {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1.125rem;
+  color: #5B6770;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.preview-benefits-copy .benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .preview-benefits-copy .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-benefits-copy .benefit-block {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.preview-benefits-copy .benefit-block h4 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 8px;
+}
+
+.preview-benefits-copy .benefit-block p {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.preview-benefits-copy .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview Lead Capture Form Styles
+   ============================================ */
+
+.preview-lead-form {
+  background-color: #DDE5ED;
+  padding: 40px 0;
+}
+
+.preview-lead-form .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+.preview-lead-form h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-lead-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .preview-lead-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-lead-form .form-field {
+  background: #fff;
+  padding: 12px;
+  border: 1px solid #D0D3D4;
+  border-radius: 4px;
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #A2AAAD;
+}
+
+.preview-lead-form .form-field.full {
+  grid-column: 1 / -1;
+}
+
+.preview-lead-form .form-field.textarea {
+  min-height: 80px;
+}
+
+.preview-lead-form .submit-btn {
+  display: block;
+  width: 100%;
+  background: #002855;
+  color: #fff;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 4px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.preview-lead-form .submit-btn:hover {
+  background-color: #207788;
+}
+
+.preview-lead-form .disclaimer {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.75rem;
+  color: #5B6770;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+.preview-lead-form .disclaimer a {
+  color: #002855;
+  text-decoration: underline;
+}
+
+/* ============================================
+   Preview Video Testimonial Styles
+   ============================================ */
+
+.preview-video-testimonial {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-video-testimonial .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.preview-video-testimonial h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 24px;
+}
+
+.preview-video-testimonial .video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.preview-video-testimonial .video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.preview-video-testimonial .video-placeholder {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 48px;
+  color: #A2AAAD;
+}
+
+.preview-video-testimonial .video-placeholder svg {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+.preview-video-testimonial .video-caption {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+/* ============================================
+   Preview FAQ Accordion Styles
+   ============================================ */
+
+.preview-faq-accordion {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-faq-accordion .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-faq-accordion h2 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 32px;
+}
+
+.preview-faq-accordion .accordion {
+  border: 1px solid #D0D3D4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-faq-accordion .accordion-item {
+  border-bottom: 1px solid #D0D3D4;
+}
+
+.preview-faq-accordion .accordion-item:last-child {
+  border-bottom: none;
+}
+
+.preview-faq-accordion .accordion-toggle {
+  width: 100%;
+  padding: 16px 48px 16px 16px;
+  background: #fff;
+  border: none;
+  text-align: left;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #002855;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.preview-faq-accordion .accordion-toggle:hover {
+  background-color: #f7f7f7;
+}
+
+.preview-faq-accordion .accordion-toggle::after {
+  content: "+";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #C6AA76;
+}
+
+.preview-faq-accordion .accordion-content {
+  padding: 0 16px 16px;
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.9375rem;
+  color: #5B6770;
+  line-height: 1.6;
+}
+
+.preview-faq-accordion .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview More Info Card Styles
+   ============================================ */
+
+.preview-more-info-card {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-more-info-card .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 16px;
+}
+
+.preview-more-info-card .card {
+  background: #f7f7f7;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 767px) {
+  .preview-more-info-card .card {
+    flex-direction: column;
+  }
+}
+
+.preview-more-info-card .card-image {
+  flex: 0 0 33%;
+  background: #DDE5ED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.preview-more-info-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-more-info-card .card-image-placeholder {
+  color: #A2AAAD;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.preview-more-info-card .card-content {
+  flex: 1;
+  padding: 32px;
+}
+
+.preview-more-info-card .card-content h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 16px;
+}
+
+.preview-more-info-card .card-content p {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #5B6770;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.preview-more-info-card .card-content .button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #002855;
+  color: #fff;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.preview-more-info-card .card-content .button:hover {
+  background-color: #207788;
+}
+
+/* ============================================
+   Preview Footnotes/Disclaimers Styles
+   ============================================ */
+
+.preview-footnotes {
+  background-color: #f7f7f7;
+  padding: 32px 0;
+}
+
+.preview-footnotes .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0 16px;
+}
+
+.preview-footnotes h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 16px;
+}
+
+.preview-footnotes .disclaimer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preview-footnotes .disclaimer-list li {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  line-height: 1.6;
+  padding: 8px 0;
+}
+
+.preview-footnotes .disclaimer-list li span {
+  font-weight: 600;
+}
+
+.preview-footnotes .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 24px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview Value Proposition Cards Styles
+   ============================================ */
+
+.preview-value-props {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-value-props .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0 16px;
+}
+
+.preview-value-props .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 767px) {
+  .preview-value-props .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-value-props .prop-card {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.preview-value-props .prop-card .icon {
+  width: 64px;
+  height: 64px;
+  background: #002855;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+}
+
+.preview-value-props .prop-card .icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.preview-value-props .prop-card h4 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 8px;
+}
+
+.preview-value-props .prop-card p {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.preview-value-props .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview Tiered Pricing Display Styles
+   ============================================ */
+
+.preview-tiered-pricing {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-tiered-pricing .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 16px;
+}
+
+.preview-tiered-pricing h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-tiered-pricing .tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 767px) {
+  .preview-tiered-pricing .tiers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-tiered-pricing .tier-card {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.preview-tiered-pricing .tier-card .tier-level {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  margin-bottom: 8px;
+}
+
+.preview-tiered-pricing .tier-card .tier-discount {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #C6AA76;
+}
+
+.preview-tiered-pricing .tier-card .tier-original {
+  font-size: 0.75rem;
+  color: #A2AAAD;
+  text-decoration: line-through;
+  margin-top: 4px;
+}
+
+.preview-tiered-pricing .footnote {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.75rem;
+  color: #A2AAAD;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* ============================================
+   Preview Why Choose CSU Styles
+   ============================================ */
+
+.preview-why-choose {
+  background-color: #f7f7f7;
+  padding: 40px 0;
+}
+
+.preview-why-choose .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-why-choose h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 24px;
+}
+
+.preview-why-choose .benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 767px) {
+  .preview-why-choose .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-why-choose .benefits-grid li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #5B6770;
+}
+
+.preview-why-choose .benefits-grid li::before {
+  content: "✓";
+  color: #C6AA76;
+  font-weight: bold;
+}
+
+.preview-why-choose .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+}
+
+/* ============================================
+   Preview Tuition Comparison Banner Styles
+   ============================================ */
+
+.preview-tuition-banner {
+  background-color: #002855;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.preview-tuition-banner .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-tuition-banner h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #DFD1A7;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.preview-tuition-banner .body-text {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-tuition-banner .bullet-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.preview-tuition-banner .bullet-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  padding: 8px 0;
+}
+
+.preview-tuition-banner .bullet-list li::before {
+  content: "✓";
+  color: #C6AA76;
+  font-weight: bold;
+}
+
+.preview-tuition-banner .cta-wrapper {
+  text-align: center;
+}
+
+.preview-tuition-banner .button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #C6AA76;
+  color: #002855;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.preview-tuition-banner .button:hover {
+  background-color: #207788;
+  color: #fff;
+}
+
+.preview-tuition-banner .empty-state {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+/* ============================================
+   Preview Tuition Comparison Table Styles
+   ============================================ */
+
+.preview-tuition-table {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-tuition-table .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-tuition-table h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.preview-tuition-table .subheading {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #5B6770;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-tuition-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-tuition-table thead tr {
+  background-color: #002855;
+  color: #fff;
+}
+
+.preview-tuition-table th {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.preview-tuition-table th:last-child {
+  text-align: right;
+}
+
+.preview-tuition-table td {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.9375rem;
+  color: #5B6770;
+  padding: 12px 16px;
+  border-bottom: 1px solid #D0D3D4;
+}
+
+.preview-tuition-table td:last-child {
+  text-align: right;
+}
+
+.preview-tuition-table tr.highlight {
+  background-color: rgba(198, 170, 118, 0.2);
+}
+
+.preview-tuition-table tr.highlight td {
+  font-weight: 600;
+  color: #002855;
+}
+
+/* ============================================
+   Preview CTA Buttons Only Styles
+   ============================================ */
+
+.preview-cta-buttons {
+  background-color: #fff;
+  padding: 32px 0;
+}
+
+.preview-cta-buttons .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+.preview-cta-buttons .button-group {
+  display: flex;
+  gap: 16px;
+}
+
+.preview-cta-buttons .button-group.center {
+  justify-content: center;
+}
+
+.preview-cta-buttons .button-group.left {
+  justify-content: flex-start;
+}
+
+.preview-cta-buttons .button-group.right {
+  justify-content: flex-end;
+}
+
+.preview-cta-buttons .button-group.stacked {
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-cta-buttons .button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.preview-cta-buttons .button.solid {
+  background-color: #C6AA76;
+  color: #002855;
+}
+
+.preview-cta-buttons .button.ghost {
+  background-color: #002855;
+  color: #fff;
+}
+
+.preview-cta-buttons .button:hover {
+  background-color: #207788;
+  color: #fff;
+}
+
+.preview-cta-buttons .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ============================================
+   Preview Contact Info Block Styles
+   ============================================ */
+
+.preview-contact-info {
+  background-color: #f7f7f7;
+  padding: 40px 0;
+}
+
+.preview-contact-info .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.preview-contact-info h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 24px;
+}
+
+.preview-contact-info .contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preview-contact-info .contact-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.preview-contact-info .contact-list li svg {
+  width: 20px;
+  height: 20px;
+  color: #C6AA76;
+}
+
+.preview-contact-info .contact-list li a {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #002855;
+  text-decoration: none;
+}
+
+.preview-contact-info .contact-list li a:hover {
+  color: #C6AA76;
+}
+
+/* ============================================
+   Preview Cost Calculator Widget Styles
+   ============================================ */
+
+.preview-cost-calculator {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-cost-calculator .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-cost-calculator h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-cost-calculator .calculator-container {
+  border: 1px solid #D0D3D4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-cost-calculator .calculator-container iframe {
+  display: block;
+  width: 100%;
+}
+
+.preview-cost-calculator .placeholder {
+  background-color: #f7f7f7;
+  padding: 48px;
+  text-align: center;
+  color: #A2AAAD;
+}
+
+.preview-cost-calculator .placeholder svg {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+/* ============================================
+   Preview CSU By The Numbers Styles
+   ============================================ */
+
+.preview-csu-numbers {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-csu-numbers .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.preview-csu-numbers .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+
+.preview-csu-numbers .stat-item .stat-number {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #002855;
+  line-height: 1.2;
+}
+
+.preview-csu-numbers .stat-item .stat-label {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #5B6770;
+  margin-top: 4px;
+}
+
+.preview-csu-numbers .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.preview-csu-numbers .empty-state .hint {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* ============================================
+   Preview Accreditations Section Styles
+   ============================================ */
+
+.preview-accreditations {
+  background-color: #f7f7f7;
+  padding: 40px 0;
+}
+
+.preview-accreditations .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.preview-accreditations h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 8px;
+}
+
+.preview-accreditations .subheading {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #5B6770;
+  margin: 0 0 24px;
+}
+
+.preview-accreditations .accred-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.preview-accreditations .accred-item {
+  width: 80px;
+  height: 64px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.75rem;
+  color: #A2AAAD;
+  text-align: center;
+  padding: 8px;
+}
+
+.preview-accreditations .no-accreds {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 0.875rem;
+  color: #A2AAAD;
+}
+
+/* ============================================
+   Preview Degree Programs List Styles
+   ============================================ */
+
+.preview-degree-programs {
+  background-color: #fff;
+  padding: 40px 0;
+}
+
+.preview-degree-programs .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+.preview-degree-programs h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002855;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.preview-degree-programs .programs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preview-degree-programs .programs-list li {
+  padding: 8px 0;
+}
+
+.preview-degree-programs .programs-list li a {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #002855;
+  text-decoration: underline;
+}
+
+.preview-degree-programs .programs-list li a:hover {
+  color: #C6AA76;
+}
+
+.preview-degree-programs .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 8px;
+}
+
+.preview-degree-programs .empty-state .hint {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* ============================================
+   Preview Scholarship Highlight Styles
+   ============================================ */
+
+.preview-scholarship {
+  background-color: rgba(198, 170, 118, 0.1);
+  border-left: 4px solid #C6AA76;
+  padding: 24px 0;
+}
+
+.preview-scholarship .preview-site-wrap {
+  margin: 0 auto;
+  max-width: 700px;
+  padding: 0 24px;
+}
+
+.preview-scholarship h3 {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #002855;
+  margin: 0 0 12px;
+}
+
+.preview-scholarship .description {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #5B6770;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.preview-scholarship .actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.preview-scholarship .actions a.link {
+  font-family: "cronos-pro", sans-serif;
+  font-size: 1rem;
+  color: #002855;
+  text-decoration: underline;
+}
+
+.preview-scholarship .actions a.link:hover {
+  color: #C6AA76;
+}
+
+.preview-scholarship .actions .button {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  background-color: #C6AA76;
+  color: #002855;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.preview-scholarship .actions .button:hover {
+  background-color: #207788;
+  color: #fff;
+}
+
+.preview-scholarship .empty-state {
+  color: #A2AAAD;
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+  border: 2px dashed #D0D3D4;
+  border-radius: 8px;
+}
+
+.preview-scholarship .empty-state .hint {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
