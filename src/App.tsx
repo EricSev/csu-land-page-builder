@@ -159,7 +159,7 @@ interface ModuleContent {
 const LEARNING_PARTNER_MODULES: Module[] = [
   // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'csu-global-menu', name: 'CSU Global Menu', enabled: false, locked: false, order: 2 },
+  { id: 'csu-global-menu', name: 'BD Global Menu', enabled: false, locked: false, order: 2 },
   { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 3 },
   // Hero Section
   { id: 'hero-banner', name: 'Hero Banner', enabled: false, locked: false, order: 4 },
@@ -171,7 +171,7 @@ const LEARNING_PARTNER_MODULES: Module[] = [
   { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 8 },
   { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 9 },
   { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 10 },
-  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 11 },
+  { id: 'why-choose-csu', name: 'Why Choose BD', enabled: false, locked: false, order: 11 },
   { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: false, locked: false, order: 12 },
   // Program Information
   { id: 'degree-programs-list', name: 'Degree Programs List', enabled: false, locked: false, order: 13 },
@@ -183,7 +183,7 @@ const LEARNING_PARTNER_MODULES: Module[] = [
   // Social Proof & Trust
   { id: 'video-testimonial', name: 'Video Testimonial', enabled: false, locked: false, order: 18 },
   { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 19 },
-  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: false, locked: false, order: 20 },
+  { id: 'csu-by-the-numbers', name: 'BD by the Numbers', enabled: false, locked: false, order: 20 },
   { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 21 },
   // Tuition & Cost
   { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 22 },
@@ -202,7 +202,7 @@ const LEARNING_PARTNER_MODULES: Module[] = [
 const CHANNEL_PARTNER_MODULES: Module[] = [
   // Header Elements
   { id: 'header', name: 'Header', enabled: true, locked: true, order: 1 },
-  { id: 'csu-global-menu', name: 'CSU Global Menu', enabled: false, locked: false, order: 2 },
+  { id: 'csu-global-menu', name: 'BD Global Menu', enabled: false, locked: false, order: 2 },
   { id: 'welcome-bar', name: 'Welcome Bar', enabled: false, locked: false, order: 3 },
   // Hero Section
   { id: 'hero-banner', name: 'Hero Banner', enabled: true, locked: false, order: 4 },
@@ -214,7 +214,7 @@ const CHANNEL_PARTNER_MODULES: Module[] = [
   { id: 'partner-benefits-card', name: 'Partner Benefits Card', enabled: true, locked: false, order: 8 },
   { id: 'benefits-copy', name: 'Benefits Copy', enabled: true, locked: false, order: 9 },
   { id: 'tiered-pricing-display', name: 'Tiered Pricing Display', enabled: false, locked: false, order: 10 },
-  { id: 'why-choose-csu', name: 'Why Choose CSU', enabled: false, locked: false, order: 11 },
+  { id: 'why-choose-csu', name: 'Why Choose BD', enabled: false, locked: false, order: 11 },
   { id: 'value-proposition-cards', name: 'Value Proposition Cards', enabled: true, locked: false, order: 12 },
   // Program Information
   { id: 'degree-programs-list', name: 'Degree Programs List', enabled: true, locked: false, order: 13 },
@@ -226,7 +226,7 @@ const CHANNEL_PARTNER_MODULES: Module[] = [
   // Social Proof & Trust
   { id: 'video-testimonial', name: 'Video Testimonial', enabled: true, locked: false, order: 18 },
   { id: 'faq-accordion', name: 'FAQ Accordion', enabled: true, locked: false, order: 19 },
-  { id: 'csu-by-the-numbers', name: 'CSU by the Numbers', enabled: true, locked: false, order: 20 },
+  { id: 'csu-by-the-numbers', name: 'BD by the Numbers', enabled: true, locked: false, order: 20 },
   { id: 'accreditations-section', name: 'Accreditations Section', enabled: true, locked: false, order: 21 },
   // Tuition & Cost
   { id: 'tuition-comparison-table', name: 'Tuition Comparison Table', enabled: false, locked: false, order: 22 },
@@ -522,7 +522,7 @@ function App() {
       : `WHERE: New landing page for ${partnerName}`
 
     // Build WHY section
-    const whySection = `WHY: Partner education benefits landing page to promote CSU programs to ${partnerName} employees`
+    const whySection = `WHY: Partner education benefits landing page to promote BD programs to ${partnerName} employees`
 
     // Combine content
     const contentMessage = [
@@ -626,20 +626,20 @@ function App() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${partnerName} - Columbia Southern University</title>
+  <title>${partnerName} - DGP</title>
   <!-- Adobe Typekit - cronos-pro font -->
   <link rel="stylesheet" href="https://use.typekit.net/yxt5svl.css">
   <!-- Google Fonts - Nunito Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
-  <!-- jQuery (required for CSU navigation) -->
+  <!-- jQuery (required for BD navigation) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <!-- CSU Global Scripts (for navigation menu functionality) -->
+  <!-- BD Global Scripts (for navigation menu functionality) -->
   <script src="https://www.columbiasouthern.edu/scripts/globals.js"></script>
   <style>
     /* ===========================================
-       CSU Design System - CSS Custom Properties
+       BD Design System - CSS Custom Properties
        =========================================== */
     :root {
       /* Brand Colors */
@@ -939,7 +939,7 @@ function App() {
     </div>
     <div class="dark utility-navigation">
       <div class="site-wrap flex">
-        <div class="site-logo"><a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png" alt="Columbia Southern University logo, homepage"></a></div>
+        <div class="site-logo"><a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png" alt="DGP logo, homepage"></a></div>
         <ul class="button-group flex">
           <li><a class="button" href="tel:+18009778449">800-977-8449</a></li>
           <li><a class="button" href="https://www.columbiasouthern.edu/login">Login Options</a></li>
@@ -952,7 +952,7 @@ function App() {
     <div class="light">
       <nav class="navigation-wrapper site-wrap flex">
         <div class="mobile-site-logo">
-          <a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/campm3vj/csu-logo-horizontal.png" alt="Columbia Southern University logo, homepage"></a>
+          <a href="https://www.columbiasouthern.edu/"><img src="https://www.columbiasouthern.edu/media/campm3vj/csu-logo-horizontal.png" alt="DGP logo, homepage"></a>
         </div>
         <button id="mobileMenuToggle" class="mobile-menu" aria-expanded="false" aria-haspopup="true" type="button">
           <span class="offscreen">Menu</span>
@@ -986,7 +986,7 @@ function App() {
                   <li><a href="https://www.columbiasouthern.edu/online-degree/full-course-listing/" class="arrow-link reveal">Full Course Listing</a></li>
                   <li><a href="https://www.columbiasouthern.edu/online-degree/doctoral-overview/" class="arrow-link reveal">Doctoral Overview</a></li>
                   <li><a href="https://www.columbiasouthern.edu/online-degree/colleges-and-faculty/" class="arrow-link reveal">Colleges and Faculty</a></li>
-                  <li><a href="https://www.columbiasouthern.edu/online-degree/transfer-credit-to-csu/" class="arrow-link reveal">Transfer Credit to CSU</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/online-degree/transfer-credit-to-csu/" class="arrow-link reveal">Transfer Credit to BD</a></li>
                   <li><a href="https://www.columbiasouthern.edu/online-degree/general-education/" class="arrow-link reveal">General Education</a></li>
                   <li><a href="https://www.columbiasouthern.edu/online-degree/certificates/" class="arrow-link reveal">Certificate Programs</a></li>
                   <li><a href="https://www.columbiasouthern.edu/online-degree/academic-calendar/" class="arrow-link reveal">Academic Calendar</a></li>
@@ -1073,18 +1073,18 @@ function App() {
               <div class="dropdown grid grid-gap-20 columns-1-2" data-breakpoints="650">
                 <div class="column dark">
                   <div class="image fit-image">
-                    <img alt="Columbia Southern University facade against blue sky" src="https://www.columbiasouthern.edu/media/qimp2eni/thumbnail-about.jpg">
+                    <img alt="DGP facade against blue sky" src="https://www.columbiasouthern.edu/media/qimp2eni/thumbnail-about.jpg">
                   </div>
                   <div class="text-overlay gradient-bottom">
                     <div class="text"><strong class="h5">About</strong></div>
                   </div>
                 </div>
                 <ul class="self-center">
-                  <li><a href="https://www.columbiasouthern.edu/about-csu/about-csu/" class="arrow-link reveal">About CSU</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/about-csu/" class="arrow-link reveal">About BD</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/accreditation-licensure/" class="arrow-link reveal">State Authorization and Accreditation</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/leadership/" class="arrow-link reveal">Leadership</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/board-of-trustees/" class="arrow-link reveal">Board of Trustees</a></li>
-                  <li><a href="https://www.columbiasouthern.edu/about-csu/csu-cares/" class="arrow-link reveal">CSU Cares</a></li>
+                  <li><a href="https://www.columbiasouthern.edu/about-csu/csu-cares/" class="arrow-link reveal">BD Cares</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/media/" class="arrow-link reveal">Press Room</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/contact-us/" class="arrow-link reveal">Contact Us</a></li>
                   <li><a href="https://www.columbiasouthern.edu/about-csu/history/" class="arrow-link reveal">History</a></li>
@@ -1275,7 +1275,7 @@ function App() {
         <p>${benefitsCopy?.benefitsCopy || 'As a valued partner, you and your eligible family members can take advantage of exclusive benefits.'}</p>
 
         <h2>Tuition Benefits</h2>
-        <p>${benefitsCopy?.tuitionParagraph || 'Enjoy exclusive tuition discounts at Columbia Southern University.'}</p>
+        <p>${benefitsCopy?.tuitionParagraph || 'Enjoy exclusive tuition discounts at DGP.'}</p>
 
         <h2>Flexible Learning</h2>
         <p>${benefitsCopy?.flexibilityParagraph || 'Our flexible online programs are designed to fit your busy schedule.'}</p>
@@ -1330,7 +1330,7 @@ function App() {
       <div class="site-wrap page-grid columns-1-2">
         <!-- Left Column: Contact Info -->
         <div>
-          <h2 class="h4">Columbia Southern University</h2>
+          <h2 class="h4">DGP</h2>
           <p>
             21982 University Lane<br>
             Orange Beach, Alabama 36561
@@ -1368,7 +1368,7 @@ function App() {
             </li>
           </ul>
 
-          <p><small>&copy; ${new Date().getFullYear()} Columbia Southern University</small></p>
+          <p><small>&copy; ${new Date().getFullYear()} DGP</small></p>
         </div>
 
         <!-- Right Column: Link Columns -->
@@ -1733,7 +1733,7 @@ function App() {
     }
 
     if (!isValidCsuUrl(sourceUrl)) {
-      setUrlError('Please enter a valid CSU landing page URL. Supported patterns include columbiasouthern.edu/tuition-financing/partnerships/learning-partner-directory/*, /landing-pages/learning-partners/*, /benefithub, /delta, /perkspot, /iafc, /ebg-solutions')
+      setUrlError('Please enter a valid BD landing page URL. Supported patterns include columbiasouthern.edu/tuition-financing/partnerships/learning-partner-directory/*, /landing-pages/learning-partners/*, /benefithub, /delta, /perkspot, /iafc, /ebg-solutions')
       return
     }
 
@@ -1931,7 +1931,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
-                <span className="text-csu-navy font-bold text-xl">CSU</span>
+                <span className="text-csu-navy font-bold text-xl">BD</span>
               </div>
               <h1 className="text-xl font-semibold">Landing Page Builder</h1>
             </div>
@@ -1943,7 +1943,7 @@ function App() {
           <div className="max-w-4xl w-full">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-csu-near-black mb-4">
-                Welcome to the CSU Landing Page Builder
+                Welcome to the BD Landing Page Builder
               </h2>
               <p className="text-csu-dark-gray text-lg">
                 Create detailed mockups for partner landing pages. Choose how you'd like to get started.
@@ -1983,7 +1983,7 @@ function App() {
                   Edit Existing Page
                 </h3>
                 <p className="text-csu-dark-gray">
-                  Import content from an existing CSU landing page URL to modify.
+                  Import content from an existing BD landing page URL to modify.
                 </p>
               </button>
 
@@ -2010,7 +2010,7 @@ function App() {
 
         {/* Footer */}
         <footer className="bg-csu-near-black text-white py-4 px-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Columbia Southern University. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DGP. All rights reserved.</p>
         </footer>
       </div>
     )
@@ -2025,7 +2025,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-white rounded flex items-center justify-center">
-                <span className="text-csu-navy font-bold text-xl">CSU</span>
+                <span className="text-csu-navy font-bold text-xl">BD</span>
               </div>
               <h1 className="text-xl font-semibold">Landing Page Builder</h1>
             </div>
@@ -2109,7 +2109,7 @@ function App() {
                   Edit Existing Landing Page
                 </h2>
                 <p className="text-csu-dark-gray mb-6">
-                  Enter the URL of an existing CSU landing page to import its content.
+                  Enter the URL of an existing BD landing page to import its content.
                 </p>
 
                 <div className="space-y-6">
@@ -2262,7 +2262,7 @@ function App() {
 
         {/* Footer */}
         <footer className="bg-csu-near-black text-white py-4 px-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Columbia Southern University. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DGP. All rights reserved.</p>
         </footer>
       </div>
     )
@@ -2276,7 +2276,7 @@ function App() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-              <span className="text-csu-navy font-bold text-sm">CSU</span>
+              <span className="text-csu-navy font-bold text-sm">BD</span>
             </div>
             <h1 className="text-lg font-semibold">Landing Page Builder</h1>
             {/* Overall Completion Progress */}
@@ -2602,7 +2602,7 @@ function App() {
                           {moduleContent['lead-capture-form']?.submitButtonText || 'Submit'}
                         </button>
                         <p className="disclaimer">
-                          By submitting this request, you consent to Columbia Southern University using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See <a href="https://www.columbiasouthern.edu/privacy-policy">Privacy Policy</a>.
+                          By submitting this request, you consent to DGP using automated technology and prerecorded/artificial voice messages to contact you via phone, email, and SMS/text messaging for marketing purposes. Communications may be monitored and/or recorded. Consent is not required to enroll, and you may still choose to enroll without providing consent. See <a href="https://www.columbiasouthern.edu/privacy-policy">Privacy Policy</a>.
                         </p>
                       </div>
                     </section>
@@ -2773,7 +2773,7 @@ function App() {
 
                   {/* Why Choose CSU Preview */}
                   {module.id === 'why-choose-csu' && (() => {
-                    const heading = moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose CSU?'
+                    const heading = moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose BD?'
                     const benefits = moduleContent['why-choose-csu']?.whyChooseBenefits || [
                       '100% Online - Learn from anywhere',
                       'Regionally Accredited',
@@ -2854,7 +2854,7 @@ function App() {
                     const heading = moduleContent['tuition-comparison-table']?.tuitionTableHeading || 'Compare Tuition Costs'
                     const subheading = moduleContent['tuition-comparison-table']?.tuitionTableSubheading
                     const rows = moduleContent['tuition-comparison-table']?.tuitionTableRows || [
-                      { institution: 'Columbia Southern University', tuitionPerCredit: '$270', isCSU: true },
+                      { institution: 'DGP', tuitionPerCredit: '$270', isCSU: true },
                       { institution: 'Average Public University', tuitionPerCredit: '$390', isCSU: false },
                       { institution: 'Average Private University', tuitionPerCredit: '$550', isCSU: false },
                     ]
@@ -3205,7 +3205,7 @@ function App() {
 
                   {module.id === 'more-info-card' && (() => {
                     const heading = moduleContent['more-info-card']?.moreInfoHeading || 'Looking for More Information?'
-                    const body = moduleContent['more-info-card']?.moreInfoBody || 'Explore our website to learn more about programs, tuition, and everything CSU has to offer.'
+                    const body = moduleContent['more-info-card']?.moreInfoBody || 'Explore our website to learn more about programs, tuition, and everything BD has to offer.'
                     const linkUrl = moduleContent['more-info-card']?.moreInfoLinkUrl || 'https://www.columbiasouthern.edu'
                     const imageUrl = moduleContent['more-info-card']?.moreInfoImageUrl || ''
 
@@ -3261,7 +3261,7 @@ function App() {
                       {footerStyle === 'minimal' ? (
                         /* Minimal Footer */
                         <div className="text-center">
-                          <p>&copy; {new Date().getFullYear()} Columbia Southern University</p>
+                          <p>&copy; {new Date().getFullYear()} DGP</p>
                           <p className="text-white/60 mt-2">
                             <a
                               href="https://www.columbiasouthern.edu/privacy-policy"
@@ -3278,7 +3278,7 @@ function App() {
                         <div>
                           <div className="grid md:grid-cols-4 gap-8 mb-8">
                             <div>
-                              <h4 className="font-bold mb-3">About CSU</h4>
+                              <h4 className="font-bold mb-3">About BD</h4>
                               <ul className="space-y-2 text-white/70">
                                 <li><a href="#" className="hover:text-white">About Us</a></li>
                                 <li><a href="#" className="hover:text-white">Accreditation</a></li>
@@ -3309,7 +3309,7 @@ function App() {
                             </div>
                           </div>
                           <div className="border-t border-white/20 pt-6 text-center">
-                            <p>&copy; {new Date().getFullYear()} Columbia Southern University</p>
+                            <p>&copy; {new Date().getFullYear()} DGP</p>
                             <p className="text-white/60 mt-2">
                               <a
                                 href="https://www.columbiasouthern.edu/privacy-policy"
@@ -3374,7 +3374,7 @@ function App() {
           {selectedModuleId === 'header' && (
             <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
               <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
-                <strong>Header</strong> is a locked module that displays the CSU corporate header with logo, phone number, and action buttons. This module cannot be edited or disabled.
+                <strong>Header</strong> is a locked module that displays the BD corporate header with logo, phone number, and action buttons. This module cannot be edited or disabled.
               </p>
             </div>
           )}
@@ -3383,16 +3383,16 @@ function App() {
           {selectedModuleId === 'csu-global-menu' && (
             <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
               <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
-                <strong>CSU Global Menu</strong> displays the official CSU website navigation bar with full mega-menu functionality.
+                <strong>BD Global Menu</strong> displays the official BD website navigation bar with full mega-menu functionality.
               </p>
               <p className={`text-sm mt-2 ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
-                The preview shows simplified navigation links. The exported HTML includes the complete CSU template with:
+                The preview shows simplified navigation links. The exported HTML includes the complete BD template with:
               </p>
               <ul className={`text-sm mt-2 list-disc list-inside ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
                 <li>Dropdown menus with images for each section</li>
                 <li>Mobile menu toggle and responsive design</li>
                 <li>Site search functionality</li>
-                <li>All styling from CSU global.css</li>
+                <li>All styling from BD global.css</li>
               </ul>
               <p className={`text-sm mt-2 ${darkMode ? 'text-gray-400' : 'text-csu-dark-gray/80'}`}>
                 Enable or disable using the checkbox in the left panel.
@@ -3404,7 +3404,7 @@ function App() {
           {selectedModuleId === 'footer' && (
             <div className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-csu-light-gray/50'}`}>
               <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-csu-dark-gray'}`}>
-                <strong>Footer</strong> is a locked module that displays the standard CSU footer with copyright and address information. This module cannot be edited or disabled.
+                <strong>Footer</strong> is a locked module that displays the standard BD footer with copyright and address information. This module cannot be edited or disabled.
               </p>
             </div>
           )}
@@ -3705,7 +3705,7 @@ function App() {
                   </label>
                   <textarea
                     id="tuitionParagraph"
-                    value={moduleContent['benefits-copy']?.tuitionParagraph || 'Enjoy exclusive tuition discounts at Columbia Southern University. Our affordable programs make quality education accessible to you and your family.'}
+                    value={moduleContent['benefits-copy']?.tuitionParagraph || 'Enjoy exclusive tuition discounts at DGP. Our affordable programs make quality education accessible to you and your family.'}
                     onChange={(e) => updateModuleContent('benefits-copy', { tuitionParagraph: e.target.value })}
                     rows={3}
                     className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none resize-none"
@@ -3826,9 +3826,9 @@ function App() {
           {selectedModuleId === 'faq-accordion' && (() => {
             const defaultFaqs = [
               { question: 'How do I apply?', answer: 'Visit our application page and complete the online form. Our admissions team will guide you through the process.' },
-              { question: 'What programs are available?', answer: 'CSU offers over 50 online degree programs including business, criminal justice, fire science, and more.' },
+              { question: 'What programs are available?', answer: 'BD offers over 50 online degree programs including business, criminal justice, fire science, and more.' },
               { question: 'How much is tuition?', answer: 'Tuition varies by program. Partner employees receive exclusive discounts on all programs.' },
-              { question: 'Is financial aid available?', answer: 'Yes! CSU offers various financial aid options including federal aid, military benefits, and payment plans.' }
+              { question: 'Is financial aid available?', answer: 'Yes! BD offers various financial aid options including federal aid, military benefits, and payment plans.' }
             ]
             const currentFaqs = moduleContent['faq-accordion']?.faqs || defaultFaqs
             const maxFaqs = 6
@@ -4141,7 +4141,7 @@ function App() {
                     </label>
                     <textarea
                       id="comparisonBody"
-                      value={moduleContent['tuition-comparison-banner']?.comparisonBody || 'See how CSU stacks up against other universities'}
+                      value={moduleContent['tuition-comparison-banner']?.comparisonBody || 'See how BD stacks up against other universities'}
                       onChange={(e) => updateModuleContent('tuition-comparison-banner', { comparisonBody: e.target.value })}
                       rows={2}
                       className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none resize-none"
@@ -4839,7 +4839,7 @@ function App() {
                   <input
                     type="text"
                     id="whyChooseHeading"
-                    value={moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose CSU?'}
+                    value={moduleContent['why-choose-csu']?.whyChooseHeading || 'Why Choose BD?'}
                     onChange={(e) => updateModuleContent('why-choose-csu', { whyChooseHeading: e.target.value })}
                     className="w-full px-3 py-2 border border-csu-light-gray rounded-lg focus:border-csu-navy focus:ring-1 focus:ring-csu-navy outline-none"
                   />
@@ -5041,7 +5041,7 @@ function App() {
           {/* Tuition Comparison Table Form */}
           {selectedModuleId === 'tuition-comparison-table' && (() => {
             const defaultRows = [
-              { institution: 'Columbia Southern University', tuitionPerCredit: '$270', isCSU: true },
+              { institution: 'DGP', tuitionPerCredit: '$270', isCSU: true },
               { institution: 'Average Public University', tuitionPerCredit: '$390', isCSU: false },
               { institution: 'Average Private University', tuitionPerCredit: '$550', isCSU: false },
             ]
@@ -5129,7 +5129,7 @@ function App() {
                           }}
                           className="w-4 h-4 text-csu-navy rounded focus:ring-csu-navy"
                         />
-                        <span className="text-xs text-csu-medium-gray">CSU</span>
+                        <span className="text-xs text-csu-medium-gray">BD</span>
                       </label>
                       {currentRows.length > 1 && (
                         <button

@@ -1,6 +1,6 @@
-# CSU Landing Page Builder
+# BD Landing Page Builder
 
-A landing page builder tool for Columbia Southern University's Business Development team to create detailed, structured mockups for partner landing pages.
+A landing page builder tool for the Business Development team to create detailed, structured mockups for partner landing pages.
 
 ## Overview
 
@@ -49,7 +49,7 @@ The application will be available at `http://localhost:5173`
 
 ### Page Creation Modes
 - **Create New Page**: Start from scratch with template selection
-- **Edit Existing Page**: Parse content from existing CSU landing page URLs
+- **Edit Existing Page**: Parse content from existing BD landing page URLs
 - **Load Draft**: Resume work from a saved JSON draft file
 
 ### Module System
@@ -66,7 +66,7 @@ The application will be available at `http://localhost:5173`
 5. Lead Capture Form
 6. FAQ Accordion
 7. Value Proposition Cards
-8. CSU by the Numbers
+8. BD by the Numbers
 9. Accreditations Section
 10. Tuition Comparison Banner
 11. Degree Programs List
@@ -87,7 +87,7 @@ The application will be available at `http://localhost:5173`
 - Three-panel layout (modules, preview, content)
 - Desktop/tablet/mobile viewport preview
 - Light/dark mode for builder UI
-- CSU brand colors and styling
+- BD brand colors and styling
 - Auto-save to localStorage
 
 ## Supported URL Patterns for Editing
@@ -138,4 +138,4 @@ This application is designed to be hosted as a static site on Render.com or simi
 
 ## License
 
-Internal CSU Business Development Tool
+Internal BD Business Development Tool

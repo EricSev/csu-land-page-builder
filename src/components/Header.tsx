@@ -1,7 +1,7 @@
 /**
  * Header Component
  *
- * Renders the CSU header using semantic class names from csu-global.css.
+ * Renders the BD header using semantic class names from csu-global.css.
  * This component matches the exported HTML structure exactly.
  */
 
@@ -17,7 +17,7 @@ const navigationItems = [
       { label: 'Full Course Listing', href: 'https://www.columbiasouthern.edu/online-degree/full-course-listing/' },
       { label: 'Doctoral Overview', href: 'https://www.columbiasouthern.edu/online-degree/doctoral-overview/' },
       { label: 'Colleges and Faculty', href: 'https://www.columbiasouthern.edu/online-degree/colleges-and-faculty/' },
-      { label: 'Transfer Credit to CSU', href: 'https://www.columbiasouthern.edu/online-degree/transfer-credit-to-csu/' },
+      { label: 'Transfer Credit to BD', href: 'https://www.columbiasouthern.edu/online-degree/transfer-credit-to-csu/' },
       { label: 'General Education', href: 'https://www.columbiasouthern.edu/online-degree/general-education/' },
       { label: 'Certificate Programs', href: 'https://www.columbiasouthern.edu/online-degree/certificates/' },
       { label: 'Academic Calendar', href: 'https://www.columbiasouthern.edu/online-degree/academic-calendar/' },
@@ -77,13 +77,13 @@ const navigationItems = [
   {
     label: 'About',
     image: 'https://www.columbiasouthern.edu/media/qimp2eni/thumbnail-about.jpg',
-    imageAlt: 'Columbia Southern University facade against blue sky',
+    imageAlt: 'DGP facade against blue sky',
     links: [
-      { label: 'About CSU', href: 'https://www.columbiasouthern.edu/about-csu/about-csu/' },
+      { label: 'About BD', href: 'https://www.columbiasouthern.edu/about-csu/about-csu/' },
       { label: 'State Authorization and Accreditation', href: 'https://www.columbiasouthern.edu/about-csu/accreditation-licensure/' },
       { label: 'Leadership', href: 'https://www.columbiasouthern.edu/about-csu/leadership/' },
       { label: 'Board of Trustees', href: 'https://www.columbiasouthern.edu/about-csu/board-of-trustees/' },
-      { label: 'CSU Cares', href: 'https://www.columbiasouthern.edu/about-csu/csu-cares/' },
+      { label: 'BD Cares', href: 'https://www.columbiasouthern.edu/about-csu/csu-cares/' },
       { label: 'Press Room', href: 'https://www.columbiasouthern.edu/about-csu/media/' },
       { label: 'Contact Us', href: 'https://www.columbiasouthern.edu/about-csu/contact-us/' },
       { label: 'History', href: 'https://www.columbiasouthern.edu/about-csu/history/' },
@@ -132,7 +132,7 @@ export function Header({
   showUtilityNav = true,
   showGlobalMenu = true,
   logoUrl = 'https://www.columbiasouthern.edu/media/vhgldcbo/csu-logo-horizontal-white.png',
-  logoAlt = 'Columbia Southern University logo, homepage',
+  logoAlt = 'DGP logo, homepage',
   previewMode = false,
 }: HeaderProps) {
   return (
@@ -231,7 +231,7 @@ export function Header({
               >
                 <img
                   src="https://www.columbiasouthern.edu/media/campm3vj/csu-logo-horizontal.png"
-                  alt="Columbia Southern University logo, homepage"
+                  alt="DGP logo, homepage"
                 />
               </a>
             </div>
